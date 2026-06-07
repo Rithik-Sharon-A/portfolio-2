@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "projects",
+  "info": {
+    "singularName": "project",
+    "pluralName": "projects",
+    "displayName": "Project",
+    "description": "Portfolio projects"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": ["Client", "Personal"],
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "techStack": {
+      "type": "string"
+    },
+    "liveUrl": {
+      "type": "string"
+    },
+    "order": {
+      "type": "integer",
+      "default": 1
+    },
+    "col1Image1": {
+      "allowedTypes": ["images"],
+      "type": "media",
+      "multiple": false
+    },
+    "col1Image2": {
+      "allowedTypes": ["images"],
+      "type": "media",
+      "multiple": false
+    },
+    "col2Image": {
+      "allowedTypes": ["images"],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

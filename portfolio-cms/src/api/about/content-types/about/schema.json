@@ -1,0 +1,55 @@
+{
+  "kind": "collectionType",
+  "collectionName": "abouts",
+  "info": {
+    "singularName": "about",
+    "pluralName": "abouts",
+    "displayName": "About",
+    "description": "About section content"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true,
+      "default": "Read the spin."
+    },
+    "para1": {
+      "type": "text",
+      "required": true
+    },
+    "para2": {
+      "type": "text"
+    },
+    "para3": {
+      "type": "text"
+    },
+    "stat1Value": {
+      "type": "string",
+      "default": "20+"
+    },
+    "stat1Label": {
+      "type": "string",
+      "default": "Projects"
+    },
+    "stat2Value": {
+      "type": "string",
+      "default": "∞"
+    },
+    "stat2Label": {
+      "type": "string",
+      "default": "Chai"
+    },
+    "stat3Value": {
+      "type": "string",
+      "default": "5+"
+    },
+    "stat3Label": {
+      "type": "string",
+      "default": "Technologies"
+    }
+  }
+}

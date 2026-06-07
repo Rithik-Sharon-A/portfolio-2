@@ -1,0 +1,78 @@
+{
+  "heroes": [
+    {
+      "heroWord": "BOUNDARY",
+      "bioLeft": "Full stack developer reading every line like a length ball — judging early, committing late.",
+      "bioRight": "Open to collaboration. Let's build something worth a standing ovation.",
+      "counterValue": "02+",
+      "counterLabel": "PROJECTS SHIPPED"
+    }
+  ],
+  "abouts": [
+    {
+      "heading": "Read the spin.",
+      "para1": "I'm Rithik Sharon A — a full stack developer who approaches code the way a batsman reads spin: with patience, precision, and intent.",
+      "para2": "Based in Chennai, I build end-to-end digital products — from pixel-perfect React frontends to robust Node.js APIs, always thinking about the full pitch.",
+      "para3": "When I'm not shipping code, I'm following cricket, obsessing over clean architecture, and looking for the next boundary to hit.",
+      "stat1Value": "02+",
+      "stat1Label": "Projects Shipped",
+      "stat2Value": "∞",
+      "stat2Label": "Chai Consumed",
+      "stat3Value": "10+",
+      "stat3Label": "Technologies"
+    }
+  ],
+  "projects": [
+    {
+      "title": "MERN Movie Management Dashboard",
+      "category": "Personal",
+      "description": "Engineered a full-stack MERN application implementing multi-layer authentication using Express.js middleware and JWT authorization. Developed high-performance RESTful APIs reducing database query response time by 25%. Optimized MongoDB Atlas through strategic schema design, pagination and indexing. Integrated Redux Toolkit reducing component re-renders by 20%. Leveraged AWS to host production-grade data maintaining seamless sync for 500+ concurrent entries.",
+      "techStack": "React.js, Redux, Node.js, Express.js, MongoDB Atlas, JWT, REST APIs, AWS",
+      "liveUrl": "https://your-demo-url.com",
+      "order": 1
+    },
+    {
+      "title": "Agentic AI Digital Twin",
+      "category": "Personal",
+      "description": "Developed a full-stack MERN application using MVC architecture and Express.js to automate data retrieval via secure RESTful APIs. Strengthened backend with modular Node.js logic and MongoDB Atlas ensuring 99.9% uptime. Implemented secure JWT authentication and middleware validation. Orchestrated OpenRouter API for autonomous reasoning resulting in 30% reduction in context-switching. Constructed a RAG-based system enhancing knowledge retrieval precision by 40% over base models.",
+      "techStack": "JavaScript, OpenRouter, Agentic AI, React, Node.js, Express.js, MongoDB Atlas, JWT, Vite",
+      "liveUrl": "https://your-demo-url.com",
+      "order": 2
+    }
+  ],
+  "stack-items": [
+    { "name": "React.js",      "cricketRole": "Opening Batsman",  "order": 1 },
+    { "name": "Node.js",       "cricketRole": "All-rounder",      "order": 2 },
+    { "name": "Express.js",    "cricketRole": "Pace Bowler",      "order": 3 },
+    { "name": "MongoDB Atlas", "cricketRole": "Wicket Keeper",    "order": 4 },
+    { "name": "Redux Toolkit", "cricketRole": "Vice Captain",     "order": 5 },
+    { "name": "JavaScript",    "cricketRole": "Anchor Batsman",   "order": 6 },
+    { "name": "Python",        "cricketRole": "Spin Bowler",      "order": 7 },
+    { "name": "JWT Auth",      "cricketRole": "12th Man",         "order": 8 },
+    { "name": "AWS",           "cricketRole": "Captain",          "order": 9 },
+    { "name": "Tailwind CSS",  "cricketRole": "Stroke Maker",     "order": 10 },
+    { "name": "Git / GitHub",  "cricketRole": "Opening Partner",  "order": 11 }
+  ],
+  "services": [
+    { "number": "01", "name": "Full Stack Development", "description": "End-to-end MERN stack web applications — from pixel-perfect React frontends to robust Node.js APIs, built for scale and performance.", "order": 1 },
+    { "number": "02", "name": "Backend Architecture",   "description": "RESTful API design with Node.js and Express.js, JWT authentication, MVC pattern, middleware, and MongoDB Atlas database optimization.", "order": 2 },
+    { "number": "03", "name": "AI Integration",         "description": "RAG-based systems, OpenRouter API orchestration, agentic AI workflows, and intelligent chatbot development.", "order": 3 },
+    { "number": "04", "name": "Cloud Deployment",       "description": "Production-grade deployment on AWS and Vercel with CI/CD pipelines, GitHub Actions, and performance optimization.", "order": 4 },
+    { "number": "05", "name": "Frontend Engineering",   "description": "React.js with Redux Toolkit, Vite, Tailwind CSS — responsive, animated, pixel-perfect interfaces with clean component architecture.", "order": 5 }
+  ],
+  "contacts": [
+    {
+      "email": "rithiksharon.a@gmail.com",
+      "github": "https://github.com/Rithik-Sharon-A",
+      "linkedin": "https://linkedin.com/in/rithik-sharon",
+      "phone": "+91 93608 12245",
+      "ctaText": "GET IN TOUCH →"
+    }
+  ],
+  "site-settings": [
+    {
+      "seoTitle": "Rithik Sharon A — Full Stack Developer",
+      "seoDesc": "Full Stack Developer from Chennai specializing in MERN stack, RESTful APIs, JWT authentication, and AI integration. National Hackathon Finalist."
+    }
+  ]
+}

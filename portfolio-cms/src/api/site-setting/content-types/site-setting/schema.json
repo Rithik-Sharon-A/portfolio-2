@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "site_settings",
+  "info": {
+    "singularName": "site-setting",
+    "pluralName": "site-settings",
+    "displayName": "SiteSettings",
+    "description": "Global site settings and SEO"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "seoTitle": {
+      "type": "string",
+      "default": "Rithik Sharon A — Full Stack Developer"
+    },
+    "seoDesc": {
+      "type": "text",
+      "default": "Full Stack Developer based in Chennai."
+    },
+    "ogImage": {
+      "allowedTypes": ["images"],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

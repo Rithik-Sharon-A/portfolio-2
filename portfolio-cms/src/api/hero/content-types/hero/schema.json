@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "heroes",
+  "info": {
+    "singularName": "hero",
+    "pluralName": "heroes",
+    "displayName": "Hero",
+    "description": "Hero section content"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "heroWord": {
+      "type": "string",
+      "required": true,
+      "default": "BOUNDARY"
+    },
+    "bioLeft": {
+      "type": "text",
+      "required": true
+    },
+    "bioRight": {
+      "type": "text",
+      "required": true
+    },
+    "counterValue": {
+      "type": "string",
+      "required": true,
+      "default": "20+"
+    },
+    "counterLabel": {
+      "type": "string",
+      "required": true,
+      "default": "PROJECTS BUILT"
+    }
+  }
+}
