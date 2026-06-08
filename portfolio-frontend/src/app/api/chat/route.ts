@@ -1,10 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
-  await req.json();
+  const { message, history } = await req.json();
 
-  const reply =
-    "Thanks for your question! Rithik Sharon A is a Full Stack Developer from Chennai specializing in the MERN stack, RESTful APIs, and AI integration. He has built projects like a MERN Movie Management Dashboard and an Agentic AI Digital Twin. Feel free to check out his work or contact him at rithiksharon.a@gmail.com";
+  try {
+    const res = await fetch('http://localhost:8000/chat/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message, history }),
+    });
 
-  return NextResponse.json({ reply });
+    if (!res.ok) {
+      throw new Error('FastAPI error');
+    }
+
+    const data = await res.json();
+    return NextResponse.json({ reply: data.reply });
+  } catch (error) {
+    console.error('Chat error:', error);
+    return NextResponse.json({
+      reply: "I'm having trouble connecting right now. Please reach out to Rithik directly at rithiksharon.a@gmail.com"
+    });
+  }
 }
