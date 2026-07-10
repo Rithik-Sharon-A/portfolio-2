@@ -1,14 +1,21 @@
 export interface Hero {
   id: number;
-  heroWord: string;
+  heroWordLine1: string;
+  heroWordLine2: string;
   bioLeft: string;
   bioRight: string;
   counterValue: string;
   counterLabel: string;
+  badgeOuterText: string;
+  badgeInnerText: string;
+  bottomLabel: string;
+  bottomName: string;
+  bottomLocation: string;
 }
 
 export interface About {
   id: number;
+  sectionLabel: string;
   heading: string;
   para1: string;
   para2: string;
@@ -52,6 +59,13 @@ export interface Service {
 
 export interface Contact {
   id: number;
+  sectionLabel: string;
+  headingLine1: string;
+  headingLine2: string;
+  availabilityText: string;
+  footerCopyright: string;
+  footerStatus: string;
+  footerTagline: string;
   email: string;
   github: string;
   linkedin: string;
@@ -63,4 +77,16 @@ export interface SiteSettings {
   id: number;
   seoTitle: string;
   seoDesc: string;
+  logoText: string;
+  marqueeLine1: string;
+  marqueeLine2: string;
+  projectsLabel: string;
+  projectsHeading: string;
+  stackLabel: string;
+  stackHeading: string;
+  stackSubtitle: string;
+  servicesLabel: string;
+  servicesHeading: string;
+  chatButtonLabel: string;
+  chatGreeting: string;
 }

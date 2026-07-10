@@ -9,11 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg: '#F5F5EF',
-        ink: '#0A0A0A',
-        green: '#2D5016',
+        bg: '#080C10',
+        surface: '#0D1117',
+        ink: '#E2E8F0',
+        green: '#00FF88',
+        blue: '#0EA5E9',
         tan: '#C8A96E',
-        muted: '#888880',
+        muted: '#475569',
       },
       fontFamily: {
         sans: ['Space Grotesk', 'sans-serif'],

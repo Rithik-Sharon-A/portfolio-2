@@ -465,6 +465,8 @@ export interface ApiAboutAbout extends Struct.CollectionTypeSchema {
     para2: Schema.Attribute.Text;
     para3: Schema.Attribute.Text;
     publishedAt: Schema.Attribute.DateTime;
+    sectionLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'02 \u00B7 ABOUT'>;
     stat1Label: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Projects'>;
     stat1Value: Schema.Attribute.String & Schema.Attribute.DefaultTo<'20+'>;
@@ -491,13 +493,24 @@ export interface ApiContactContact extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    availabilityText: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Open for embedded roles, firmware projects, and full stack work.'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     ctaText: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'GET IN TOUCH \u2192'>;
     email: Schema.Attribute.Email & Schema.Attribute.Required;
+    footerCopyright: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'\u00A9 Rithik Sharon A \u00B7 Chennai'>;
+    footerStatus: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'System online.'>;
+    footerTagline: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Built from bare metal to browser.'>;
     github: Schema.Attribute.String;
+    headingLine1: Schema.Attribute.String & Schema.Attribute.DefaultTo<"LET'S">;
+    headingLine2: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'CONNECT'>;
     linkedin: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -507,6 +520,8 @@ export interface ApiContactContact extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     phone: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    sectionLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'06 \u00B7 ESTABLISH CONNECTION'>;
     twitter: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -526,20 +541,33 @@ export interface ApiHeroHero extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    badgeInnerText: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'C/C++ \u00B7 STM32 \u00B7 ESP32 \u00B7 RTOS \u00B7 UART \u00B7'>;
+    badgeOuterText: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'\u25C6 EMBEDDED DEV \u00B7 OPEN TO WORK \u00B7 CHENNAI \u00B7'>;
     bioLeft: Schema.Attribute.Text & Schema.Attribute.Required;
     bioRight: Schema.Attribute.Text & Schema.Attribute.Required;
+    bottomLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'EMBEDDED SYSTEMS DEVELOPER'>;
+    bottomLocation: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'CHENNAI'>;
+    bottomName: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Rithik Sharon A'>;
     counterLabel: Schema.Attribute.String &
       Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'PROJECTS BUILT'>;
+      Schema.Attribute.DefaultTo<'PRIMARY LANGUAGE'>;
     counterValue: Schema.Attribute.String &
       Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'20+'>;
+      Schema.Attribute.DefaultTo<'C/C++'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    heroWord: Schema.Attribute.String &
+    heroWordLine1: Schema.Attribute.String &
       Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'BOUNDARY'>;
+      Schema.Attribute.DefaultTo<'FIRM'>;
+    heroWordLine2: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'WARE'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::hero.hero'> &
       Schema.Attribute.Private;
@@ -625,7 +653,7 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
 export interface ApiSiteSettingSiteSetting extends Struct.CollectionTypeSchema {
   collectionName: 'site_settings';
   info: {
-    description: 'Global site settings and SEO';
+    description: 'Global site settings, SEO, and shared UI text';
     displayName: 'SiteSettings';
     pluralName: 'site-settings';
     singularName: 'site-setting';
@@ -634,6 +662,10 @@ export interface ApiSiteSettingSiteSetting extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    chatButtonLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'\u2B21 Ask Rithik'>;
+    chatGreeting: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<"Hey! I'm Rithik's AI assistant. Ask me about his skills, projects, or how to work with him. \u26A1">;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -643,12 +675,31 @@ export interface ApiSiteSettingSiteSetting extends Struct.CollectionTypeSchema {
       'api::site-setting.site-setting'
     > &
       Schema.Attribute.Private;
+    logoText: Schema.Attribute.String & Schema.Attribute.DefaultTo<'RS'>;
+    marqueeLine1: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'FIRMWARE,SIGNAL,INTERRUPT,REGISTER,PROTOCOL,VOLTAGE,LATENCY'>;
+    marqueeLine2: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'C/C++,RTOS,ESP32,ARDUINO,UART,SPI,I2C,GPIO,PWM'>;
     ogImage: Schema.Attribute.Media<'images'>;
+    projectsHeading: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'PROJECTS'>;
+    projectsLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'03 \u00B7 DEPLOYED SYSTEMS'>;
     publishedAt: Schema.Attribute.DateTime;
     seoDesc: Schema.Attribute.Text &
-      Schema.Attribute.DefaultTo<'Full Stack Developer based in Chennai.'>;
+      Schema.Attribute.DefaultTo<'Embedded Systems Developer with Full Stack capability. From bare metal to browser.'>;
     seoTitle: Schema.Attribute.String &
-      Schema.Attribute.DefaultTo<'Rithik Sharon A \u2014 Full Stack Developer'>;
+      Schema.Attribute.DefaultTo<'Rithik Sharon A \u2014 Embedded Systems Developer'>;
+    servicesHeading: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'SERVICES'>;
+    servicesLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'05 \u00B7 WHAT I BUILD'>;
+    stackHeading: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'MY STACK'>;
+    stackLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'04 \u00B7 THE COMPONENTS'>;
+    stackSubtitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Full component list \u2014 hardware to web'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

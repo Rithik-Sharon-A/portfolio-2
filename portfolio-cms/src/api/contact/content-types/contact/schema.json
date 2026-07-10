@@ -12,6 +12,34 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "sectionLabel": {
+      "type": "string",
+      "default": "06 · ESTABLISH CONNECTION"
+    },
+    "headingLine1": {
+      "type": "string",
+      "default": "LET'S"
+    },
+    "headingLine2": {
+      "type": "string",
+      "default": "CONNECT"
+    },
+    "availabilityText": {
+      "type": "text",
+      "default": "Open for embedded roles, firmware projects, and full stack work."
+    },
+    "footerCopyright": {
+      "type": "string",
+      "default": "© Rithik Sharon A · Chennai"
+    },
+    "footerStatus": {
+      "type": "string",
+      "default": "System online."
+    },
+    "footerTagline": {
+      "type": "string",
+      "default": "Built from bare metal to browser."
+    },
     "email": {
       "type": "email",
       "required": true

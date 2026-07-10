@@ -1,36 +1,41 @@
 'use client';
 
-const cricketWords = ['BOUNDARY', 'CENTURY', 'WICKET', 'OVER', 'CREASE', 'PITCH', 'INNINGS'];
-const techWords = ['REACT', 'NODE.JS', 'EXPRESS', 'MONGODB', 'FASTAPI', 'POSTGRES', 'DOCKER'];
+interface Props {
+  line1?: string;
+  line2?: string;
+}
 
-export default function MarqueeSection() {
+export default function MarqueeSection({ line1, line2 }: Props) {
+  const wordsTop = (line1 ?? '').split(',').map((w) => w.trim()).filter(Boolean);
+  const wordsBottom = (line2 ?? '').split(',').map((w) => w.trim()).filter(Boolean);
+
   return (
-    <div style={{ background: 'var(--ink)', overflow: 'hidden', padding: '14px 0' }}>
+    <div
+      style={{
+        background: 'var(--surface)',
+        overflow: 'hidden',
+        padding: '12px 0',
+        borderTop: '1px solid rgba(0,255,136,0.1)',
+        borderBottom: '1px solid rgba(0,255,136,0.1)',
+      }}
+    >
       <style>{`
-        @keyframes marqueeLeft {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
-        @keyframes marqueeRight {
-          from { transform: translateX(-50%); }
-          to { transform: translateX(0); }
-        }
-        .marquee-left { animation: marqueeLeft 20s linear infinite; display: flex; white-space: nowrap; }
-        .marquee-right { animation: marqueeRight 24s linear infinite; display: flex; white-space: nowrap; }
+        .mL { animation: marqueeLeft 18s linear infinite; display:flex; white-space:nowrap; }
+        .mR { animation: marqueeRight 22s linear infinite; display:flex; white-space:nowrap; }
       `}</style>
-
-      <div style={{ overflow: 'hidden', marginBottom: '8px' }}>
-        <div className="marquee-left">
-          {[...cricketWords, ...cricketWords, ...cricketWords, ...cricketWords].map((w, i) => (
+      <div style={{ overflow: 'hidden', marginBottom: '6px' }}>
+        <div className="mL">
+          {[...wordsTop, ...wordsTop, ...wordsTop, ...wordsTop].map((w, i) => (
             <span
               key={i}
               style={{
-                fontFamily: 'Space Grotesk, sans-serif',
-                fontSize: '13px',
-                fontWeight: 700,
-                color: 'var(--bg)',
-                letterSpacing: '0.15em',
+                fontFamily: 'DM Mono, monospace',
+                fontSize: '12px',
+                fontWeight: 400,
+                color: 'var(--green)',
+                letterSpacing: '0.2em',
                 marginRight: '32px',
+                textShadow: '0 0 8px rgba(0,255,136,0.3)',
               }}
             >
               {w} ·
@@ -38,17 +43,16 @@ export default function MarqueeSection() {
           ))}
         </div>
       </div>
-
       <div style={{ overflow: 'hidden' }}>
-        <div className="marquee-right">
-          {[...techWords, ...techWords, ...techWords, ...techWords].map((w, i) => (
+        <div className="mR">
+          {[...wordsBottom, ...wordsBottom, ...wordsBottom, ...wordsBottom].map((w, i) => (
             <span
               key={i}
               style={{
                 fontFamily: 'DM Mono, monospace',
                 fontSize: '12px',
-                color: 'var(--tan)',
-                letterSpacing: '0.1em',
+                color: 'var(--blue)',
+                letterSpacing: '0.15em',
                 marginRight: '32px',
               }}
             >

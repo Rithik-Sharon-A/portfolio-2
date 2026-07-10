@@ -6,23 +6,34 @@ import { StackItem } from '@/types';
 
 interface Props {
   data: StackItem[];
+  label?: string;
+  heading?: string;
+  subtitle?: string;
 }
 
-const TECH_ICONS: Record<string, string> = {
+const ICONS: Record<string, string> = {
+  'C/C++': '⚙️',
+  Python: '🐍',
   'React.js': '⚛️',
   'Node.js': '🟢',
   'Express.js': '🚂',
   'MongoDB Atlas': '🍃',
-  'Redux Toolkit': '🔄',
-  'JavaScript': '🟨',
-  'Python': '🐍',
-  'JWT Auth': '🔐',
-  'AWS': '☁️',
-  'Tailwind CSS': '🎨',
+  JavaScript: '🟨',
+  TypeScript: '🔷',
+  AWS: '☁️',
   'Git / GitHub': '🐙',
+  'Tailwind CSS': '🎨',
+  'Redux Toolkit': '🔄',
+  'JWT Auth': '🔐',
+  FreeRTOS: '⏱️',
+  Arduino: '🔌',
+  ESP32: '📡',
+  UART: '📶',
+  SPI: '🔗',
+  I2C: '🔗',
 };
 
-export default function StackSection({ data }: Props) {
+export default function StackSection({ data, label, heading, subtitle }: Props) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-100px' });
 
@@ -32,97 +43,93 @@ export default function StackSection({ data }: Props) {
       ref={ref}
       style={{
         background: 'var(--bg)',
-        padding: '120px 80px',
+        padding: 'clamp(60px, 12vw, 120px) clamp(20px, 6vw, 80px)',
         minHeight: '80vh',
+        position: 'relative',
+        overflow: 'hidden',
       }}
     >
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={inView ? { opacity: 1 } : {}}
-        style={{
-          fontFamily: 'DM Mono, monospace',
-          fontSize: '11px',
-          color: 'var(--tan)',
-          letterSpacing: '0.15em',
-          textTransform: 'uppercase',
-          marginBottom: '16px',
-        }}
-      >
-        04 · THE ELEVEN
-      </motion.div>
+      <style>{`
+        .stack-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+          gap: 12px;
+          max-width: 1200px;
+        }
+        @media (max-width: 480px) {
+          .stack-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+      `}</style>
 
-      <motion.h2
-        initial={{ opacity: 0, y: 40 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        style={{
-          fontFamily: 'Space Grotesk, sans-serif',
-          fontSize: 'clamp(3rem, 8vw, 8rem)',
-          fontWeight: 700,
-          color: 'var(--ink)',
-          letterSpacing: '-0.03em',
-          lineHeight: 1,
-          marginBottom: '8px',
-        }}
-      >
-        MY STACK
-      </motion.h2>
+      <div className="pcb-grid" style={{ position: 'absolute', inset: 0, opacity: 0.4 }} />
 
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={inView ? { opacity: 1 } : {}}
-        transition={{ delay: 0.2 }}
-        style={{
-          fontFamily: 'DM Mono, monospace',
-          fontSize: '12px',
-          color: 'var(--muted)',
-          marginBottom: '60px',
-        }}
-      >
-        First-choice XI for any project
-      </motion.p>
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          style={{
+            fontFamily: 'DM Mono, monospace',
+            fontSize: '11px',
+            color: 'var(--blue)',
+            letterSpacing: '0.15em',
+            textTransform: 'uppercase',
+            marginBottom: '16px',
+          }}
+        >
+          {label ?? ''}
+        </motion.div>
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
-          gap: '16px',
-          maxWidth: '1200px',
-        }}
-      >
-        {data.map((item, i) => (
-          <motion.div
-            key={item.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: i * 0.05 }}
-            whileHover={{ y: -4, borderColor: 'var(--green)' }}
-            style={{
-              border: '1px solid rgba(10,10,10,0.12)',
-              borderRadius: '16px',
-              padding: '24px 20px',
-              background: 'var(--bg)',
-              cursor: 'default',
-              transition: 'all 0.2s',
-            }}
-          >
-            <div style={{ fontSize: '2rem', marginBottom: '12px' }}>{TECH_ICONS[item.name] || '⚙️'}</div>
-            <div
+        <motion.h2
+          initial={{ opacity: 0, y: 40 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7 }}
+          style={{
+            fontFamily: 'Syne, sans-serif',
+            fontSize: 'clamp(2.2rem, 9vw, 8rem)',
+            fontWeight: 800,
+            color: 'var(--white)',
+            letterSpacing: '-0.03em',
+            lineHeight: 1,
+            marginBottom: '8px',
+          }}
+        >
+          {heading ?? ''}
+        </motion.h2>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ delay: 0.2 }}
+          style={{ fontFamily: 'DM Mono, monospace', fontSize: '12px', color: 'var(--muted)', marginBottom: '60px' }}
+        >
+          {subtitle ?? ''}
+        </motion.p>
+
+        <div className="stack-grid">
+          {data.map((item, i) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: i * 0.05 }}
+              whileHover={{ borderColor: 'var(--blue)', background: 'var(--glow-g)', y: -4 }}
               style={{
-                fontFamily: 'Space Grotesk, sans-serif',
-                fontSize: '15px',
-                fontWeight: 600,
-                color: 'var(--ink)',
-                marginBottom: '4px',
+                border: '1px solid rgba(14,165,233,0.12)',
+                borderRadius: '8px',
+                padding: '20px 16px',
+                background: 'var(--surface)',
+                transition: 'all 0.2s',
+                cursor: 'default',
               }}
             >
-              {item.name}
-            </div>
-            <div style={{ fontFamily: 'DM Mono, monospace', fontSize: '11px', color: 'var(--tan)' }}>
-              {item.cricketRole}
-            </div>
-          </motion.div>
-        ))}
+              <div style={{ fontSize: '1.8rem', marginBottom: '10px' }}>{ICONS[item.name] || '⚡'}</div>
+              <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '14px', fontWeight: 600, color: 'var(--white)', marginBottom: '4px' }}>
+                {item.name}
+              </div>
+              <div style={{ fontFamily: 'DM Mono, monospace', fontSize: '11px', color: 'var(--blue)' }}>{item.cricketRole}</div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

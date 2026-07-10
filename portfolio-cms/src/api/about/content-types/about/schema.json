@@ -12,6 +12,10 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "sectionLabel": {
+      "type": "string",
+      "default": "02 · ABOUT"
+    },
     "heading": {
       "type": "string",
       "required": true,

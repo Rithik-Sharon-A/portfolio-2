@@ -5,15 +5,21 @@ import { fetchSiteSettings } from '@/lib/strapi';
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await fetchSiteSettings();
   return {
-    title: settings?.seoTitle || 'Rithik Sharon A — Full Stack Developer',
-    description: settings?.seoDesc || 'Full Stack Developer from Chennai',
+    title: settings?.seoTitle,
+    description: settings?.seoDesc,
   };
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" style={{ backgroundColor: '#080C10' }}>
+      <body style={{ backgroundColor: '#080C10', margin: 0, padding: 0 }}>
+        {children}
+      </body>
     </html>
   );
 }

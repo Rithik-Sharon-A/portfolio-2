@@ -12,10 +12,15 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "heroWord": {
+    "heroWordLine1": {
       "type": "string",
       "required": true,
-      "default": "BOUNDARY"
+      "default": "FIRM"
+    },
+    "heroWordLine2": {
+      "type": "string",
+      "required": true,
+      "default": "WARE"
     },
     "bioLeft": {
       "type": "text",
@@ -28,12 +33,32 @@
     "counterValue": {
       "type": "string",
       "required": true,
-      "default": "20+"
+      "default": "C/C++"
     },
     "counterLabel": {
       "type": "string",
       "required": true,
-      "default": "PROJECTS BUILT"
+      "default": "PRIMARY LANGUAGE"
+    },
+    "badgeOuterText": {
+      "type": "string",
+      "default": "◆ EMBEDDED DEV · OPEN TO WORK · CHENNAI ·"
+    },
+    "badgeInnerText": {
+      "type": "string",
+      "default": "C/C++ · STM32 · ESP32 · RTOS · UART ·"
+    },
+    "bottomLabel": {
+      "type": "string",
+      "default": "EMBEDDED SYSTEMS DEVELOPER"
+    },
+    "bottomName": {
+      "type": "string",
+      "default": "Rithik Sharon A"
+    },
+    "bottomLocation": {
+      "type": "string",
+      "default": "CHENNAI"
     }
   }
 }

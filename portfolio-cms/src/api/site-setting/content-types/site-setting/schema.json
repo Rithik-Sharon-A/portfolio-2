@@ -5,7 +5,7 @@
     "singularName": "site-setting",
     "pluralName": "site-settings",
     "displayName": "SiteSettings",
-    "description": "Global site settings and SEO"
+    "description": "Global site settings, SEO, and shared UI text"
   },
   "options": {
     "draftAndPublish": true
@@ -14,16 +14,64 @@
   "attributes": {
     "seoTitle": {
       "type": "string",
-      "default": "Rithik Sharon A — Full Stack Developer"
+      "default": "Rithik Sharon A — Embedded Systems Developer"
     },
     "seoDesc": {
       "type": "text",
-      "default": "Full Stack Developer based in Chennai."
+      "default": "Embedded Systems Developer with Full Stack capability. From bare metal to browser."
     },
     "ogImage": {
       "allowedTypes": ["images"],
       "type": "media",
       "multiple": false
+    },
+    "logoText": {
+      "type": "string",
+      "default": "RS"
+    },
+    "marqueeLine1": {
+      "type": "text",
+      "default": "FIRMWARE,SIGNAL,INTERRUPT,REGISTER,PROTOCOL,VOLTAGE,LATENCY"
+    },
+    "marqueeLine2": {
+      "type": "text",
+      "default": "C/C++,RTOS,ESP32,ARDUINO,UART,SPI,I2C,GPIO,PWM"
+    },
+    "projectsLabel": {
+      "type": "string",
+      "default": "03 · DEPLOYED SYSTEMS"
+    },
+    "projectsHeading": {
+      "type": "string",
+      "default": "PROJECTS"
+    },
+    "stackLabel": {
+      "type": "string",
+      "default": "04 · THE COMPONENTS"
+    },
+    "stackHeading": {
+      "type": "string",
+      "default": "MY STACK"
+    },
+    "stackSubtitle": {
+      "type": "string",
+      "default": "Full component list — hardware to web"
+    },
+    "servicesLabel": {
+      "type": "string",
+      "default": "05 · WHAT I BUILD"
+    },
+    "servicesHeading": {
+      "type": "string",
+      "default": "SERVICES"
+    },
+    "chatButtonLabel": {
+      "type": "string",
+      "default": "⬡ Ask Rithik"
+    },
+    "chatGreeting": {
+      "type": "text",
+      "default": "Hey! I'm Rithik's AI assistant. Ask me about his skills, projects, or how to work with him. ⚡"
     }
   }
 }
