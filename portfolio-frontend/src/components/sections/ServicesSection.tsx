@@ -14,7 +14,7 @@ interface Props {
 export default function ServicesSection({ data, label, heading }: Props) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-100px' });
-  const [hovered, setHovered] = useState<number | null>(null);
+  const [hovered, setHovered] = useState<string | null>(null);
 
   return (
     <section
@@ -79,12 +79,12 @@ export default function ServicesSection({ data, label, heading }: Props) {
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
           {data.map((service, i) => (
             <motion.div
-              key={service.id}
+              key={service.documentId}
               className="service-row"
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: i * 0.1 }}
-              onMouseEnter={() => setHovered(service.id)}
+              onMouseEnter={() => setHovered(service.documentId)}
               onMouseLeave={() => setHovered(null)}
               style={{
                 borderTop: '1px solid rgba(14,165,233,0.1)',
@@ -97,11 +97,11 @@ export default function ServicesSection({ data, label, heading }: Props) {
                   fontFamily: 'Syne, sans-serif',
                   fontSize: 'clamp(1.8rem, 5vw, 6rem)',
                   fontWeight: 700,
-                  color: hovered === service.id ? 'var(--blue)' : 'rgba(14,165,233,0.08)',
+                  color: hovered === service.documentId ? 'var(--blue)' : 'rgba(14,165,233,0.08)',
                   lineHeight: 1,
                   transition: 'color 0.2s',
                   minWidth: '50px',
-                  textShadow: hovered === service.id ? '0 0 20px rgba(14,165,233,0.4)' : 'none',
+                  textShadow: hovered === service.documentId ? '0 0 20px rgba(14,165,233,0.4)' : 'none',
                 }}
               >
                 {service.number}
@@ -114,7 +114,7 @@ export default function ServicesSection({ data, label, heading }: Props) {
                     fontWeight: 600,
                     color: 'var(--white)',
                     marginBottom: '8px',
-                    transform: hovered === service.id ? 'translateX(8px)' : 'translateX(0)',
+                    transform: hovered === service.documentId ? 'translateX(8px)' : 'translateX(0)',
                     transition: 'transform 0.2s',
                   }}
                 >

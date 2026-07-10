@@ -29,7 +29,7 @@ export interface About {
 }
 
 export interface Project {
-  id: number;
+  documentId: string;
   title: string;
   category: 'Client' | 'Personal';
   description: string;
@@ -42,7 +42,7 @@ export interface Project {
 }
 
 export interface StackItem {
-  id: number;
+  documentId: string;
   name: string;
   cricketRole: string;
   order: number;
@@ -50,7 +50,7 @@ export interface StackItem {
 }
 
 export interface Service {
-  id: number;
+  documentId: string;
   number: string;
   name: string;
   description: string;

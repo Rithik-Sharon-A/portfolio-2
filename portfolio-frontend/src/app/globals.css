@@ -91,6 +91,11 @@ body {
   to   { stroke-dashoffset: 0; }
 }
 
+@keyframes waveShift {
+  from { stroke-dashoffset: 800; }
+  to   { stroke-dashoffset: 0; }
+}
+
 @keyframes marqueeLeft {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }

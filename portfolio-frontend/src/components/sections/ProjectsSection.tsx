@@ -13,12 +13,12 @@ interface Props {
 export default function ProjectsSection({ data, label, heading }: Props) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-100px' });
-  const [hovered, setHovered] = useState<number | null>(null);
+  const [hovered, setHovered] = useState<string | null>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   return (
     <section
-      id="work"
+      id="projects"
       ref={ref}
       style={{
         background: 'var(--surface)',
@@ -80,18 +80,18 @@ export default function ProjectsSection({ data, label, heading }: Props) {
         <div style={{ maxWidth: '1200px' }}>
           {data.map((project, i) => (
             <motion.div
-              key={project.id}
+              key={project.documentId}
               className="project-row"
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: i * 0.1 }}
-              onMouseEnter={() => setHovered(project.id)}
+              onMouseEnter={() => setHovered(project.documentId)}
               onMouseLeave={() => setHovered(null)}
               style={{
                 borderTop: '1px solid rgba(14,165,233,0.1)',
                 padding: '32px 0',
                 cursor: 'pointer',
-                background: hovered === project.id ? 'rgba(14,165,233,0.03)' : 'transparent',
+                background: hovered === project.documentId ? 'rgba(14,165,233,0.03)' : 'transparent',
                 transition: 'background 0.2s',
               }}
             >
@@ -103,7 +103,7 @@ export default function ProjectsSection({ data, label, heading }: Props) {
                   fontFamily: 'Space Grotesk, sans-serif',
                   fontSize: 'clamp(1.1rem, 4vw, 2rem)',
                   fontWeight: 600,
-                  color: hovered === project.id ? 'var(--blue)' : 'var(--white)',
+                  color: hovered === project.documentId ? 'var(--blue)' : 'var(--white)',
                   flex: 1,
                   minWidth: '160px',
                   transition: 'color 0.2s',
@@ -138,7 +138,7 @@ export default function ProjectsSection({ data, label, heading }: Props) {
                     fontSize: '12px',
                     color: 'var(--blue)',
                     textDecoration: 'none',
-                    transform: hovered === project.id ? 'translateX(6px)' : 'translateX(0)',
+                    transform: hovered === project.documentId ? 'translateX(6px)' : 'translateX(0)',
                     transition: 'transform 0.2s',
                     display: 'inline-block',
                   }}
@@ -171,7 +171,7 @@ export default function ProjectsSection({ data, label, heading }: Props) {
           }}
         >
           <span style={{ fontFamily: 'DM Mono', fontSize: '11px', color: 'var(--blue)' }}>
-            {data.find((p) => p.id === hovered)?.category}
+            {data.find((p) => p.documentId === hovered)?.category}
           </span>
         </div>
       )}

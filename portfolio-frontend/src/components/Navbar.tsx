@@ -4,7 +4,12 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 
-const links = ['WORK', 'ABOUT', 'STACK', 'CONTACT'];
+const navLinks = [
+  { label: 'WORK', href: '#projects' },
+  { label: 'ABOUT', href: '#about' },
+  { label: 'STACK', href: '#stack' },
+  { label: 'CONTACT', href: '#contact' },
+];
 
 function StatusLed({ label, color, blink, active }: { label: string; color: string; blink?: string; active?: boolean }) {
   return (
@@ -97,10 +102,10 @@ export default function Navbar({ logoText }: { logoText?: string }) {
         </div>
 
         <div className="nav-links">
-          {links.map((link) => (
+          {navLinks.map((link) => (
             <a
-              key={link}
-              href={`#${link.toLowerCase()}`}
+              key={link.label}
+              href={link.href}
               style={{
                 fontFamily: 'DM Mono, monospace',
                 fontSize: '12px',
@@ -112,7 +117,7 @@ export default function Navbar({ logoText }: { logoText?: string }) {
               onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--green)')}
               onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--muted)')}
             >
-              {link}
+              {link.label}
             </a>
           ))}
         </div>
@@ -154,10 +159,10 @@ export default function Navbar({ logoText }: { logoText?: string }) {
             }}
           >
             <div style={{ display: 'flex', flexDirection: 'column', padding: '16px 24px' }}>
-              {links.map((link) => (
+              {navLinks.map((link) => (
                 <a
-                  key={link}
-                  href={`#${link.toLowerCase()}`}
+                  key={link.label}
+                  href={link.href}
                   onClick={() => setMenuOpen(false)}
                   style={{
                     fontFamily: 'DM Mono, monospace',
@@ -169,7 +174,7 @@ export default function Navbar({ logoText }: { logoText?: string }) {
                     borderBottom: '1px solid rgba(14,165,233,0.08)',
                   }}
                 >
-                  {link}
+                  {link.label}
                 </a>
               ))}
             </div>

@@ -25,14 +25,16 @@ export default function ChatBubble({ buttonLabel, greeting }: Props) {
   async function send() {
     if (!input.trim() || loading) return;
     const msg = input.trim();
+    const userMessage: Message = { role: 'user', content: msg };
+    const historyWithCurrent = [...messages, userMessage];
     setInput('');
-    setMessages((p) => [...p, { role: 'user', content: msg }]);
+    setMessages((p) => [...p, userMessage]);
     setLoading(true);
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: msg, history: messages }),
+        body: JSON.stringify({ message: msg, history: historyWithCurrent }),
       });
       const data = await res.json();
       setMessages((p) => [...p, { role: 'assistant', content: data.reply || 'Try again!' }]);

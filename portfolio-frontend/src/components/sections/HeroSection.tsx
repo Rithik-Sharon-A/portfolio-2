@@ -28,7 +28,7 @@ export default function HeroSection({ data }: Props) {
   const bottomLocation = data?.bottomLocation ?? '';
 
   return (
-    <section id="work" className="hero-section">
+    <section id="hero" className="hero-section">
       <style>{`
         .hero-section {
           --nav-clear: clamp(58px, 7vh, 68px);

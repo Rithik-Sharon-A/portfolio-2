@@ -108,7 +108,7 @@ export default function StackSection({ data, label, heading, subtitle }: Props) 
         <div className="stack-grid">
           {data.map((item, i) => (
             <motion.div
-              key={item.id}
+              key={item.documentId}
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: i * 0.05 }}
