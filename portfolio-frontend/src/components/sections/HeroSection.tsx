@@ -7,7 +7,7 @@ import STM32Chip from '@/components/svg/STM32Chip';
 import ESP32Board from '@/components/svg/ESP32Board';
 import GPIOPinout from '@/components/svg/GPIOPinout';
 import UARTDiagram from '@/components/svg/UARTDiagram';
-import RotatingCircuitBadge from '@/components/svg/RotatingCircuitBadge';
+import RadarSweep from '@/components/svg/RadarSweep';
 import TypeText from '@/components/TypeText';
 
 interface Props {
@@ -339,7 +339,7 @@ export default function HeroSection({ data }: Props) {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <RotatingCircuitBadge size={148} outerText={badgeOuterText} innerText={badgeInnerText} />
+          <RadarSweep size={148} outerText={badgeOuterText} innerText={badgeInnerText} />
         </motion.div>
 
         <motion.div
