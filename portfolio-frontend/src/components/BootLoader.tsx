@@ -4,14 +4,15 @@ import { useEffect, useState } from 'react';
 
 const BOOT_LINES = [
   '[ OK ] POWER-ON SELF TEST',
-  '[ OK ] INIT GPIO PORTS',
-  '[ OK ] UART READY @ 115200 BAUD',
-  '[ OK ] MOUNTING PORTFOLIO v2.0',
+  '[ OK ] ATTACH DEBUG PROBE',
+  '[ OK ] OPEN UART @ 115200',
+  '[ OK ] ENUMERATE PERIPHERALS',
+  '[ OK ] LOAD FIRMWARE IMAGE',
   '[ OK ] SYSTEM ONLINE',
 ];
 
-const LINE_INTERVAL = 260;
-const FADE_DELAY = 400;
+const LINE_INTERVAL = 240;
+const FADE_DELAY = 380;
 
 export default function BootLoader() {
   const [visibleLines, setVisibleLines] = useState(0);
@@ -34,7 +35,7 @@ export default function BootLoader() {
       setTimeout(() => {
         setDone(true);
         sessionStorage.setItem('booted', '1');
-      }, BOOT_LINES.length * LINE_INTERVAL + FADE_DELAY + 500)
+      }, BOOT_LINES.length * LINE_INTERVAL + FADE_DELAY + 480)
     );
     return () => timers.forEach(clearTimeout);
   }, []);
@@ -56,7 +57,10 @@ export default function BootLoader() {
         pointerEvents: fading ? 'none' : 'auto',
       }}
     >
-      <div style={{ fontFamily: 'DM Mono, monospace', fontSize: '13px', lineHeight: 2, minWidth: '280px' }}>
+      <div style={{ fontFamily: 'DM Mono, monospace', fontSize: '13px', lineHeight: 2, minWidth: '300px' }}>
+        <div style={{ color: 'rgba(0,255,136,0.55)', marginBottom: 12, letterSpacing: '0.14em', fontSize: 11 }}>
+          EMBEDDED WORKSTATION · BOOT
+        </div>
         {BOOT_LINES.slice(0, visibleLines).map((line, i) => (
           <div key={i} style={{ color: i === BOOT_LINES.length - 1 ? '#00FF88' : '#475569' }}>
             <span style={{ color: '#00FF88' }}>{line.slice(0, 6)}</span>

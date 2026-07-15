@@ -1,46 +1,108 @@
-export default function GPIOPinout({ color = '#0EA5E9' }: { color?: string }) {
+'use client';
+
+export default function GPIOPinout({
+  color = '#00FF88',
+  size = 148,
+  onPinClick,
+}: {
+  color?: string;
+  size?: number;
+  onPinClick?: (label: string) => void;
+}) {
   const accent = '#00FF88';
   const pins = [
-    { label: 'VCC', col: '#FF4444' },
-    { label: 'GND', col: '#888' },
-    { label: 'PA0', col: color },
-    { label: 'PA1', col: color },
-    { label: 'PB0', col: color },
-    { label: 'PB1', col: accent },
-    { label: 'PC13', col: accent },
-    { label: 'NRST', col: '#FFD700' },
+    { label: 'VCC', col: '#FF6B6B', tech: null },
+    { label: 'GND', col: '#94A3B8', tech: null },
+    { label: 'PA0', col: color, tech: 'GPIO' },
+    { label: 'PA1', col: color, tech: 'UART' },
+    { label: 'PB0', col: color, tech: 'SPI' },
+    { label: 'PB1', col: accent, tech: 'I2C' },
+    { label: 'PC13', col: accent, tech: 'STM32' },
+    { label: 'NRST', col: '#FBBF24', tech: 'C/C++' },
   ];
 
+  const h = 28 + pins.length * 20;
+
   return (
-    <svg width="120" height="180" viewBox="0 0 120 180">
-      <text x="60" y="12" textAnchor="middle"
-        fontFamily="DM Mono" fontSize="8" fill={color} opacity="0.6">
+    <svg width={size} height={size * (h / 140)} viewBox={`0 0 140 ${h}`}>
+      <text
+        x="70"
+        y="14"
+        textAnchor="middle"
+        fontFamily="DM Mono"
+        fontSize="10"
+        fontWeight="600"
+        fill={color}
+        opacity="0.95"
+        letterSpacing="0.12em"
+      >
         GPIO HEADER
       </text>
 
-      {pins.map((pin, i) => (
-        <g key={i}>
-          <text x="20" y={30 + i * 18} fontFamily="DM Mono"
-            fontSize="7" fill={pin.col} opacity="0.5"
-            textAnchor="middle">
-            {i + 1}
-          </text>
+      {pins.map((pin, i) => {
+        const cy = 34 + i * 20;
+        const interactive = Boolean(onPinClick && pin.tech);
+        return (
+          <g
+            key={pin.label}
+            style={{ cursor: interactive ? 'pointer' : 'default' }}
+            onClick={() => pin.tech && onPinClick?.(pin.tech)}
+          >
+            <title>{pin.tech ? `Open · ${pin.tech}` : pin.label}</title>
+            <text
+              x="18"
+              y={cy + 4}
+              fontFamily="DM Mono"
+              fontSize="9"
+              fill={pin.col}
+              opacity="0.85"
+              textAnchor="middle"
+            >
+              {i + 1}
+            </text>
 
-          <circle cx="40" cy={26 + i * 18} r="5"
-            fill="none" stroke={pin.col} strokeWidth="1.2" />
-          <circle cx="40" cy={26 + i * 18} r="2"
-            fill={pin.col} opacity="0.6" />
+            <circle
+              cx="42"
+              cy={cy}
+              r="6"
+              fill="none"
+              stroke={pin.col}
+              strokeWidth="1.6"
+              opacity="0.95"
+              style={{
+                filter: interactive ? `drop-shadow(0 0 4px ${pin.col})` : undefined,
+              }}
+            >
+              {interactive && (
+                <animate attributeName="opacity" values="0.7;1;0.7" dur={`${2.2 + i * 0.15}s`} repeatCount="indefinite" />
+              )}
+            </circle>
+            <circle cx="42" cy={cy} r="2.4" fill={pin.col} opacity="0.9" />
 
-          <text x="52" y={30 + i * 18}
-            fontFamily="DM Mono" fontSize="8"
-            fill={pin.col} opacity="0.8">
-            {pin.label}
-          </text>
+            <line
+              x1="48"
+              y1={cy}
+              x2="58"
+              y2={cy}
+              stroke={pin.col}
+              strokeWidth="1.2"
+              opacity="0.7"
+            />
 
-          <line x1="45" y1={26 + i * 18} x2="50" y2={26 + i * 18}
-            stroke={pin.col} strokeWidth="0.8" opacity="0.4" />
-        </g>
-      ))}
+            <text
+              x="62"
+              y={cy + 4}
+              fontFamily="DM Mono"
+              fontSize="11"
+              fontWeight="600"
+              fill={pin.col}
+              opacity="1"
+            >
+              {pin.label}
+            </text>
+          </g>
+        );
+      })}
     </svg>
   );
 }

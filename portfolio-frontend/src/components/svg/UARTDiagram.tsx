@@ -1,4 +1,4 @@
-export default function UARTDiagram({ color = '#0EA5E9' }: { color?: string }) {
+export default function UARTDiagram({ color = '#00FF88' }: { color?: string }) {
   return (
     <svg width="200" height="80" viewBox="0 0 200 80">
       <text x="5" y="25" fontFamily="DM Mono" fontSize="9"

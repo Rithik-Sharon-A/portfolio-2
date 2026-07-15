@@ -1,13 +1,32 @@
 export default function ESP32Board({
-  color = '#0EA5E9',
+  color = '#00FF88',
   size = 80,
+  onSelect,
 }: {
   color?: string;
   size?: number;
+  onSelect?: () => void;
 }) {
   return (
-    <svg width={size} height={size * 1.8} viewBox="0 0 80 144"
-      style={{ animation: 'float 5s ease-in-out infinite 1s' }}>
+    <svg
+      width={size}
+      height={size * 1.8}
+      viewBox="0 0 80 144"
+      role={onSelect ? 'button' : undefined}
+      tabIndex={onSelect ? 0 : undefined}
+      onClick={onSelect}
+      onKeyDown={(e) => {
+        if (!onSelect) return;
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onSelect();
+        }
+      }}
+      style={{
+        animation: 'float 5s ease-in-out infinite 1s',
+        cursor: onSelect ? 'pointer' : undefined,
+      }}
+    >
       <rect x="8" y="8" width="64" height="128" rx="4"
         fill="none" stroke={color} strokeWidth="1.5" />
 

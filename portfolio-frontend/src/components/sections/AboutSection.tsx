@@ -9,53 +9,47 @@ interface Props {
   data: About | null;
 }
 
-function StatCard({ value, label }: { value: string; label: string }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true });
+function Row({ k, v }: { k: string; v?: string | null }) {
+  if (!v?.trim()) return null;
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      whileHover={{ borderColor: 'var(--blue)', background: 'var(--glow-g)' }}
+    <div
       style={{
-        border: '1px solid rgba(14,165,233,0.15)',
-        borderRadius: '12px',
-        padding: '24px 28px',
-        background: 'var(--surface)',
-        transition: 'all 0.2s',
+        display: 'grid',
+        gridTemplateColumns: 'minmax(120px, 180px) 1fr',
+        gap: 16,
+        padding: '14px 0',
+        borderBottom: '1px solid rgba(81,246,218,0.1)',
       }}
     >
       <div
         style={{
-          fontFamily: 'Syne, sans-serif',
-          fontSize: 'clamp(2rem, 4vw, 3rem)',
-          fontWeight: 700,
-          color: 'var(--blue)',
-          textShadow: '0 0 20px rgba(14,165,233,0.4)',
-          marginBottom: '4px',
+          fontFamily: 'DM Mono, monospace',
+          fontSize: 11,
+          letterSpacing: '0.1em',
+          color: 'rgba(81,246,218,0.7)',
         }}
       >
-        {value}
+        {k}
       </div>
       <div
         style={{
-          fontFamily: 'DM Mono, monospace',
-          fontSize: '11px',
-          color: 'var(--muted)',
-          letterSpacing: '0.1em',
-          textTransform: 'uppercase',
+          fontFamily: 'Space Grotesk, sans-serif',
+          fontSize: 15,
+          lineHeight: 1.65,
+          color: 'rgba(226,232,240,0.9)',
         }}
       >
-        {label}
+        {v}
       </div>
-    </motion.div>
+    </div>
   );
 }
 
 export default function AboutSection({ data }: Props) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-100px' });
+
+  if (!data) return null;
 
   return (
     <section
@@ -72,22 +66,23 @@ export default function AboutSection({ data }: Props) {
       }}
     >
       <style>{`
-        .about-grid {
+        .about-sys {
           display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 80px;
+          grid-template-columns: 1.2fr 0.8fr;
+          gap: 56px;
           width: 100%;
-          max-width: 1200px;
+          max-width: 1100px;
           margin: 0 auto;
+          align-items: start;
         }
         @media (max-width: 900px) {
-          .about-grid { grid-template-columns: 1fr; gap: 40px; }
+          .about-sys { grid-template-columns: 1fr; gap: 36px; }
         }
       `}</style>
 
       <div className="pcb-grid" style={{ position: 'absolute', inset: 0, opacity: 0.4 }} />
 
-      <div className="about-grid" style={{ position: 'relative', zIndex: 1 }}>
+      <div className="about-sys" style={{ position: 'relative', zIndex: 1 }}>
         <div>
           <motion.div
             initial={{ opacity: 0 }}
@@ -98,80 +93,90 @@ export default function AboutSection({ data }: Props) {
               color: 'var(--blue)',
               letterSpacing: '0.15em',
               textTransform: 'uppercase',
-              marginBottom: '24px',
+              marginBottom: '16px',
             }}
           >
-            {data?.sectionLabel ?? ''}
+            {data.sectionLabel}
           </motion.div>
-
           <motion.h2
-            initial={{ opacity: 0, y: 40 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            style={{
-              fontFamily: 'Syne, sans-serif',
-              fontSize: 'clamp(2.2rem, 6vw, 5rem)',
-              fontWeight: 700,
-              color: 'var(--white)',
-              lineHeight: 1.1,
-              marginBottom: '24px',
-            }}
-          >
-            {data?.heading ?? ''}
-          </motion.h2>
-
-          <div style={{ marginBottom: '24px' }}>
-            <OscilloscopeWave color="var(--blue)" width={200} height={30} animated />
-          </div>
-
-          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.2 }}
             style={{
-              fontFamily: 'Space Grotesk, sans-serif',
-              fontSize: '15px',
-              fontWeight: 300,
-              color: 'var(--muted)',
-              lineHeight: 1.9,
-              borderTop: '1px solid rgba(14,165,233,0.3)',
-              borderRight: '1px solid rgba(14,165,233,0.3)',
-              borderBottom: '1px solid rgba(14,165,233,0.3)',
-              borderLeft: '3px solid var(--green)',
-              borderRadius: '0 8px 8px 0',
-              padding: '16px 20px',
-              marginBottom: '20px',
-              background: 'rgba(14,165,233,0.04)',
+              fontFamily: 'Syne, sans-serif',
+              fontSize: 'clamp(2rem, 4.5vw, 3rem)',
+              fontWeight: 800,
+              letterSpacing: '-0.03em',
+              marginBottom: 28,
+              color: 'var(--white)',
             }}
           >
-            {data?.para1}
-          </motion.p>
+            {data.heading}
+          </motion.h2>
 
-          {[data?.para2, data?.para3].filter(Boolean).map((para, i) => (
-            <motion.p
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.3 + i * 0.1 }}
-              style={{
-                fontFamily: 'Space Grotesk, sans-serif',
-                fontSize: '15px',
-                fontWeight: 300,
-                color: 'var(--muted)',
-                lineHeight: 1.9,
-                marginBottom: '16px',
-              }}
-            >
-              {para}
-            </motion.p>
-          ))}
+          <div
+            style={{
+              border: '1px solid rgba(81,246,218,0.16)',
+              background: 'rgba(22,24,29,0.55)',
+              padding: '8px 20px 4px',
+            }}
+          >
+            <Row k="NAME" v={data.name} />
+            <Row k="BACKGROUND" v={data.para3} />
+            <Row k="PRIMARY LANGUAGE" v={data.stat1Value} />
+            <Row k="CURRENT FOCUS" v={data.focus} />
+            <Row k="MISSION" v={data.para1} />
+            <Row k="PHILOSOPHY" v={data.philosophy} />
+            <Row k="CURRENT LEARNING" v={data.learning} />
+            <Row k="LOCATION / OPS" v={data.para2} />
+          </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', justifyContent: 'center' }}>
-          <StatCard value={data?.stat1Value ?? ''} label={data?.stat1Label ?? ''} />
-          <StatCard value={data?.stat2Value ?? ''} label={data?.stat2Label ?? ''} />
-          <StatCard value={data?.stat3Value ?? ''} label={data?.stat3Label ?? ''} />
-        </div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ delay: 0.2 }}
+          style={{ display: 'flex', flexDirection: 'column', gap: 16 }}
+        >
+          <OscilloscopeWave color="#00FF88" />
+          <div style={{ display: 'grid', gap: 10 }}>
+            {[
+              { v: data.stat1Value, l: data.stat1Label },
+              { v: data.stat2Value, l: data.stat2Label },
+              { v: data.stat3Value, l: data.stat3Label },
+            ].map((s) => (
+              <div
+                key={s.l}
+                style={{
+                  border: '1px solid rgba(81,246,218,0.14)',
+                  padding: '18px 20px',
+                  background: 'var(--surface)',
+                }}
+              >
+                <div
+                  style={{
+                    fontFamily: 'Syne, sans-serif',
+                    fontSize: '1.75rem',
+                    fontWeight: 700,
+                    color: '#00FF88',
+                  }}
+                >
+                  {s.v}
+                </div>
+                <div
+                  style={{
+                    fontFamily: 'DM Mono, monospace',
+                    fontSize: 10,
+                    color: 'var(--muted)',
+                    letterSpacing: '0.12em',
+                    marginTop: 4,
+                  }}
+                >
+                  {(s.l || '').toUpperCase()}
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,8 +1,11 @@
 'use client';
 
+import { useMemo } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Project } from '@/types';
+import { useInstrumentBus } from '@/context/InstrumentBus';
+import FirmwareInspector from '@/components/sections/FirmwareInspector';
 
 interface Props {
   data: Project[];
@@ -12,169 +15,193 @@ interface Props {
 
 export default function ProjectsSection({ data, label, heading }: Props) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-100px' });
-  const [hovered, setHovered] = useState<string | null>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const inView = useInView(ref, { once: true, margin: '-80px' });
+  const {
+    openProject,
+    activeProjectId,
+    techFilter,
+    projectsHighlight,
+    filterByTech,
+  } = useInstrumentBus();
+
+  const filtered = useMemo(() => {
+    if (!techFilter) return data;
+    const q = techFilter.toLowerCase();
+    return data.filter((p) => (p.techStack || '').toLowerCase().includes(q));
+  }, [data, techFilter]);
 
   return (
     <section
-      id="projects"
+      id="work"
       ref={ref}
       style={{
-        background: 'var(--surface)',
-        padding: 'clamp(60px, 12vw, 120px) clamp(20px, 6vw, 80px)',
-        minHeight: '100vh',
+        background: 'var(--bg)',
+        padding: 'clamp(70px, 12vw, 120px) clamp(20px, 6vw, 80px)',
         position: 'relative',
-        overflow: 'hidden',
+        outline: projectsHighlight ? '1px solid rgba(81,246,218,0.35)' : 'none',
+        outlineOffset: '-1px',
+        transition: 'outline 0.3s ease',
       }}
-      onMouseMove={(e) => setMousePos({ x: e.clientX, y: e.clientY })}
     >
-      <style>{`
-        .project-row {
-          display: flex;
-          align-items: center;
-          gap: 32px;
-          flex-wrap: wrap;
-        }
-        @media (max-width: 700px) {
-          .project-row { gap: 12px; }
-          .project-tags { order: 3; width: 100%; }
-        }
-      `}</style>
-
-      <div className="pcb-grid" style={{ position: 'absolute', inset: 0, opacity: 0.3 }} />
-
-      <div style={{ position: 'relative', zIndex: 1 }}>
+          <div className="pcb-grid alive" style={{ position: 'absolute', inset: 0, opacity: 0.45 }} />
+      <div style={{ position: 'relative', zIndex: 1, maxWidth: 1100, margin: '0 auto' }}>
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
+          initial={{ opacity: 0, y: 16 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
           style={{
             fontFamily: 'DM Mono, monospace',
-            fontSize: '11px',
+            fontSize: 11,
             color: 'var(--blue)',
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            marginBottom: '16px',
+            letterSpacing: '0.14em',
+            marginBottom: 12,
           }}
         >
-          {label ?? ''}
+          {label}
         </motion.div>
-
         <motion.h2
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
+          transition={{ delay: 0.05 }}
           style={{
             fontFamily: 'Syne, sans-serif',
-            fontSize: 'clamp(2.8rem, 11vw, 9rem)',
+            fontSize: 'clamp(2rem, 5vw, 3.5rem)',
             fontWeight: 800,
-            color: 'var(--white)',
             letterSpacing: '-0.03em',
-            lineHeight: 1,
-            marginBottom: '60px',
+            marginBottom: 16,
+            color: 'var(--white)',
           }}
         >
-          {heading ?? ''}
+          {heading}
         </motion.h2>
-
-        <div style={{ maxWidth: '1200px' }}>
-          {data.map((project, i) => (
-            <motion.div
-              key={project.documentId}
-              className="project-row"
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: i * 0.1 }}
-              onMouseEnter={() => setHovered(project.documentId)}
-              onMouseLeave={() => setHovered(null)}
-              style={{
-                borderTop: '1px solid rgba(14,165,233,0.1)',
-                padding: '32px 0',
-                cursor: 'pointer',
-                background: hovered === project.documentId ? 'rgba(14,165,233,0.03)' : 'transparent',
-                transition: 'background 0.2s',
-              }}
-            >
-              <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '11px', color: 'var(--blue)', minWidth: '24px' }}>
-                0{i + 1}
-              </span>
-              <span
+        <p
+          style={{
+            fontFamily: 'DM Mono, monospace',
+            fontSize: 12,
+            color: 'var(--muted)',
+            letterSpacing: '0.06em',
+            marginBottom: 36,
+            maxWidth: 520,
+          }}
+        >
+          Select a module to open the Firmware Inspector.
+          {techFilter ? (
+            <>
+              {' '}
+              Filter active:{' '}
+              <button
+                type="button"
+                onClick={() => filterByTech(null)}
                 style={{
-                  fontFamily: 'Space Grotesk, sans-serif',
-                  fontSize: 'clamp(1.1rem, 4vw, 2rem)',
-                  fontWeight: 600,
-                  color: hovered === project.documentId ? 'var(--blue)' : 'var(--white)',
-                  flex: 1,
-                  minWidth: '160px',
-                  transition: 'color 0.2s',
+                  background: 'none',
+                  border: 'none',
+                  color: '#00FF88',
+                  cursor: 'pointer',
+                  fontFamily: 'inherit',
+                  fontSize: 'inherit',
+                  letterSpacing: 'inherit',
+                  textDecoration: 'underline',
                 }}
               >
-                {project.title}
-              </span>
-              <div className="project-tags" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                {project.techStack?.split(',').slice(0, 3).map((t, j) => (
-                  <span
-                    key={j}
-                    style={{
-                      fontFamily: 'DM Mono, monospace',
-                      fontSize: '11px',
-                      color: 'var(--muted)',
-                      border: '1px solid rgba(14,165,233,0.2)',
-                      borderRadius: '4px',
-                      padding: '4px 10px',
-                    }}
-                  >
-                    {t.trim()}
-                  </span>
-                ))}
-              </div>
-              {project.liveUrl && (
-                <a
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                {techFilter} ×
+              </button>
+            </>
+          ) : null}
+        </p>
+
+        <div>
+          {filtered.map((project, i) => {
+            const tags = (project.techStack || '')
+              .split(',')
+              .map((t) => t.trim())
+              .filter(Boolean)
+              .slice(0, 4);
+            const active = activeProjectId === project.documentId;
+            return (
+              <motion.button
+                key={project.documentId}
+                type="button"
+                initial={{ opacity: 0, y: 18 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.05 + i * 0.05 }}
+                onClick={() => openProject(project.documentId)}
+                className="eng-pulse"
+                style={{
+                  width: '100%',
+                  textAlign: 'left',
+                  borderTop: '1px solid rgba(81,246,218,0.12)',
+                  borderLeft: active ? '2px solid #00FF88' : '2px solid transparent',
+                  borderRight: 'none',
+                  borderBottom: 'none',
+                  padding: '28px 12px 28px 16px',
+                  background: active ? 'rgba(81,246,218,0.05)' : 'transparent',
+                  cursor: 'pointer',
+                  display: 'grid',
+                  gridTemplateColumns: '56px 1fr auto',
+                  gap: 16,
+                  alignItems: 'center',
+                  transition: 'background 0.2s, border-color 0.2s',
+                }}
+              >
+                <span
                   style={{
                     fontFamily: 'DM Mono, monospace',
-                    fontSize: '12px',
-                    color: 'var(--blue)',
-                    textDecoration: 'none',
-                    transform: hovered === project.documentId ? 'translateX(6px)' : 'translateX(0)',
-                    transition: 'transform 0.2s',
-                    display: 'inline-block',
+                    fontSize: 12,
+                    color: 'rgba(81,246,218,0.55)',
                   }}
                 >
-                  VIEW →
-                </a>
-              )}
-            </motion.div>
-          ))}
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <div>
+                  <div
+                    style={{
+                      fontFamily: 'Syne, sans-serif',
+                      fontSize: 'clamp(1.15rem, 2.5vw, 1.55rem)',
+                      fontWeight: 700,
+                      color: 'var(--white)',
+                      marginBottom: 8,
+                    }}
+                  >
+                    {project.title}
+                  </div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                    {tags.map((t) => (
+                      <span
+                        key={t}
+                        style={{
+                          fontFamily: 'DM Mono, monospace',
+                          fontSize: 10,
+                          color: 'var(--muted)',
+                          border: '1px solid rgba(81,246,218,0.18)',
+                          padding: '3px 8px',
+                        }}
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <span
+                  style={{
+                    fontFamily: 'DM Mono, monospace',
+                    fontSize: 11,
+                    letterSpacing: '0.12em',
+                    color: '#00FF88',
+                  }}
+                >
+                  INSPECT →
+                </span>
+              </motion.button>
+            );
+          })}
+          {filtered.length === 0 && (
+            <p style={{ fontFamily: 'DM Mono, monospace', fontSize: 12, color: 'var(--muted)' }}>
+              No modules match this filter.
+            </p>
+          )}
         </div>
       </div>
 
-      {hovered !== null && (
-        <div
-          style={{
-            position: 'fixed',
-            left: mousePos.x + 20,
-            top: mousePos.y - 60,
-            width: '200px',
-            height: '120px',
-            background: 'var(--surface)',
-            border: '1px solid rgba(14,165,233,0.2)',
-            borderRadius: '8px',
-            backdropFilter: 'blur(8px)',
-            pointerEvents: 'none',
-            zIndex: 999,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <span style={{ fontFamily: 'DM Mono', fontSize: '11px', color: 'var(--blue)' }}>
-            {data.find((p) => p.documentId === hovered)?.category}
-          </span>
-        </div>
-      )}
+      <FirmwareInspector project={null} projects={data} />
     </section>
   );
 }

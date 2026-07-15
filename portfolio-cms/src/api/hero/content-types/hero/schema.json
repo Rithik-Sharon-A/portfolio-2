@@ -59,6 +59,36 @@
     "bottomLocation": {
       "type": "string",
       "default": "CHENNAI"
+    },
+    "statusTags": {
+      "type": "string",
+      "default": "System Online,Communication Active,ARM Cortex-M,Embedded C,STM32,ESP32,RTOS,TinyML"
+    },
+    "roleSubtitle": {
+      "type": "string",
+      "default": "EMBEDDED SYSTEMS ENGINEER"
+    },
+    "typedLines": {
+      "type": "text"
+    },
+    "profileStatus": {
+      "type": "string",
+      "default": "OPEN TO WORK"
+    },
+    "profileRows": {
+      "type": "text"
+    },
+    "badgeTitle": {
+      "type": "string",
+      "default": "NATIONAL FINALIST"
+    },
+    "badgeSubtitle": {
+      "type": "string",
+      "default": "Gidy AgentX Hackathon"
+    },
+    "avatarInitials": {
+      "type": "string",
+      "default": "RS"
     }
   }
 }

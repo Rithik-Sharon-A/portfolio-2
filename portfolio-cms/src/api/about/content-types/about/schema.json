@@ -5,7 +5,7 @@
     "singularName": "about",
     "pluralName": "abouts",
     "displayName": "About",
-    "description": "About section content"
+    "description": "About / system information section"
   },
   "options": {
     "draftAndPublish": true
@@ -21,6 +21,9 @@
       "required": true,
       "default": "Read the spin."
     },
+    "name": {
+      "type": "string"
+    },
     "para1": {
       "type": "text",
       "required": true
@@ -33,27 +36,36 @@
     },
     "stat1Value": {
       "type": "string",
-      "default": "20+"
+      "default": "C/C++"
     },
     "stat1Label": {
       "type": "string",
-      "default": "Projects"
+      "default": "Primary Language"
     },
     "stat2Value": {
       "type": "string",
-      "default": "∞"
+      "default": "ECE"
     },
     "stat2Label": {
       "type": "string",
-      "default": "Chai"
+      "default": "Background"
     },
     "stat3Value": {
       "type": "string",
-      "default": "5+"
+      "default": "10+"
     },
     "stat3Label": {
       "type": "string",
       "default": "Technologies"
+    },
+    "philosophy": {
+      "type": "text"
+    },
+    "focus": {
+      "type": "string"
+    },
+    "learning": {
+      "type": "string"
     }
   }
 }

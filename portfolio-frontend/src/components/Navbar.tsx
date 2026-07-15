@@ -3,15 +3,30 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import { useInstrumentBus } from '@/context/InstrumentBus';
 
 const navLinks = [
-  { label: 'WORK', href: '#projects' },
-  { label: 'ABOUT', href: '#about' },
+  { label: 'SYSTEMS', href: '#work' },
+  { label: 'SYSINFO', href: '#about' },
   { label: 'STACK', href: '#stack' },
-  { label: 'CONTACT', href: '#contact' },
+  { label: 'CONNECT', href: '#contact' },
 ];
 
-function StatusLed({ label, color, blink, active }: { label: string; color: string; blink?: string; active?: boolean }) {
+function openTerminal() {
+  window.dispatchEvent(new Event('open-terminal'));
+}
+
+function StatusLed({
+  label,
+  color,
+  blink,
+  active,
+}: {
+  label: string;
+  color: string;
+  blink?: string;
+  active?: boolean;
+}) {
   return (
     <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
       <span
@@ -26,7 +41,14 @@ function StatusLed({ label, color, blink, active }: { label: string; color: stri
           transition: 'opacity 0.15s, box-shadow 0.15s',
         }}
       />
-      <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '7px', color: 'var(--muted)', letterSpacing: '0.1em' }}>
+      <span
+        style={{
+          fontFamily: 'DM Mono, monospace',
+          fontSize: '11px',
+          color: 'var(--muted)',
+          letterSpacing: '0.1em',
+        }}
+      >
         {label}
       </span>
     </span>
@@ -37,6 +59,7 @@ export default function Navbar({ logoText }: { logoText?: string }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [txActive, setTxActive] = useState(false);
+  const { systemMode, toggleDebug } = useInstrumentBus();
 
   useEffect(() => {
     let txTimer: ReturnType<typeof setTimeout>;
@@ -56,7 +79,7 @@ export default function Navbar({ logoText }: { logoText?: string }) {
   return (
     <>
       <style>{`
-        .nav-links { display: flex; gap: 40px; }
+        .nav-links { display: flex; gap: 40px; align-items: center; }
         .nav-toggle { display: none; }
         @media (max-width: 720px) {
           .nav-links { display: none; }
@@ -79,25 +102,45 @@ export default function Navbar({ logoText }: { logoText?: string }) {
           alignItems: 'center',
           background: scrolled ? 'rgba(8,12,16,0.96)' : 'transparent',
           backdropFilter: scrolled ? 'blur(12px)' : 'none',
-          borderBottom: scrolled ? '1px solid rgba(14,165,233,0.12)' : 'none',
+          borderBottom: scrolled
+            ? `1px solid rgba(0,255,136,${systemMode === 'debug' ? 0.28 : 0.12})`
+            : 'none',
           transition: 'all 0.3s ease',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <span
+          <button
+            type="button"
+            onDoubleClick={() => toggleDebug()}
+            title="Double-click for Debug Mode"
             style={{
               fontFamily: 'DM Mono, monospace',
               fontSize: '14px',
               color: 'var(--blue)',
               letterSpacing: '0.1em',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: 0,
             }}
           >
             {logoText ?? ''}
-          </span>
+            {systemMode === 'debug' && (
+              <span style={{ marginLeft: 8, fontSize: 11, opacity: 0.7 }}>DBG</span>
+            )}
+          </button>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: '10px' }}>
             <StatusLed label="PWR" color="#00FF88" blink="glowPulse 2.4s ease-in-out infinite" />
-            <StatusLed label="TX" color="#0EA5E9" active={txActive} />
-            <StatusLed label="RX" color="#00FF88" blink="blink 3.7s step-end infinite" />
+            <StatusLed
+              label="TX"
+              color="#00FF88"
+              active={txActive}
+              blink="blink 0.7s step-end infinite"
+            />
+            <StatusLed label="RX" color="#0EA5E9" blink="blink 3.7s step-end infinite" />
+            {systemMode === 'debug' && (
+              <StatusLed label="DBG" color="#00FF88" blink="blink 1.2s step-end infinite" />
+            )}
           </span>
         </div>
 
@@ -120,6 +163,23 @@ export default function Navbar({ logoText }: { logoText?: string }) {
               {link.label}
             </a>
           ))}
+          <button
+            type="button"
+            onClick={openTerminal}
+            style={{
+              fontFamily: 'DM Mono, monospace',
+              fontSize: '12px',
+              color: 'var(--muted)',
+              background: 'none',
+              border: 'none',
+              letterSpacing: '0.1em',
+              cursor: 'pointer',
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--green)')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--muted)')}
+          >
+            TERMINAL
+          </button>
         </div>
 
         <button
@@ -154,7 +214,7 @@ export default function Navbar({ logoText }: { logoText?: string }) {
               zIndex: 99,
               background: 'rgba(8,12,16,0.98)',
               backdropFilter: 'blur(12px)',
-              borderBottom: '1px solid rgba(14,165,233,0.12)',
+              borderBottom: '1px solid rgba(0,255,136,0.12)',
               overflow: 'hidden',
             }}
           >
@@ -171,12 +231,32 @@ export default function Navbar({ logoText }: { logoText?: string }) {
                     textDecoration: 'none',
                     letterSpacing: '0.1em',
                     padding: '14px 0',
-                    borderBottom: '1px solid rgba(14,165,233,0.08)',
+                    borderBottom: '1px solid rgba(0,255,136,0.08)',
                   }}
                 >
                   {link.label}
                 </a>
               ))}
+              <button
+                type="button"
+                onClick={() => {
+                  setMenuOpen(false);
+                  openTerminal();
+                }}
+                style={{
+                  fontFamily: 'DM Mono, monospace',
+                  fontSize: '13px',
+                  color: 'var(--white)',
+                  textAlign: 'left',
+                  background: 'none',
+                  border: 'none',
+                  letterSpacing: '0.1em',
+                  padding: '14px 0',
+                  cursor: 'pointer',
+                }}
+              >
+                OPEN TERMINAL
+              </button>
             </div>
           </motion.div>
         )}

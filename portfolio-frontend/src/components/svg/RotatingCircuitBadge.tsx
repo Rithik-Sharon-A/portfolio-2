@@ -22,7 +22,7 @@ export default function RotatingCircuitBadge({
         position: 'relative',
         width: size,
         height: size,
-        filter: 'drop-shadow(0 0 24px rgba(14,165,233,0.3))',
+        filter: 'drop-shadow(0 0 24px rgba(81,246,218,0.3))',
       }}
     >
       <svg
@@ -64,7 +64,7 @@ export default function RotatingCircuitBadge({
           position: 'absolute',
           inset: '8%',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(14,165,233,0.1) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(81,246,218,0.1) 0%, transparent 70%)',
           animation: 'glowPulse 3s ease-in-out infinite',
           pointerEvents: 'none',
         }}
@@ -174,7 +174,7 @@ export default function RotatingCircuitBadge({
         }}
       >
         <rect x="62" y="62" width="76" height="76" rx="3"
-          fill="rgba(14,165,233,0.04)"
+          fill="rgba(81,246,218,0.04)"
           stroke={BLUE} strokeWidth="1"
           opacity="0.65" />
 
@@ -224,7 +224,7 @@ export default function RotatingCircuitBadge({
         })}
 
         <rect x="82" y="82" width="36" height="36" rx="2"
-          fill="rgba(8,12,16,0.9)"
+          fill="rgba(14,15,18,0.9)"
           stroke={BLUE} strokeWidth="1.5" />
         <rect x="87" y="87" width="26" height="26"
           fill="none" stroke={BLUE} strokeWidth="0.5" opacity="0.35" />

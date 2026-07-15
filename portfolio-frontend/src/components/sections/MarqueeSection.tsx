@@ -15,8 +15,8 @@ export default function MarqueeSection({ line1, line2 }: Props) {
         background: 'var(--surface)',
         overflow: 'hidden',
         padding: '12px 0',
-        borderTop: '1px solid rgba(0,255,136,0.1)',
-        borderBottom: '1px solid rgba(0,255,136,0.1)',
+        borderTop: '1px solid rgba(81,246,218,0.1)',
+        borderBottom: '1px solid rgba(81,246,218,0.1)',
       }}
     >
       <style>{`
@@ -35,7 +35,7 @@ export default function MarqueeSection({ line1, line2 }: Props) {
                 color: 'var(--green)',
                 letterSpacing: '0.2em',
                 marginRight: '32px',
-                textShadow: '0 0 8px rgba(0,255,136,0.3)',
+                textShadow: '0 0 8px rgba(81,246,218,0.3)',
               }}
             >
               {w} ·

@@ -3,7 +3,6 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { Service } from '@/types';
-import OscilloscopeWave from '@/components/svg/OscilloscopeWave';
 
 interface Props {
   data: Service[];
@@ -18,28 +17,21 @@ export default function ServicesSection({ data, label, heading }: Props) {
 
   return (
     <section
+      id="domains"
       ref={ref}
       style={{
         background: 'var(--surface)',
-        borderRadius: '40px 40px 0 0',
-        marginTop: '-32px',
         position: 'relative',
         zIndex: 2,
         padding: 'clamp(50px, 10vw, 100px) clamp(20px, 6vw, 80px)',
         minHeight: '80vh',
         overflow: 'hidden',
+        borderTop: '1px solid rgba(81,246,218,0.1)',
       }}
     >
-      <style>{`
-        .service-row { display: flex; gap: 32px; align-items: flex-start; }
-        @media (max-width: 600px) {
-          .service-row { gap: 16px; }
-        }
-      `}</style>
-
       <div className="pcb-grid" style={{ position: 'absolute', inset: 0, opacity: 0.3 }} />
 
-      <div style={{ position: 'relative', zIndex: 1 }}>
+      <div style={{ position: 'relative', zIndex: 1, maxWidth: 1100, margin: '0 auto' }}>
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
@@ -52,77 +44,84 @@ export default function ServicesSection({ data, label, heading }: Props) {
             marginBottom: '16px',
           }}
         >
-          {label ?? ''}
+          {label}
         </motion.div>
-
         <motion.h2
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
           style={{
             fontFamily: 'Syne, sans-serif',
-            fontSize: 'clamp(2.2rem, 9vw, 8rem)',
+            fontSize: 'clamp(2rem, 5vw, 3.2rem)',
             fontWeight: 800,
-            color: 'var(--white)',
             letterSpacing: '-0.03em',
-            lineHeight: 1,
-            marginBottom: '16px',
+            marginBottom: 40,
+            color: 'var(--white)',
           }}
         >
-          {heading ?? ''}
+          {heading}
         </motion.h2>
 
-        <div style={{ marginBottom: '48px' }}>
-          <OscilloscopeWave color="var(--blue)" width={300} height={30} animated />
-        </div>
-
-        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+        <div>
           {data.map((service, i) => (
             <motion.div
               key={service.documentId}
-              className="service-row"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: i * 0.1 }}
+              transition={{ delay: i * 0.06 }}
               onMouseEnter={() => setHovered(service.documentId)}
               onMouseLeave={() => setHovered(null)}
               style={{
-                borderTop: '1px solid rgba(14,165,233,0.1)',
-                padding: '32px 0',
+                borderTop: '1px solid rgba(81,246,218,0.12)',
+                padding: '28px 0',
+                display: 'grid',
+                gridTemplateColumns: '72px 1fr',
+                gap: 20,
                 cursor: 'default',
               }}
             >
-              <span
+              <div
                 style={{
                   fontFamily: 'Syne, sans-serif',
-                  fontSize: 'clamp(1.8rem, 5vw, 6rem)',
+                  fontSize: 'clamp(1.6rem, 4vw, 2.8rem)',
                   fontWeight: 700,
-                  color: hovered === service.documentId ? 'var(--blue)' : 'rgba(14,165,233,0.08)',
+                  color:
+                    hovered === service.documentId
+                      ? 'var(--blue)'
+                      : 'rgba(81,246,218,0.12)',
                   lineHeight: 1,
                   transition: 'color 0.2s',
-                  minWidth: '50px',
-                  textShadow: hovered === service.documentId ? '0 0 20px rgba(14,165,233,0.4)' : 'none',
+                  textShadow:
+                    hovered === service.documentId
+                      ? '0 0 18px rgba(81,246,218,0.35)'
+                      : 'none',
                 }}
               >
                 {service.number}
-              </span>
-              <div style={{ flex: 1 }}>
+              </div>
+              <div>
                 <div
                   style={{
                     fontFamily: 'Space Grotesk, sans-serif',
-                    fontSize: 'clamp(1rem, 3vw, 1.8rem)',
+                    fontSize: 'clamp(1.15rem, 2.5vw, 1.45rem)',
                     fontWeight: 600,
                     color: 'var(--white)',
-                    marginBottom: '8px',
-                    transform: hovered === service.documentId ? 'translateX(8px)' : 'translateX(0)',
-                    transition: 'transform 0.2s',
+                    marginBottom: 8,
                   }}
                 >
                   {service.name}
                 </div>
-                <div style={{ fontFamily: 'DM Mono, monospace', fontSize: '13px', color: 'var(--muted)', lineHeight: 1.8, maxWidth: '480px' }}>
+                <p
+                  style={{
+                    fontFamily: 'Space Grotesk, sans-serif',
+                    fontSize: 14,
+                    lineHeight: 1.7,
+                    color: 'var(--muted)',
+                    maxWidth: 640,
+                    margin: 0,
+                  }}
+                >
                   {service.description}
-                </div>
+                </p>
               </div>
             </motion.div>
           ))}

@@ -1,4 +1,4 @@
-export default function CircuitNode({ size = 60, color = '#0EA5E9' }: { size?: number; color?: string }) {
+export default function CircuitNode({ size = 60, color = '#00FF88' }: { size?: number; color?: string }) {
   const c = size / 2;
   const r = size * 0.12;
   return (

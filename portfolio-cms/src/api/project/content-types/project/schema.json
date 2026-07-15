@@ -34,6 +34,36 @@
       "type": "integer",
       "default": 1
     },
+    "overview": {
+      "type": "text"
+    },
+    "hardwareUsed": {
+      "type": "text"
+    },
+    "architecture": {
+      "type": "text"
+    },
+    "protocols": {
+      "type": "string"
+    },
+    "challenges": {
+      "type": "text"
+    },
+    "decisions": {
+      "type": "text"
+    },
+    "firmwareFeatures": {
+      "type": "text"
+    },
+    "lessonsLearned": {
+      "type": "text"
+    },
+    "repoUrl": {
+      "type": "string"
+    },
+    "docsUrl": {
+      "type": "string"
+    },
     "col1Image1": {
       "allowedTypes": ["images"],
       "type": "media",
@@ -46,6 +76,21 @@
     },
     "col2Image": {
       "allowedTypes": ["images"],
+      "type": "media",
+      "multiple": false
+    },
+    "blockDiagram": {
+      "allowedTypes": ["images"],
+      "type": "media",
+      "multiple": false
+    },
+    "schematic": {
+      "allowedTypes": ["images"],
+      "type": "media",
+      "multiple": false
+    },
+    "video": {
+      "allowedTypes": ["videos", "files"],
       "type": "media",
       "multiple": false
     }

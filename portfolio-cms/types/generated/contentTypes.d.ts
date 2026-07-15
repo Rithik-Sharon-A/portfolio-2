@@ -443,7 +443,7 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiAboutAbout extends Struct.CollectionTypeSchema {
   collectionName: 'abouts';
   info: {
-    description: 'About section content';
+    description: 'About / system information section';
     displayName: 'About';
     pluralName: 'abouts';
     singularName: 'about';
@@ -455,26 +455,31 @@ export interface ApiAboutAbout extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    focus: Schema.Attribute.String;
     heading: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'Read the spin.'>;
+    learning: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::about.about'> &
       Schema.Attribute.Private;
+    name: Schema.Attribute.String;
     para1: Schema.Attribute.Text & Schema.Attribute.Required;
     para2: Schema.Attribute.Text;
     para3: Schema.Attribute.Text;
+    philosophy: Schema.Attribute.Text;
     publishedAt: Schema.Attribute.DateTime;
     sectionLabel: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'02 \u00B7 ABOUT'>;
     stat1Label: Schema.Attribute.String &
-      Schema.Attribute.DefaultTo<'Projects'>;
-    stat1Value: Schema.Attribute.String & Schema.Attribute.DefaultTo<'20+'>;
-    stat2Label: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Chai'>;
-    stat2Value: Schema.Attribute.String & Schema.Attribute.DefaultTo<'\u221E'>;
+      Schema.Attribute.DefaultTo<'Primary Language'>;
+    stat1Value: Schema.Attribute.String & Schema.Attribute.DefaultTo<'C/C++'>;
+    stat2Label: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Background'>;
+    stat2Value: Schema.Attribute.String & Schema.Attribute.DefaultTo<'ECE'>;
     stat3Label: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Technologies'>;
-    stat3Value: Schema.Attribute.String & Schema.Attribute.DefaultTo<'5+'>;
+    stat3Value: Schema.Attribute.String & Schema.Attribute.DefaultTo<'10+'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -541,10 +546,15 @@ export interface ApiHeroHero extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    avatarInitials: Schema.Attribute.String & Schema.Attribute.DefaultTo<'RS'>;
     badgeInnerText: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'C/C++ \u00B7 STM32 \u00B7 ESP32 \u00B7 RTOS \u00B7 UART \u00B7'>;
     badgeOuterText: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'\u25C6 EMBEDDED DEV \u00B7 OPEN TO WORK \u00B7 CHENNAI \u00B7'>;
+    badgeSubtitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Gidy AgentX Hackathon'>;
+    badgeTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'NATIONAL FINALIST'>;
     bioLeft: Schema.Attribute.Text & Schema.Attribute.Required;
     bioRight: Schema.Attribute.Text & Schema.Attribute.Required;
     bottomLabel: Schema.Attribute.String &
@@ -571,7 +581,15 @@ export interface ApiHeroHero extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::hero.hero'> &
       Schema.Attribute.Private;
+    profileRows: Schema.Attribute.Text;
+    profileStatus: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'OPEN TO WORK'>;
     publishedAt: Schema.Attribute.DateTime;
+    roleSubtitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'EMBEDDED SYSTEMS ENGINEER'>;
+    statusTags: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'System Online,Communication Active,ARM Cortex-M,Embedded C,STM32,ESP32,RTOS,TinyML'>;
+    typedLines: Schema.Attribute.Text;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -590,15 +608,23 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    architecture: Schema.Attribute.Text;
+    blockDiagram: Schema.Attribute.Media<'images'>;
     category: Schema.Attribute.Enumeration<['Client', 'Personal']> &
       Schema.Attribute.Required;
+    challenges: Schema.Attribute.Text;
     col1Image1: Schema.Attribute.Media<'images'>;
     col1Image2: Schema.Attribute.Media<'images'>;
     col2Image: Schema.Attribute.Media<'images'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    decisions: Schema.Attribute.Text;
     description: Schema.Attribute.Text;
+    docsUrl: Schema.Attribute.String;
+    firmwareFeatures: Schema.Attribute.Text;
+    hardwareUsed: Schema.Attribute.Text;
+    lessonsLearned: Schema.Attribute.Text;
     liveUrl: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -607,12 +633,17 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     order: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<1>;
+    overview: Schema.Attribute.Text;
+    protocols: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    repoUrl: Schema.Attribute.String;
+    schematic: Schema.Attribute.Media<'images'>;
     techStack: Schema.Attribute.String;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    video: Schema.Attribute.Media<'videos' | 'files'>;
   };
 }
 
@@ -722,6 +753,19 @@ export interface ApiStackItemStackItem extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     cricketRole: Schema.Attribute.String & Schema.Attribute.Required;
+    domain: Schema.Attribute.Enumeration<
+      [
+        'Firmware',
+        'Protocols',
+        'MCU',
+        'Tools',
+        'RTOS',
+        'Cloud',
+        'AI',
+        'Testing',
+      ]
+    > &
+      Schema.Attribute.DefaultTo<'Firmware'>;
     icon: Schema.Attribute.Media<'images'>;
     iconUrl: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
