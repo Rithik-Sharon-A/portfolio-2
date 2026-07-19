@@ -1,9 +1,15 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useEffect, useMemo, useState, type CSSProperties } from 'react';
+import { useEffect, useMemo, useState, type CSSProperties, type MouseEvent } from 'react';
 import { Hero } from '@/types';
-import CircuitBoardBackground from '@/components/svg/CircuitBoardBackground';
+import CircuitBoardBackground, {
+  emitPcbPulse,
+} from '@/components/svg/CircuitBoardBackground';
+
+function onInteractiveHover(e: MouseEvent) {
+  emitPcbPulse(e.clientX, e.clientY);
+}
 
 interface Props {
   data: Hero | null;
@@ -810,11 +816,17 @@ export default function HeroSection({ data }: Props) {
               key={link.label}
               href={link.href}
               className={i === 0 ? 'hero-nav-active' : undefined}
+              onMouseEnter={onInteractiveHover}
             >
               {link.label}
             </a>
           ))}
-          <button type="button" className="hero-nav-term" onClick={openTerminal}>
+          <button
+            type="button"
+            className="hero-nav-term"
+            onClick={openTerminal}
+            onMouseEnter={onInteractiveHover}
+          >
             TERMINAL
           </button>
         </nav>
@@ -824,6 +836,7 @@ export default function HeroSection({ data }: Props) {
           className="hero-nav-toggle"
           aria-label="Menu"
           onClick={() => setMenuOpen((v) => !v)}
+          onMouseEnter={onInteractiveHover}
         >
           {menuOpen ? '✕' : '☰'}
         </button>
@@ -1077,6 +1090,7 @@ export default function HeroSection({ data }: Props) {
                 transition={{ duration: 0.6, delay: 0.7 }}
                 className="hero-resume-cta"
                 onMouseEnter={(e) => {
+                  onInteractiveHover(e);
                   e.currentTarget.style.background = 'rgba(0,212,255,0.12)';
                 }}
                 onMouseLeave={(e) => {
@@ -1270,10 +1284,19 @@ export default function HeroSection({ data }: Props) {
           </div>
 
           <div className="hero-ctas">
-            <button type="button" className="hero-cta-solid" onClick={openTerminal}>
+            <button
+              type="button"
+              className="hero-cta-solid eng-pulse"
+              onClick={openTerminal}
+              onMouseEnter={onInteractiveHover}
+            >
               {'>_'} OPEN TERMINAL
             </button>
-            <a href="#work" className="hero-cta-ghost">
+            <a
+              href="#work"
+              className="hero-cta-ghost eng-pulse"
+              onMouseEnter={onInteractiveHover}
+            >
               ▦ VIEW SYSTEMS
             </a>
           </div>
@@ -1321,7 +1344,12 @@ export default function HeroSection({ data }: Props) {
                   <span className={value === 'Online' ? 'hero-kv-accent' : 'hero-kv-val'}>{value}</span>
                 </div>
               ))}
-              <button type="button" className="hero-dbg-btn" onClick={openTerminal}>
+              <button
+                type="button"
+                className="hero-dbg-btn eng-pulse"
+                onClick={openTerminal}
+                onMouseEnter={onInteractiveHover}
+              >
                 PRESS TO OPEN TERMINAL {'>'}
               </button>
             </div>
