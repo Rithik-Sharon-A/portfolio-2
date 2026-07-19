@@ -8,12 +8,6 @@ import {
   siteSettings,
 } from './portfolio-data';
 
-/** Resolve media URLs (absolute paths or full URLs). Local `/public` assets work as-is. */
-export function mediaUrl(url?: string | null): string {
-  if (!url) return '';
-  return url;
-}
-
 export async function fetchHero() {
   return hero;
 }

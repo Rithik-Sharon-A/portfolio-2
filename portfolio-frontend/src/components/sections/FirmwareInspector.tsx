@@ -4,7 +4,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, FolderGit2, FileText } from 'lucide-react';
 import { Project, SiteSettings } from '@/types';
 import { useInstrumentBus } from '@/context/InstrumentBus';
-import { mediaUrl } from '@/lib/strapi';
+
+/** Media URLs are full https:// links or /public paths — no CMS prefix. */
+function mediaUrl(url?: string) {
+  if (!url) return '';
+  return url;
+}
 
 type InspectorLabels = Pick<
   SiteSettings,

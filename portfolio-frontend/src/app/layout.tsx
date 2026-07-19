@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { fetchSiteSettings, mediaUrl } from '@/lib/strapi';
+import { fetchSiteSettings } from '@/lib/strapi';
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await fetchSiteSettings();
-  const og = mediaUrl(settings?.ogImage?.url) || undefined;
+  const og = settings?.ogImage?.url;
   return {
     title: settings?.seoTitle,
     description: settings?.seoDesc,

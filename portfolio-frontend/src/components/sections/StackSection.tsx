@@ -5,7 +5,11 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { StackDomain, StackItem } from '@/types';
 import { useInstrumentBus } from '@/context/InstrumentBus';
-import { mediaUrl } from '@/lib/strapi';
+
+function mediaUrl(url?: string) {
+  if (!url) return '';
+  return url;
+}
 
 interface Props {
   data: StackItem[];
