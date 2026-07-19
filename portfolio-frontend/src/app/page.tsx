@@ -34,7 +34,7 @@ export default async function Home() {
     <WorkstationShell>
       <main
         style={{
-          background: '#080C10',
+          background: '#010509',
           overflowX: 'hidden',
           minHeight: '100vh',
           paddingBottom: 56,
@@ -44,13 +44,13 @@ export default async function Home() {
         <HeroSection data={hero} />
         <MarqueeSection line1={settings?.marqueeLine1} line2={settings?.marqueeLine2} />
         <AboutSection data={about} />
-        <SquareWaveDivider color="#0EA5E9" background="#080C10" />
+        <SquareWaveDivider color="#00FFE5" background="#010509" />
         <ProjectsSection
           data={projects}
           label={settings?.projectsLabel}
           heading={settings?.projectsHeading}
         />
-        <SquareWaveDivider color="#00FF88" background="#080C10" flip />
+        <SquareWaveDivider color="#00D4FF" background="#010509" flip />
         <StackSection
           data={stackItems}
           label={settings?.stackLabel}

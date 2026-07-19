@@ -2,7 +2,7 @@
 
 export default function STM32Chip({
   size = 160,
-  color = '#00FF88',
+  color = '#00D4FF',
   animated = true,
   dimmed = false,
   onSelect,

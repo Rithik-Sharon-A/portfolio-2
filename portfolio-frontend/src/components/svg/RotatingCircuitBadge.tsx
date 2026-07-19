@@ -1,5 +1,6 @@
-const BLUE = '#0EA5E9';
-const GREEN = '#00FF88';
+const BLUE = '#00D4FF';
+const CYAN = '#00FFE5';
+const GREEN = '#00FFE5'; // secondary accent (was neon green)
 
 // Round to 2 decimals so SSR and client render identical coordinate strings
 // (raw trig output differs in the last float digit between V8 builds → hydration mismatch)
@@ -22,7 +23,7 @@ export default function RotatingCircuitBadge({
         position: 'relative',
         width: size,
         height: size,
-        filter: 'drop-shadow(0 0 24px rgba(81,246,218,0.3))',
+        filter: 'drop-shadow(0 0 24px rgba(0,212,255,0.3))',
       }}
     >
       <svg
@@ -64,7 +65,7 @@ export default function RotatingCircuitBadge({
           position: 'absolute',
           inset: '8%',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(81,246,218,0.1) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(0,212,255,0.1) 0%, transparent 70%)',
           animation: 'glowPulse 3s ease-in-out infinite',
           pointerEvents: 'none',
         }}
@@ -174,7 +175,7 @@ export default function RotatingCircuitBadge({
         }}
       >
         <rect x="62" y="62" width="76" height="76" rx="3"
-          fill="rgba(81,246,218,0.04)"
+          fill="rgba(0,212,255,0.04)"
           stroke={BLUE} strokeWidth="1"
           opacity="0.65" />
 

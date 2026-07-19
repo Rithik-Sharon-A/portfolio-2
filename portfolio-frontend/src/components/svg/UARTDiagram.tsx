@@ -1,4 +1,4 @@
-export default function UARTDiagram({ color = '#00FF88' }: { color?: string }) {
+export default function UARTDiagram({ color = '#00D4FF' }: { color?: string }) {
   return (
     <svg width="200" height="80" viewBox="0 0 200 80">
       <text x="5" y="25" fontFamily="DM Mono" fontSize="9"
@@ -7,9 +7,9 @@ export default function UARTDiagram({ color = '#00FF88' }: { color?: string }) {
         stroke={color} strokeWidth="0.8" opacity="0.3" />
 
       <text x="5" y="55" fontFamily="DM Mono" fontSize="9"
-        fill="#00FF88" opacity="0.7">RX</text>
+        fill="#00D4FF" opacity="0.7">RX</text>
       <line x1="25" y1="50" x2="175" y2="50"
-        stroke="#00FF88" strokeWidth="0.8" opacity="0.3" />
+        stroke="#00D4FF" strokeWidth="0.8" opacity="0.3" />
 
       {[0, 1, 0, 1, 1, 0, 1, 0].map((bit, i) => {
         const x = 25 + i * 18;

@@ -4,6 +4,7 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { About } from '@/types';
 import OscilloscopeWave from '@/components/svg/OscilloscopeWave';
+import CircuitCorners from '@/components/svg/CircuitCorners';
 
 interface Props {
   data: About | null;
@@ -13,12 +14,13 @@ function Row({ k, v }: { k: string; v?: string | null }) {
   if (!v?.trim()) return null;
   return (
     <div
+      className="about-row"
       style={{
         display: 'grid',
-        gridTemplateColumns: 'minmax(120px, 180px) 1fr',
+        gridTemplateColumns: 'minmax(100px, 180px) 1fr',
         gap: 16,
         padding: '14px 0',
-        borderBottom: '1px solid rgba(81,246,218,0.1)',
+        borderBottom: '1px solid rgba(0,212,255,0.1)',
       }}
     >
       <div
@@ -26,7 +28,7 @@ function Row({ k, v }: { k: string; v?: string | null }) {
           fontFamily: 'DM Mono, monospace',
           fontSize: 11,
           letterSpacing: '0.1em',
-          color: 'rgba(81,246,218,0.7)',
+          color: 'rgba(0,212,255,0.7)',
         }}
       >
         {k}
@@ -66,23 +68,22 @@ export default function AboutSection({ data }: Props) {
       }}
     >
       <style>{`
-        .about-sys {
+        .about-sys, .about-grid {
           display: grid;
-          grid-template-columns: 1.2fr 0.8fr;
-          gap: 56px;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: clamp(32px, 5vw, 80px);
           width: 100%;
           max-width: 1100px;
           margin: 0 auto;
           align-items: start;
         }
-        @media (max-width: 900px) {
-          .about-sys { grid-template-columns: 1fr; gap: 36px; }
-        }
       `}</style>
 
       <div className="pcb-grid" style={{ position: 'absolute', inset: 0, opacity: 0.4 }} />
 
-      <div className="about-sys" style={{ position: 'relative', zIndex: 1 }}>
+      <CircuitCorners opacity={0.35} />
+
+      <div className="about-sys about-grid" style={{ position: 'relative', zIndex: 1 }}>
         <div>
           <motion.div
             initial={{ opacity: 0 }}
@@ -94,6 +95,7 @@ export default function AboutSection({ data }: Props) {
               letterSpacing: '0.15em',
               textTransform: 'uppercase',
               marginBottom: '16px',
+              marginTop: 'clamp(0px, 2vw, 8px)',
             }}
           >
             {data.sectionLabel}
@@ -103,7 +105,7 @@ export default function AboutSection({ data }: Props) {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             style={{
               fontFamily: 'Syne, sans-serif',
-              fontSize: 'clamp(2rem, 4.5vw, 3rem)',
+              fontSize: 'clamp(2rem, 8vw, 5rem)',
               fontWeight: 800,
               letterSpacing: '-0.03em',
               marginBottom: 28,
@@ -115,7 +117,7 @@ export default function AboutSection({ data }: Props) {
 
           <div
             style={{
-              border: '1px solid rgba(81,246,218,0.16)',
+              border: '1px solid rgba(0,212,255,0.16)',
               background: 'rgba(22,24,29,0.55)',
               padding: '8px 20px 4px',
             }}
@@ -135,10 +137,10 @@ export default function AboutSection({ data }: Props) {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 0.2 }}
-          style={{ display: 'flex', flexDirection: 'column', gap: 16 }}
+          style={{ display: 'flex', flexDirection: 'column', gap: 16, width: '100%' }}
         >
-          <OscilloscopeWave color="#00FF88" />
-          <div style={{ display: 'grid', gap: 10 }}>
+          <OscilloscopeWave color="#00D4FF" />
+          <div className="about-stats" style={{ display: 'grid', gap: 10, width: '100%' }}>
             {[
               { v: data.stat1Value, l: data.stat1Label },
               { v: data.stat2Value, l: data.stat2Label },
@@ -147,8 +149,8 @@ export default function AboutSection({ data }: Props) {
               <div
                 key={s.l}
                 style={{
-                  border: '1px solid rgba(81,246,218,0.14)',
-                  padding: '18px 20px',
+                  border: '1px solid rgba(0,212,255,0.14)',
+                  padding: 'clamp(14px, 2vw, 18px) clamp(14px, 2vw, 20px)',
                   background: 'var(--surface)',
                 }}
               >
@@ -157,7 +159,7 @@ export default function AboutSection({ data }: Props) {
                     fontFamily: 'Syne, sans-serif',
                     fontSize: '1.75rem',
                     fontWeight: 700,
-                    color: '#00FF88',
+                    color: '#00D4FF',
                   }}
                 >
                   {s.v}

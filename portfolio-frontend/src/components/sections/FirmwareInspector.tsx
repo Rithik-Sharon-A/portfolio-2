@@ -21,7 +21,7 @@ function Block({ title, body }: { title: string; body?: string | null }) {
           fontFamily: 'DM Mono, monospace',
           fontSize: 10,
           letterSpacing: '0.14em',
-          color: 'rgba(81,246,218,0.75)',
+          color: 'rgba(0,212,255,0.75)',
           marginBottom: 8,
         }}
       >
@@ -75,7 +75,7 @@ export default function FirmwareInspector({
             width: 'min(520px, 100vw)',
             zIndex: 910,
             background: 'rgba(14,15,18,0.97)',
-            borderLeft: '1px solid rgba(81,246,218,0.22)',
+            borderLeft: '1px solid rgba(0,212,255,0.22)',
             boxShadow: '-16px 0 48px rgba(0,0,0,0.45)',
             display: 'flex',
             flexDirection: 'column',
@@ -87,7 +87,7 @@ export default function FirmwareInspector({
           <div
             style={{
               padding: '18px 20px',
-              borderBottom: '1px solid rgba(81,246,218,0.12)',
+              borderBottom: '1px solid rgba(0,212,255,0.12)',
               display: 'flex',
               justifyContent: 'space-between',
               gap: 12,
@@ -100,7 +100,7 @@ export default function FirmwareInspector({
                   fontFamily: 'DM Mono, monospace',
                   fontSize: 10,
                   letterSpacing: '0.14em',
-                  color: 'rgba(81,246,218,0.7)',
+                  color: 'rgba(0,212,255,0.7)',
                   marginBottom: 6,
                 }}
               >
@@ -129,7 +129,7 @@ export default function FirmwareInspector({
                 display: 'grid',
                 placeItems: 'center',
                 background: 'transparent',
-                border: '1px solid rgba(81,246,218,0.18)',
+                border: '1px solid rgba(0,212,255,0.18)',
                 color: 'var(--muted)',
                 cursor: 'pointer',
                 flexShrink: 0,
@@ -156,7 +156,7 @@ export default function FirmwareInspector({
                     fontFamily: 'DM Mono, monospace',
                     fontSize: 10,
                     letterSpacing: '0.14em',
-                    color: 'rgba(81,246,218,0.75)',
+                    color: 'rgba(0,212,255,0.75)',
                     marginBottom: 10,
                   }}
                 >
@@ -170,7 +170,7 @@ export default function FirmwareInspector({
                         fontFamily: 'DM Mono, monospace',
                         fontSize: 11,
                         color: 'var(--muted)',
-                        border: '1px solid rgba(81,246,218,0.2)',
+                        border: '1px solid rgba(0,212,255,0.2)',
                         padding: '4px 10px',
                       }}
                     >
@@ -188,7 +188,7 @@ export default function FirmwareInspector({
                     fontFamily: 'DM Mono, monospace',
                     fontSize: 10,
                     letterSpacing: '0.14em',
-                    color: 'rgba(81,246,218,0.75)',
+                    color: 'rgba(0,212,255,0.75)',
                     marginBottom: 10,
                   }}
                 >
@@ -203,7 +203,7 @@ export default function FirmwareInspector({
                       alt=""
                       style={{
                         width: '100%',
-                        border: '1px solid rgba(81,246,218,0.15)',
+                        border: '1px solid rgba(0,212,255,0.15)',
                         display: 'block',
                       }}
                     />
@@ -219,7 +219,7 @@ export default function FirmwareInspector({
                     fontFamily: 'DM Mono, monospace',
                     fontSize: 10,
                     letterSpacing: '0.14em',
-                    color: 'rgba(81,246,218,0.75)',
+                    color: 'rgba(0,212,255,0.75)',
                     marginBottom: 10,
                   }}
                 >
@@ -228,7 +228,7 @@ export default function FirmwareInspector({
                 <video
                   controls
                   src={mediaUrl(active.video.url)}
-                  style={{ width: '100%', border: '1px solid rgba(81,246,218,0.15)' }}
+                  style={{ width: '100%', border: '1px solid rgba(0,212,255,0.15)' }}
                 />
               </div>
             )}
@@ -247,9 +247,9 @@ export default function FirmwareInspector({
                     fontFamily: 'DM Mono, monospace',
                     fontSize: 11,
                     letterSpacing: '0.08em',
-                    color: '#00FF88',
+                    color: '#00D4FF',
                     textDecoration: 'none',
-                    border: '1px solid rgba(81,246,218,0.3)',
+                    border: '1px solid rgba(0,212,255,0.3)',
                     padding: '10px 14px',
                   }}
                 >
@@ -268,9 +268,9 @@ export default function FirmwareInspector({
                     fontFamily: 'DM Mono, monospace',
                     fontSize: 11,
                     letterSpacing: '0.08em',
-                    color: '#00FF88',
+                    color: '#00D4FF',
                     textDecoration: 'none',
-                    border: '1px solid rgba(81,246,218,0.3)',
+                    border: '1px solid rgba(0,212,255,0.3)',
                     padding: '10px 14px',
                   }}
                 >
@@ -289,9 +289,9 @@ export default function FirmwareInspector({
                     fontFamily: 'DM Mono, monospace',
                     fontSize: 11,
                     letterSpacing: '0.08em',
-                    color: '#00FF88',
+                    color: '#00D4FF',
                     textDecoration: 'none',
-                    border: '1px solid rgba(81,246,218,0.3)',
+                    border: '1px solid rgba(0,212,255,0.3)',
                     padding: '10px 14px',
                   }}
                 >

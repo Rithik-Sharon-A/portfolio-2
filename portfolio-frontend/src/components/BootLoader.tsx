@@ -48,7 +48,7 @@ export default function BootLoader() {
         position: 'fixed',
         inset: 0,
         zIndex: 10000,
-        background: '#080C10',
+        background: '#020D14',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -58,12 +58,12 @@ export default function BootLoader() {
       }}
     >
       <div style={{ fontFamily: 'DM Mono, monospace', fontSize: '13px', lineHeight: 2, minWidth: '300px' }}>
-        <div style={{ color: 'rgba(0,255,136,0.55)', marginBottom: 12, letterSpacing: '0.14em', fontSize: 11 }}>
+        <div style={{ color: 'rgba(0,212,255,0.55)', marginBottom: 12, letterSpacing: '0.14em', fontSize: 11 }}>
           EMBEDDED WORKSTATION · BOOT
         </div>
         {BOOT_LINES.slice(0, visibleLines).map((line, i) => (
-          <div key={i} style={{ color: i === BOOT_LINES.length - 1 ? '#00FF88' : '#475569' }}>
-            <span style={{ color: '#00FF88' }}>{line.slice(0, 6)}</span>
+          <div key={i} style={{ color: i === BOOT_LINES.length - 1 ? '#00D4FF' : '#2A4A5A' }}>
+            <span style={{ color: '#00D4FF' }}>{line.slice(0, 6)}</span>
             {line.slice(6)}
           </div>
         ))}
@@ -72,7 +72,7 @@ export default function BootLoader() {
             display: 'inline-block',
             width: '8px',
             height: '14px',
-            background: '#00FF88',
+            background: '#00D4FF',
             animation: 'blink 0.8s step-end infinite',
             verticalAlign: 'middle',
           }}

@@ -26,7 +26,7 @@ export default function ServicesSection({ data, label, heading }: Props) {
         padding: 'clamp(50px, 10vw, 100px) clamp(20px, 6vw, 80px)',
         minHeight: '80vh',
         overflow: 'hidden',
-        borderTop: '1px solid rgba(81,246,218,0.1)',
+        borderTop: '1px solid rgba(0,212,255,0.1)',
       }}
     >
       <div className="pcb-grid" style={{ position: 'absolute', inset: 0, opacity: 0.3 }} />
@@ -51,7 +51,7 @@ export default function ServicesSection({ data, label, heading }: Props) {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           style={{
             fontFamily: 'Syne, sans-serif',
-            fontSize: 'clamp(2rem, 5vw, 3.2rem)',
+            fontSize: 'clamp(2rem, 7vw, 3.2rem)',
             fontWeight: 800,
             letterSpacing: '-0.03em',
             marginBottom: 40,
@@ -70,16 +70,18 @@ export default function ServicesSection({ data, label, heading }: Props) {
               transition={{ delay: i * 0.06 }}
               onMouseEnter={() => setHovered(service.documentId)}
               onMouseLeave={() => setHovered(null)}
+              className="service-row"
               style={{
-                borderTop: '1px solid rgba(81,246,218,0.12)',
+                borderTop: '1px solid rgba(0,212,255,0.12)',
                 padding: '28px 0',
                 display: 'grid',
-                gridTemplateColumns: '72px 1fr',
-                gap: 20,
+                gridTemplateColumns: 'minmax(48px, 72px) 1fr',
+                gap: 'clamp(12px, 3vw, 20px)',
                 cursor: 'default',
               }}
             >
               <div
+                className="service-number"
                 style={{
                   fontFamily: 'Syne, sans-serif',
                   fontSize: 'clamp(1.6rem, 4vw, 2.8rem)',
@@ -87,12 +89,12 @@ export default function ServicesSection({ data, label, heading }: Props) {
                   color:
                     hovered === service.documentId
                       ? 'var(--blue)'
-                      : 'rgba(81,246,218,0.12)',
+                      : 'rgba(0,212,255,0.12)',
                   lineHeight: 1,
                   transition: 'color 0.2s',
                   textShadow:
                     hovered === service.documentId
-                      ? '0 0 18px rgba(81,246,218,0.35)'
+                      ? '0 0 18px rgba(0,212,255,0.35)'
                       : 'none',
                 }}
               >
@@ -100,6 +102,7 @@ export default function ServicesSection({ data, label, heading }: Props) {
               </div>
               <div>
                 <div
+                  className="service-name"
                   style={{
                     fontFamily: 'Space Grotesk, sans-serif',
                     fontSize: 'clamp(1.15rem, 2.5vw, 1.45rem)',
@@ -111,6 +114,7 @@ export default function ServicesSection({ data, label, heading }: Props) {
                   {service.name}
                 </div>
                 <p
+                  className="service-desc"
                   style={{
                     fontFamily: 'Space Grotesk, sans-serif',
                     fontSize: 14,

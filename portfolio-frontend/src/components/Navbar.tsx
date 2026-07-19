@@ -79,10 +79,12 @@ export default function Navbar({ logoText }: { logoText?: string }) {
   return (
     <>
       <style>{`
-        .nav-links { display: flex; gap: 40px; align-items: center; }
+        .nav-links { display: flex; gap: clamp(16px, 3vw, 40px); align-items: center; }
         .nav-toggle { display: none; }
-        @media (max-width: 720px) {
+        .nav-leds { display: inline-flex; align-items: center; gap: 10px; }
+        @media (max-width: 768px) {
           .nav-links { display: none; }
+          .nav-leds { display: none; }
           .nav-toggle { display: flex; }
         }
       `}</style>
@@ -100,28 +102,29 @@ export default function Navbar({ logoText }: { logoText?: string }) {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          background: scrolled ? 'rgba(8,12,16,0.96)' : 'transparent',
+          background: scrolled ? 'rgba(1,5,9,0.95)' : 'transparent',
           backdropFilter: scrolled ? 'blur(12px)' : 'none',
           borderBottom: scrolled
-            ? `1px solid rgba(0,255,136,${systemMode === 'debug' ? 0.28 : 0.12})`
+            ? `1px solid rgba(0,212,255,${systemMode === 'debug' ? 0.28 : 0.12})`
             : 'none',
           transition: 'all 0.3s ease',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(8px, 2vw, 16px)' }}>
           <button
             type="button"
             onDoubleClick={() => toggleDebug()}
             title="Double-click for Debug Mode"
             style={{
               fontFamily: 'DM Mono, monospace',
-              fontSize: '14px',
-              color: 'var(--blue)',
+              fontSize: '18px',
+              color: '#00FFE5',
               letterSpacing: '0.1em',
               background: 'none',
               border: 'none',
               cursor: 'pointer',
               padding: 0,
+              textShadow: '0 0 14px rgba(0,255,229,0.7)',
             }}
           >
             {logoText ?? ''}
@@ -129,36 +132,68 @@ export default function Navbar({ logoText }: { logoText?: string }) {
               <span style={{ marginLeft: 8, fontSize: 11, opacity: 0.7 }}>DBG</span>
             )}
           </button>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '10px' }}>
-            <StatusLed label="PWR" color="#00FF88" blink="glowPulse 2.4s ease-in-out infinite" />
+          <span className="nav-leds">
+            <StatusLed label="PWR" color="#00D4FF" blink="glowPulse 2.4s ease-in-out infinite" />
             <StatusLed
               label="TX"
-              color="#00FF88"
+              color="#00FFE5"
               active={txActive}
               blink="blink 0.7s step-end infinite"
             />
-            <StatusLed label="RX" color="#0EA5E9" blink="blink 3.7s step-end infinite" />
+            <StatusLed label="RX" color="#00D4FF" blink="blink 3.7s step-end infinite" />
             {systemMode === 'debug' && (
-              <StatusLed label="DBG" color="#00FF88" blink="blink 1.2s step-end infinite" />
+              <StatusLed label="DBG" color="#00D4FF" blink="blink 1.2s step-end infinite" />
             )}
           </span>
         </div>
 
         <div className="nav-links">
-          {navLinks.map((link) => (
+          {navLinks.map((link, i) => (
             <a
               key={link.label}
               href={link.href}
-              style={{
-                fontFamily: 'DM Mono, monospace',
-                fontSize: '12px',
-                color: 'var(--muted)',
-                textDecoration: 'none',
-                letterSpacing: '0.1em',
-                transition: 'color 0.2s',
+              style={
+                i === 0
+                  ? {
+                      fontFamily: 'DM Mono, monospace',
+                      fontSize: '12px',
+                      color: '#00D4FF',
+                      textDecoration: 'none',
+                      letterSpacing: '0.1em',
+                      padding: '4px 10px',
+                      border: '1px solid rgba(0,212,255,0.3)',
+                      borderRadius: '3px',
+                      background: 'rgba(0,212,255,0.06)',
+                      transition: 'all 0.2s',
+                    }
+                  : {
+                      fontFamily: 'DM Mono, monospace',
+                      fontSize: '12px',
+                      color: '#6B8FA8',
+                      textDecoration: 'none',
+                      letterSpacing: '0.1em',
+                      padding: '4px 0',
+                      borderBottom: '1px solid transparent',
+                      transition: 'all 0.2s',
+                    }
+              }
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = '#00FFE5';
+                if (i === 0) {
+                  e.currentTarget.style.borderColor = 'rgba(0,212,255,0.5)';
+                } else {
+                  e.currentTarget.style.borderBottomColor = '#00D4FF';
+                }
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--green)')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--muted)')}
+              onMouseLeave={(e) => {
+                if (i === 0) {
+                  e.currentTarget.style.color = '#00D4FF';
+                  e.currentTarget.style.borderColor = 'rgba(0,212,255,0.3)';
+                } else {
+                  e.currentTarget.style.color = '#6B8FA8';
+                  e.currentTarget.style.borderBottomColor = 'transparent';
+                }
+              }}
             >
               {link.label}
             </a>
@@ -169,14 +204,23 @@ export default function Navbar({ logoText }: { logoText?: string }) {
             style={{
               fontFamily: 'DM Mono, monospace',
               fontSize: '12px',
-              color: 'var(--muted)',
+              color: '#6B8FA8',
               background: 'none',
               border: 'none',
+              borderBottom: '1px solid transparent',
               letterSpacing: '0.1em',
               cursor: 'pointer',
+              padding: '4px 0',
+              transition: 'all 0.2s',
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--green)')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--muted)')}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = '#00FFE5';
+              e.currentTarget.style.borderBottomColor = '#00D4FF';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = '#6B8FA8';
+              e.currentTarget.style.borderBottomColor = 'transparent';
+            }}
           >
             TERMINAL
           </button>
@@ -212,13 +256,13 @@ export default function Navbar({ logoText }: { logoText?: string }) {
               left: 0,
               right: 0,
               zIndex: 99,
-              background: 'rgba(8,12,16,0.98)',
+              background: 'rgba(1,5,9,0.98)',
               backdropFilter: 'blur(12px)',
-              borderBottom: '1px solid rgba(0,255,136,0.12)',
+              borderBottom: '1px solid rgba(0,212,255,0.2)',
               overflow: 'hidden',
             }}
           >
-            <div style={{ display: 'flex', flexDirection: 'column', padding: '16px 24px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', padding: '16px 24px', gap: 4 }}>
               {navLinks.map((link) => (
                 <a
                   key={link.label}
@@ -226,12 +270,15 @@ export default function Navbar({ logoText }: { logoText?: string }) {
                   onClick={() => setMenuOpen(false)}
                   style={{
                     fontFamily: 'DM Mono, monospace',
-                    fontSize: '13px',
-                    color: 'var(--white)',
+                    fontSize: '14px',
+                    color: '#E8F4F8',
                     textDecoration: 'none',
                     letterSpacing: '0.1em',
                     padding: '14px 0',
-                    borderBottom: '1px solid rgba(0,255,136,0.08)',
+                    borderBottom: '1px solid rgba(0,212,255,0.1)',
+                    minHeight: 44,
+                    display: 'flex',
+                    alignItems: 'center',
                   }}
                 >
                   {link.label}
@@ -245,17 +292,20 @@ export default function Navbar({ logoText }: { logoText?: string }) {
                 }}
                 style={{
                   fontFamily: 'DM Mono, monospace',
-                  fontSize: '13px',
-                  color: 'var(--white)',
-                  textAlign: 'left',
-                  background: 'none',
-                  border: 'none',
+                  fontSize: '14px',
+                  color: '#00D4FF',
+                  textAlign: 'center',
+                  background: 'rgba(0,212,255,0.08)',
+                  border: '1px solid rgba(0,212,255,0.3)',
+                  borderRadius: 4,
                   letterSpacing: '0.1em',
-                  padding: '14px 0',
+                  padding: '14px',
+                  marginTop: 8,
                   cursor: 'pointer',
+                  minHeight: 44,
                 }}
               >
-                OPEN TERMINAL
+                {'>_'} OPEN TERMINAL
               </button>
             </div>
           </motion.div>

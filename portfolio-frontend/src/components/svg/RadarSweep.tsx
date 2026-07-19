@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-const ACCENT = '#00FF88';
+const ACCENT = '#00D4FF';
 
 // Round to 2 decimals so SSR and client render identical coordinate strings
 const r2 = (n: number) => Math.round(n * 100) / 100;
@@ -92,8 +92,8 @@ export default function RadarSweep({
         width: size,
         height: size,
         filter: quiet
-          ? 'drop-shadow(0 0 10px rgba(81,246,218,0.16))'
-          : 'drop-shadow(0 0 18px rgba(81,246,218,0.3))',
+          ? 'drop-shadow(0 0 10px rgba(0,212,255,0.16))'
+          : 'drop-shadow(0 0 18px rgba(0,212,255,0.3))',
         cursor: onScan ? 'pointer' : 'default',
       }}
     >
@@ -116,8 +116,8 @@ export default function RadarSweep({
           inset: '9%',
           borderRadius: '50%',
           background: quiet
-            ? 'conic-gradient(from 0deg, transparent 0deg, transparent 270deg, rgba(81,246,218,0.015) 270deg, rgba(81,246,218,0.06) 310deg, rgba(81,246,218,0.2) 345deg, rgba(81,246,218,0.45) 360deg)'
-            : 'conic-gradient(from 0deg, transparent 0deg, transparent 250deg, rgba(81,246,218,0.02) 250deg, rgba(81,246,218,0.08) 300deg, rgba(81,246,218,0.28) 340deg, rgba(81,246,218,0.55) 355deg, rgba(81,246,218,0.85) 360deg)',
+            ? 'conic-gradient(from 0deg, transparent 0deg, transparent 270deg, rgba(0,212,255,0.015) 270deg, rgba(0,212,255,0.06) 310deg, rgba(0,212,255,0.2) 345deg, rgba(0,212,255,0.45) 360deg)'
+            : 'conic-gradient(from 0deg, transparent 0deg, transparent 250deg, rgba(0,212,255,0.02) 250deg, rgba(0,212,255,0.08) 300deg, rgba(0,212,255,0.28) 340deg, rgba(0,212,255,0.55) 355deg, rgba(0,212,255,0.85) 360deg)',
           animation: `spin ${SWEEP_SECONDS}s linear infinite`,
         }}
       />
@@ -225,7 +225,7 @@ export default function RadarSweep({
             fontFamily: 'DM Mono, monospace',
             fontSize: 8,
             letterSpacing: '0.1em',
-            color: '#080C10',
+            color: '#020D14',
             background: ACCENT,
             padding: '3px 6px',
             whiteSpace: 'nowrap',

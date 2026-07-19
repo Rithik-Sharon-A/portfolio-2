@@ -1,5 +1,5 @@
 export default function CrystalXTAL({
-  color = '#00FF88',
+  color = '#00D4FF',
   label = '16MHz',
 }: {
   color?: string;
@@ -41,7 +41,7 @@ export default function CrystalXTAL({
         width="36"
         height="28"
         rx="2"
-        fill="rgba(81,246,218,0.06)"
+        fill="rgba(0,212,255,0.06)"
         stroke={color}
         strokeWidth="1.4"
         opacity="0.9"

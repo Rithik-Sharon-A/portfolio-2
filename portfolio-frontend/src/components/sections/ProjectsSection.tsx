@@ -38,12 +38,14 @@ export default function ProjectsSection({ data, label, heading }: Props) {
         background: 'var(--bg)',
         padding: 'clamp(70px, 12vw, 120px) clamp(20px, 6vw, 80px)',
         position: 'relative',
-        outline: projectsHighlight ? '1px solid rgba(81,246,218,0.35)' : 'none',
+        overflow: 'hidden',
+        outline: projectsHighlight ? '1px solid rgba(0,212,255,0.35)' : 'none',
         outlineOffset: '-1px',
         transition: 'outline 0.3s ease',
       }}
     >
           <div className="pcb-grid alive" style={{ position: 'absolute', inset: 0, opacity: 0.45 }} />
+
       <div style={{ position: 'relative', zIndex: 1, maxWidth: 1100, margin: '0 auto' }}>
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -64,7 +66,7 @@ export default function ProjectsSection({ data, label, heading }: Props) {
           transition={{ delay: 0.05 }}
           style={{
             fontFamily: 'Syne, sans-serif',
-            fontSize: 'clamp(2rem, 5vw, 3.5rem)',
+            fontSize: 'clamp(2rem, 8vw, 3.5rem)',
             fontWeight: 800,
             letterSpacing: '-0.03em',
             marginBottom: 16,
@@ -94,7 +96,7 @@ export default function ProjectsSection({ data, label, heading }: Props) {
                 style={{
                   background: 'none',
                   border: 'none',
-                  color: '#00FF88',
+                  color: '#00D4FF',
                   cursor: 'pointer',
                   fontFamily: 'inherit',
                   fontSize: 'inherit',
@@ -124,16 +126,16 @@ export default function ProjectsSection({ data, label, heading }: Props) {
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.05 + i * 0.05 }}
                 onClick={() => openProject(project.documentId)}
-                className="eng-pulse"
+                className="eng-pulse project-row"
                 style={{
                   width: '100%',
                   textAlign: 'left',
-                  borderTop: '1px solid rgba(81,246,218,0.12)',
-                  borderLeft: active ? '2px solid #00FF88' : '2px solid transparent',
+                  borderTop: '1px solid rgba(0,212,255,0.12)',
+                  borderLeft: active ? '2px solid #00D4FF' : '2px solid transparent',
                   borderRight: 'none',
                   borderBottom: 'none',
                   padding: '28px 12px 28px 16px',
-                  background: active ? 'rgba(81,246,218,0.05)' : 'transparent',
+                  background: active ? 'rgba(0,212,255,0.05)' : 'transparent',
                   cursor: 'pointer',
                   display: 'grid',
                   gridTemplateColumns: '56px 1fr auto',
@@ -146,13 +148,14 @@ export default function ProjectsSection({ data, label, heading }: Props) {
                   style={{
                     fontFamily: 'DM Mono, monospace',
                     fontSize: 12,
-                    color: 'rgba(81,246,218,0.55)',
+                    color: 'rgba(0,212,255,0.55)',
                   }}
                 >
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <div>
+                <div style={{ minWidth: 0 }}>
                   <div
+                    className="project-title"
                     style={{
                       fontFamily: 'Syne, sans-serif',
                       fontSize: 'clamp(1.15rem, 2.5vw, 1.55rem)',
@@ -163,7 +166,7 @@ export default function ProjectsSection({ data, label, heading }: Props) {
                   >
                     {project.title}
                   </div>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                  <div className="project-tags" style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                     {tags.map((t) => (
                       <span
                         key={t}
@@ -171,7 +174,7 @@ export default function ProjectsSection({ data, label, heading }: Props) {
                           fontFamily: 'DM Mono, monospace',
                           fontSize: 10,
                           color: 'var(--muted)',
-                          border: '1px solid rgba(81,246,218,0.18)',
+                          border: '1px solid rgba(0,212,255,0.18)',
                           padding: '3px 8px',
                         }}
                       >
@@ -181,11 +184,12 @@ export default function ProjectsSection({ data, label, heading }: Props) {
                   </div>
                 </div>
                 <span
+                  className="project-inspect"
                   style={{
                     fontFamily: 'DM Mono, monospace',
                     fontSize: 11,
                     letterSpacing: '0.12em',
-                    color: '#00FF88',
+                    color: '#00D4FF',
                   }}
                 >
                   INSPECT →

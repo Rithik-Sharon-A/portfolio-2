@@ -1,4 +1,4 @@
-export default function WireframeChip({ size = 120, color = '#00FF88' }: { size?: number; color?: string }) {
+export default function WireframeChip({ size = 120, color = '#00D4FF' }: { size?: number; color?: string }) {
   const pins = [32, 44, 56, 68, 80, 92];
   return (
     <svg width={size} height={size} viewBox="0 0 120 120">

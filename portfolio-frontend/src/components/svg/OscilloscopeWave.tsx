@@ -1,5 +1,5 @@
 export default function OscilloscopeWave({
-  color = '#00FF88',
+  color = '#00D4FF',
   width = 300,
   height = 60,
   animated = true,

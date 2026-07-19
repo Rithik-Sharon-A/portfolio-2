@@ -1,7 +1,7 @@
 export default function OscilloscopeScreen({
   width = 280,
   height = 180,
-  color = '#00FF88',
+  color = '#00D4FF',
   intensity = 0.45,
 }: {
   width?: number;

@@ -130,8 +130,8 @@ export default function TerminalDock() {
             background: 'rgba(13,17,23,0.95)',
             backdropFilter: 'blur(12px)',
             border: 'none',
-            borderTop: '1px solid rgba(0,255,136,0.3)',
-            boxShadow: '0 -4px 30px rgba(0,255,136,0.08)',
+            borderTop: '1px solid rgba(0,212,255,0.3)',
+            boxShadow: '0 -4px 30px rgba(0,212,255,0.08)',
           }}
         >
           <span
@@ -139,15 +139,15 @@ export default function TerminalDock() {
               width: 8,
               height: 8,
               borderRadius: '50%',
-              background: '#00FF88',
-              boxShadow: '0 0 8px #00FF88',
+              background: '#00D4FF',
+              boxShadow: '0 0 8px #00D4FF',
               animation: 'glowPulse 2s infinite',
               flexShrink: 0,
             }}
           />
           <span
             className="term-launcher-label"
-            style={{ ...mono, fontSize: 13, color: '#00FF88', letterSpacing: '0.08em' }}
+            style={{ ...mono, fontSize: 13, color: '#00D4FF', letterSpacing: '0.08em' }}
           >
             {'>_'} OPEN TERMINAL — FIRMWARE ASSISTANT
           </span>
@@ -156,7 +156,7 @@ export default function TerminalDock() {
             style={{
               ...mono,
               fontSize: 11,
-              color: '#475569',
+              color: '#2A4A5A',
               marginLeft: 'auto',
               letterSpacing: '0.1em',
             }}
@@ -179,12 +179,12 @@ export default function TerminalDock() {
               bottom: 0,
               left: 0,
               right: 0,
-              height: 'min(460px, 60vh)',
+              height: 'min(460px, 70vh)',
               zIndex: 999,
               background: 'rgba(8,12,16,0.98)',
               backdropFilter: 'blur(16px)',
-              borderTop: '1px solid rgba(0,255,136,0.4)',
-              boxShadow: '0 -10px 60px rgba(0,255,136,0.12)',
+              borderTop: '1px solid rgba(0,212,255,0.4)',
+              boxShadow: '0 -10px 60px rgba(0,212,255,0.12)',
               display: 'flex',
               flexDirection: 'column',
             }}
@@ -193,10 +193,10 @@ export default function TerminalDock() {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: 16,
-                padding: '10px 24px',
-                borderBottom: '1px solid rgba(0,255,136,0.15)',
-                background: 'rgba(0,255,136,0.03)',
+                gap: 12,
+                padding: '10px clamp(12px, 3vw, 24px)',
+                borderBottom: '1px solid rgba(0,212,255,0.15)',
+                background: 'rgba(0,212,255,0.03)',
               }}
             >
               <span
@@ -204,18 +204,18 @@ export default function TerminalDock() {
                   width: 8,
                   height: 8,
                   borderRadius: '50%',
-                  background: '#00FF88',
-                  boxShadow: '0 0 6px #00FF88',
+                  background: '#00D4FF',
+                  boxShadow: '0 0 6px #00D4FF',
                 }}
               />
-              <span style={{ ...mono, fontSize: 12, color: '#E2E8F0', letterSpacing: '0.15em' }}>
+              <span style={{ ...mono, fontSize: 12, color: '#E8F4F8', letterSpacing: '0.15em' }}>
                 TERMINAL — FIRMWARE ASSISTANT
               </span>
               <span
                 style={{
                   ...mono,
                   fontSize: 11,
-                  color: '#475569',
+                  color: '#2A4A5A',
                   marginLeft: 'auto',
                   letterSpacing: '0.1em',
                 }}
@@ -228,8 +228,8 @@ export default function TerminalDock() {
                 style={{
                   ...mono,
                   background: 'none',
-                  border: '1px solid rgba(0,255,136,0.3)',
-                  color: '#00FF88',
+                  border: '1px solid rgba(0,212,255,0.3)',
+                  color: '#00D4FF',
                   fontSize: 11,
                   padding: '3px 10px',
                   cursor: 'pointer',
@@ -252,10 +252,10 @@ export default function TerminalDock() {
                       whiteSpace: 'pre-wrap',
                       color:
                         l.type === 'boot'
-                          ? '#0EA5E9'
+                          ? '#00FFE5'
                           : l.type === 'user'
-                            ? '#E2E8F0'
-                            : '#00FF88',
+                            ? '#E8F4F8'
+                            : '#00D4FF',
                     }}
                   >
                     {l.type === 'user' ? `assistant@rs-embedded:~$ ${l.text}` : l.text}
@@ -266,7 +266,7 @@ export default function TerminalDock() {
                     style={{
                       ...mono,
                       fontSize: 13,
-                      color: '#00FF88',
+                      color: '#00D4FF',
                       animation: 'blink 1s step-end infinite',
                     }}
                   >
@@ -279,7 +279,7 @@ export default function TerminalDock() {
                 className="term-sidebar"
                 style={{
                   width: 300,
-                  borderLeft: '1px solid rgba(0,255,136,0.12)',
+                  borderLeft: '1px solid rgba(0,212,255,0.12)',
                   padding: '16px 20px',
                   overflowY: 'auto',
                   flexShrink: 0,
@@ -289,7 +289,7 @@ export default function TerminalDock() {
                   style={{
                     ...mono,
                     fontSize: 11,
-                    color: '#475569',
+                    color: '#2A4A5A',
                     letterSpacing: '0.15em',
                     marginBottom: 12,
                   }}
@@ -312,15 +312,15 @@ export default function TerminalDock() {
                       gap: 12,
                     }}
                   >
-                    <span style={{ color: '#00FF88', minWidth: 90 }}>{c}</span>
-                    <span style={{ color: '#475569', fontSize: 11 }}>
+                    <span style={{ color: '#00D4FF', minWidth: 90 }}>{c}</span>
+                    <span style={{ color: '#2A4A5A', fontSize: 11 }}>
                       {COMMANDS[c].split('·')[0].slice(0, 34)}…
                     </span>
                   </div>
                 ))}
                 <div style={{ ...mono, fontSize: 12, lineHeight: 2.2, display: 'flex', gap: 12 }}>
-                  <span style={{ color: '#00FF88', minWidth: 90 }}>clear</span>
-                  <span style={{ color: '#475569', fontSize: 11 }}>Clear terminal</span>
+                  <span style={{ color: '#00D4FF', minWidth: 90 }}>clear</span>
+                  <span style={{ color: '#2A4A5A', fontSize: 11 }}>Clear terminal</span>
                 </div>
               </div>
             </div>
@@ -331,14 +331,14 @@ export default function TerminalDock() {
                   alignItems: 'center',
                   gap: 8,
                   padding: '12px clamp(12px, 3vw, 24px)',
-                  borderTop: '1px solid rgba(0,255,136,0.15)',
+                  borderTop: '1px solid rgba(0,212,255,0.15)',
                 }}
               >
-              <span className="term-prompt-prefix" style={{ ...mono, fontSize: 13, color: '#00FF88', flexShrink: 0 }}>
+              <span className="term-prompt-prefix term-prompt-full" style={{ ...mono, fontSize: 13, color: '#00D4FF', flexShrink: 0 }}>
                 assistant@rs-embedded:~$
               </span>
-              <span className="term-prompt-mobile" style={{ ...mono, fontSize: 13, color: '#00FF88', flexShrink: 0, display: 'none' }}>
-                {'>$'}
+              <span className="term-prompt-mobile term-prompt-short" style={{ ...mono, fontSize: 13, color: '#00D4FF', flexShrink: 0, display: 'none' }}>
+                rs~$
               </span>
               <input
                 ref={inputRef}
@@ -352,9 +352,9 @@ export default function TerminalDock() {
                   background: 'transparent',
                   border: 'none',
                   outline: 'none',
-                  color: '#E2E8F0',
+                  color: '#E8F4F8',
                   fontSize: 13,
-                  caretColor: '#00FF88',
+                  caretColor: '#00D4FF',
                 }}
               />
             </div>
@@ -367,8 +367,10 @@ export default function TerminalDock() {
           .term-sidebar { display: none !important; }
           .term-launcher-label { font-size: 11px !important; }
           .term-launcher-meta { display: none !important; }
-          .term-prompt-prefix { display: none !important; }
-          .term-prompt-mobile { display: inline !important; }
+          .term-prompt-prefix,
+          .term-prompt-full { display: none !important; }
+          .term-prompt-mobile,
+          .term-prompt-short { display: inline !important; }
         }
         @media (max-width: 480px) {
           .term-panel { height: min(72vh, 520px) !important; }

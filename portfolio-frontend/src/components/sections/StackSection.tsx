@@ -76,7 +76,7 @@ export default function StackSection({ data, label, heading, subtitle }: Props) 
           animate={inView ? { opacity: 1, y: 0 } : {}}
           style={{
             fontFamily: 'Syne, sans-serif',
-            fontSize: 'clamp(2rem, 5vw, 3.2rem)',
+            fontSize: 'clamp(2rem, 7vw, 3.2rem)',
             fontWeight: 800,
             letterSpacing: '-0.03em',
             marginBottom: 12,
@@ -111,19 +111,20 @@ export default function StackSection({ data, label, heading, subtitle }: Props) 
                   fontFamily: 'DM Mono, monospace',
                   fontSize: 11,
                   letterSpacing: '0.16em',
-                  color: 'rgba(81,246,218,0.75)',
+                  color: 'rgba(0,212,255,0.75)',
                   marginBottom: 14,
-                  borderBottom: '1px solid rgba(81,246,218,0.12)',
+                  borderBottom: '1px solid rgba(0,212,255,0.12)',
                   paddingBottom: 8,
                 }}
               >
                 {group.domain.toUpperCase()}
               </div>
               <div
+                className="stack-grid"
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
-                  gap: 10,
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
+                  gap: 'clamp(8px, 1.5vw, 12px)',
                 }}
               >
                 {group.items.map((item) => {
@@ -138,9 +139,9 @@ export default function StackSection({ data, label, heading, subtitle }: Props) 
                       className="eng-pulse"
                       style={{
                         textAlign: 'left',
-                        border: `1px solid rgba(81,246,218,${active ? 0.45 : 0.14})`,
-                        background: active ? 'rgba(81,246,218,0.08)' : 'var(--surface)',
-                        padding: '16px 14px',
+                        border: `1px solid rgba(0,212,255,${active ? 0.45 : 0.14})`,
+                        background: active ? 'rgba(0,212,255,0.08)' : 'var(--surface)',
+                        padding: 'clamp(12px, 2vw, 20px) clamp(10px, 1.5vw, 16px)',
                         cursor: 'pointer',
                         transition: 'border-color 0.2s, background 0.2s',
                       }}

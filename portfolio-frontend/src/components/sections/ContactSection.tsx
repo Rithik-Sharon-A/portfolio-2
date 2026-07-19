@@ -5,6 +5,7 @@ import { useRef, useState } from 'react';
 import { Contact } from '@/types';
 import { FolderGit2, Link2, Mail, Phone } from 'lucide-react';
 import CircuitNode from '@/components/svg/CircuitNode';
+import CircuitCorners from '@/components/svg/CircuitCorners';
 
 interface Props {
   data: Contact | null;
@@ -47,7 +48,7 @@ export default function ContactSection({ data }: Props) {
       ref={ref}
       style={{
         background: 'var(--bg)',
-        padding: 'clamp(70px, 14vw, 140px) clamp(20px, 6vw, 80px)',
+        padding: 'clamp(80px, 10vw, 140px) clamp(16px, 4vw, 80px)',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
@@ -60,22 +61,29 @@ export default function ContactSection({ data }: Props) {
     >
       <style>{`
         .contact-footer {
-          border-top: 1px solid rgba(81,246,218,0.12);
-          width: 100vw;
-          margin-left: calc(-50vw + 50%);
+          border-top: 1px solid rgba(0,212,255,0.12);
+          width: 100%;
+          max-width: 100vw;
           display: flex;
           justify-content: space-between;
           align-items: center;
           gap: 16px;
-          padding: 32px clamp(20px, 6vw, 80px) 0;
+          padding: clamp(16px, 3vw, 32px) 0 0;
           flex-wrap: wrap;
         }
-        @media (max-width: 640px) {
-          .contact-footer { flex-direction: column; text-align: center; }
+        @media (max-width: 768px) {
+          .contact-footer {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 8px;
+          }
         }
       `}</style>
 
       <div className="pcb-grid" style={{ position: 'absolute', inset: 0, opacity: 0.5 }} />
+
+      <CircuitCorners opacity={0.35} />
 
       <div style={{ position: 'relative', zIndex: 1, maxWidth: 800 }}>
         <motion.div
@@ -99,7 +107,7 @@ export default function ContactSection({ data }: Props) {
           transition={{ duration: 0.7 }}
           style={{
             fontFamily: 'Syne, sans-serif',
-            fontSize: 'clamp(2.8rem, 11vw, 7rem)',
+            fontSize: 'clamp(2.5rem, 10vw, 7rem)',
             fontWeight: 800,
             color: 'var(--white)',
             letterSpacing: '-0.03em',
@@ -115,13 +123,13 @@ export default function ContactSection({ data }: Props) {
           transition={{ duration: 0.7, delay: 0.08 }}
           style={{
             fontFamily: 'Syne, sans-serif',
-            fontSize: 'clamp(2.8rem, 11vw, 7rem)',
+            fontSize: 'clamp(2.5rem, 10vw, 7rem)',
             fontWeight: 800,
-            color: '#00FF88',
+            color: '#00FFE5',
             letterSpacing: '-0.03em',
             lineHeight: 0.92,
             marginBottom: 28,
-            textShadow: '0 0 40px rgba(81,246,218,0.25)',
+            textShadow: '0 0 40px rgba(0,255,229,0.3)',
           }}
         >
           {data.headingLine2}
@@ -146,18 +154,21 @@ export default function ContactSection({ data }: Props) {
           type="button"
           onClick={runHandshake}
           className="eng-pulse"
-          whileHover={{ borderColor: 'rgba(81,246,218,0.6)' }}
+          whileHover={{ borderColor: 'rgba(0,212,255,0.6)' }}
           style={{
             fontFamily: 'DM Mono, monospace',
             fontSize: 13,
             letterSpacing: '0.12em',
-            color: phase === 'open' ? '#080C10' : '#00FF88',
-            background: phase === 'open' ? '#00FF88' : 'transparent',
-            border: '1px solid rgba(81,246,218,0.4)',
-            padding: '16px 28px',
+            color: phase === 'open' ? '#020D14' : '#00D4FF',
+            background: phase === 'open' ? '#00D4FF' : 'transparent',
+            border: '1px solid #00D4FF',
+            padding: 'clamp(12px, 2vw, 18px) clamp(24px, 4vw, 48px)',
             cursor: 'pointer',
-            marginBottom: 40,
-            minWidth: 240,
+            marginBottom: 'clamp(24px, 4vw, 40px)',
+            minWidth: 'min(240px, 100%)',
+            width: '100%',
+            maxWidth: 320,
+            justifyContent: 'center',
             transition: 'background 0.25s, color 0.25s',
           }}
         >
@@ -172,8 +183,8 @@ export default function ContactSection({ data }: Props) {
               exit={{ opacity: 0 }}
               style={{
                 display: 'flex',
-                gap: 32,
-                marginBottom: 80,
+                gap: 'clamp(16px, 4vw, 32px)',
+                marginBottom: 'clamp(40px, 6vw, 80px)',
                 justifyContent: 'center',
                 flexWrap: 'wrap',
               }}
@@ -201,7 +212,7 @@ export default function ContactSection({ data }: Props) {
                     rel="noopener noreferrer"
                     style={{ color: 'var(--muted)', transition: 'color 0.2s' }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.color = 'var(--green)';
+                      e.currentTarget.style.color = 'var(--blue)';
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.color = 'var(--muted)';

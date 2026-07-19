@@ -178,9 +178,9 @@ export function InstrumentBusProvider({ children }: { children: ReactNode }) {
             fontFamily: 'DM Mono, monospace',
             fontSize: 11,
             letterSpacing: '0.12em',
-            color: '#00FF88',
+            color: '#00D4FF',
             background: 'rgba(14,15,18,0.94)',
-            border: '1px solid rgba(81,246,218,0.28)',
+            border: '1px solid rgba(0,212,255,0.28)',
             padding: '8px 14px',
             pointerEvents: 'none',
           }}

@@ -4,7 +4,7 @@ interface Props {
   flip?: boolean;
 }
 
-export default function SquareWaveDivider({ color = '#00FF88', background = 'transparent', flip = false }: Props) {
+export default function SquareWaveDivider({ color = '#00D4FF', background = 'transparent', flip = false }: Props) {
   const period = 120;
   const high = 8;
   const low = 32;

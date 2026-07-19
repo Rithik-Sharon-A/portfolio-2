@@ -1,7 +1,7 @@
 'use client';
 
 export default function GPIOPinout({
-  color = '#00FF88',
+  color = '#00D4FF',
   size = 148,
   onPinClick,
 }: {
@@ -9,7 +9,7 @@ export default function GPIOPinout({
   size?: number;
   onPinClick?: (label: string) => void;
 }) {
-  const accent = '#00FF88';
+  const accent = '#00D4FF';
   const pins = [
     { label: 'VCC', col: '#FF6B6B', tech: null },
     { label: 'GND', col: '#94A3B8', tech: null },

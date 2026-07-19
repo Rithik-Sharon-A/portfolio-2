@@ -1,5 +1,5 @@
 export default function ESP32Board({
-  color = '#00FF88',
+  color = '#00D4FF',
   size = 80,
   onSelect,
 }: {
@@ -67,7 +67,7 @@ export default function ESP32Board({
 
       <circle cx="20" cy="35" r="3" fill={color} opacity="0.6"
         style={{ animation: 'glowPulse 1.5s ease-in-out infinite' }} />
-      <circle cx="60" cy="35" r="3" fill="#00FF88" opacity="0.5"
+      <circle cx="60" cy="35" r="3" fill="#00D4FF" opacity="0.5"
         style={{ animation: 'glowPulse 2s ease-in-out infinite 0.5s' }} />
     </svg>
   );

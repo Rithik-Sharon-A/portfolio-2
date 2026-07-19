@@ -1,5 +1,5 @@
 export default function PCBTrace({
-  color = '#00FF88',
+  color = '#00D4FF',
   opacity = 0.15,
 }: {
   color?: string;
