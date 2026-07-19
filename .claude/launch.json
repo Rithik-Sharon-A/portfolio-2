@@ -2,12 +2,6 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "strapi-cms",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "develop", "--prefix", "portfolio-cms"],
-      "port": 1337
-    },
-    {
       "name": "next-frontend",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev", "--prefix", "portfolio-frontend"],

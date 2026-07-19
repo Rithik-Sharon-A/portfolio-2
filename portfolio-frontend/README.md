@@ -2,6 +2,8 @@
 
 Next.js app for the embedded-systems portfolio.
 
+Content lives in `src/lib/portfolio-data.ts` — edit that file to update copy, projects, stack, and terminal text.
+
 See the **[root README](../README.md)** for full setup, environment variables, and architecture.
 
 ```bash
@@ -10,4 +12,4 @@ npm install
 npm run dev
 ```
 
-Requires Strapi running at `NEXT_PUBLIC_STRAPI_URL` (default `http://localhost:1337`).
+Optional: set `OPENROUTER_API_KEY` in `.env.local` for the AI terminal assistant.

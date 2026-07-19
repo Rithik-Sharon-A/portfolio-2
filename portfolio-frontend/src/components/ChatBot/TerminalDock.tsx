@@ -12,7 +12,7 @@ interface Line {
 
 const DEFAULT_BOOT = [
   '> Boot Successful',
-  '> Loading Strapi Knowledge Base...',
+  '> Loading Portfolio Knowledge Base...',
   '> Initializing Embedded Assistant...',
   '> UART Connection Established @115200',
   '> Firmware Assistant Ready.',

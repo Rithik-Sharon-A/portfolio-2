@@ -1,8 +1,8 @@
 # Embedded Systems Portfolio
 
-Personal portfolio for **Rithik Sharon A** — an embedded-systems / firmware–focused workstation UI backed by a headless CMS.
+Personal portfolio for **Rithik Sharon A** — an embedded-systems / firmware–focused workstation UI powered by a Next.js frontend and static content.
 
-Visitors get a HUD-style site (PCB backdrop, radar, oscilloscope, terminal assistant). Content is edited in Strapi and rendered by a Next.js frontend.
+Visitors get a HUD-style site (PCB backdrop, radar, oscilloscope, terminal assistant). All copy and project data live in a single TypeScript file — no CMS required.
 
 ---
 
@@ -10,20 +10,19 @@ Visitors get a HUD-style site (PCB backdrop, radar, oscilloscope, terminal assis
 
 ```
 my-portfolio/
-├── portfolio-frontend/     # Next.js 16 + React 19 (App Router)
-└── portfolio-cms/          # Strapi 5 (SQLite in local dev)
+└── portfolio-frontend/     # Next.js 16 + React 19 (App Router)
 ```
 
 | Layer | Role |
 |--------|------|
 | **Frontend** | Marketing site, animations, Firmware Inspector, UART-style chat terminal |
-| **CMS** | All copy, projects, stack, services, SEO, boot/terminal chrome |
-| **Chat API** | `POST /api/chat` — builds context from Strapi, calls OpenRouter |
+| **Content** | `src/lib/portfolio-data.ts` — hero, about, projects, stack, services, contact, site settings |
+| **Chat API** | `POST /api/chat` — builds context from static data, calls OpenRouter |
 
 ```
 Browser ──► Next.js (localhost:3000)
                │
-               ├── fetch ──► Strapi REST (localhost:1337/api/*)
+               ├── reads ──► src/lib/portfolio-data.ts
                └── /api/chat ──► OpenRouter (optional)
 ```
 
@@ -37,22 +36,16 @@ Browser ──► Next.js (localhost:3000)
 - Tailwind CSS 4, Framer Motion
 - Lucide icons
 
-**CMS**
-
-- Strapi 5
-- SQLite (`better-sqlite3`) for development
-- Draft & publish on content types
-
 **AI assistant**
 
 - OpenRouter (default free model: `google/gemini-2.0-flash-exp:free`)
-- Portfolio facts loaded live from Strapi on each chat request
+- Portfolio facts loaded from `portfolio-data.ts` on each chat request
 
 ---
 
 ## Prerequisites
 
-- **Node.js** `20`–`24` (required by Strapi)
+- **Node.js** 18+
 - **npm** 6+
 - Optional: [OpenRouter](https://openrouter.ai/keys) API key for the terminal assistant
 
@@ -64,94 +57,47 @@ Browser ──► Next.js (localhost:3000)
 
 ```bash
 git clone <your-repo-url>
-cd my-portfolio
-
-cd portfolio-cms && npm install && cd ..
-cd portfolio-frontend && npm install && cd ..
+cd my-portfolio/portfolio-frontend
+npm install
 ```
 
 ### 2. Configure environment
 
-**CMS** — copy and edit secrets:
-
 ```bash
-cd portfolio-cms
-cp .env.example .env
-```
-
-Generate secrets (run once, paste into `.env`):
-
-```bash
-node -e "console.log(require('crypto').randomBytes(16).toString('base64'))"
-```
-
-Fill `APP_KEYS` (comma-separated), `API_TOKEN_SALT`, `ADMIN_JWT_SECRET`, `TRANSFER_TOKEN_SALT`, `JWT_SECRET`, and `ENCRYPTION_KEY`.
-
-**Frontend** — copy and edit:
-
-```bash
-cd portfolio-frontend
 cp .env.example .env.local
 ```
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `NEXT_PUBLIC_STRAPI_URL` | Yes | Strapi base URL (default `http://localhost:1337`) |
 | `OPENROUTER_API_KEY` | For chat | OpenRouter key; without it the terminal still works for slash commands |
-| `OPENROUTER_MODEL` | No | Override chat model |
+| `OPENROUTER_MODEL` | No | Override chat model (default `google/gemini-2.0-flash-exp:free`) |
+| `NEXT_PUBLIC_SITE_URL` | No | Public site URL for OpenRouter referer header |
 
 ### 3. Run locally
 
-Use two terminals.
-
-**Terminal A — CMS**
-
 ```bash
-cd portfolio-cms
-npm run develop
-```
-
-- Admin: [http://localhost:1337/admin](http://localhost:1337/admin)
-- API: [http://localhost:1337/api](http://localhost:1337/api)
-
-On first run, create the Strapi admin user.
-
-**Terminal B — Frontend**
-
-```bash
-cd portfolio-frontend
 npm run dev
 ```
 
 - Site: [http://localhost:3000](http://localhost:3000)
 
-### 4. Enable public API access
-
-In Strapi Admin → **Settings → Users & Permissions → Roles → Public**, allow `find` / `findOne` (as needed) for:
-
-- Hero, About, Project, Stack-item, Service, Contact, Site-setting
-
-Without this, the frontend will render empty sections.
-
-Publish your entries (draft & publish is enabled).
-
 ---
 
-## Content model (Strapi)
+## Editing content
 
-| Content type | Purpose |
-|--------------|---------|
-| **Hero** | Hero words, profile, pills, nav/CTAs, CORE & debugger rows, resume, tagline chrome |
-| **About** | Section heading, bio rows, stats, focus / philosophy / learning |
-| **Project** | Case studies + media (images, diagrams, video), inspector fields |
-| **StackItem** | Tech by domain (Firmware, MCU, RTOS, …), optional icon |
-| **Service** | Numbered service offerings |
-| **Contact** | Headings, CTA, social links, handshake labels |
-| **SiteSettings** | SEO, logo, marquee, section titles, boot screen, terminal copy & commands |
+All site content is in **`portfolio-frontend/src/lib/portfolio-data.ts`**.
+
+| Export | Purpose |
+|--------|---------|
+| **hero** | Hero words, profile, pills, nav/CTAs, CORE & debugger rows, resume, tagline chrome |
+| **about** | Section heading, bio rows, stats, focus / philosophy / learning |
+| **projects** | Case studies + inspector fields (media optional via `MediaRef` URLs) |
+| **stackItems** | Tech by domain (Firmware, MCU, RTOS, …) |
+| **services** | Numbered service offerings |
+| **contact** | Headings, CTA, social links, handshake labels |
+| **siteSettings** | SEO, logo, marquee, section titles, boot screen, terminal copy & commands |
 
 ### Text field formats
-
-Used in Hero / SiteSettings text fields:
 
 ```text
 # Nav / KV rows  (LABEL|VALUE per line)
@@ -168,7 +114,7 @@ typedLines / bootLines → one line per entry
 marqueeLine1/2 → comma-separated words
 ```
 
-Edit content in Admin, publish, refresh the Next site (fetches use `cache: 'no-store'`).
+Edit the file, save, and refresh — no publish step.
 
 ---
 
@@ -177,9 +123,9 @@ Edit content in Admin, publish, refresh the Next site (fetches use `cache: 'no-s
 ```
 portfolio-frontend/src/
 ├── app/
-│   ├── page.tsx              # Composes all sections from Strapi
-│   ├── layout.tsx            # SEO / Open Graph from SiteSettings
-│   ├── api/chat/route.ts     # OpenRouter + Strapi context
+│   ├── page.tsx              # Composes all sections from static data
+│   ├── layout.tsx            # SEO / Open Graph from siteSettings
+│   ├── api/chat/route.ts     # OpenRouter + portfolio context
 │   └── globals.css           # Theme tokens, hero, responsive rules
 ├── components/
 │   ├── sections/             # Hero, About, Projects, Stack, Services, Contact
@@ -188,23 +134,22 @@ portfolio-frontend/src/
 │   └── svg/                  # PCB background, dividers, radar helpers
 ├── context/InstrumentBus.tsx # Project inspector + tech filter bus
 ├── lib/
-│   ├── strapi.ts             # REST fetch helpers
+│   ├── portfolio-data.ts     # Single source of truth for all content
+│   ├── strapi.ts             # Async fetch wrappers over static data
 │   └── cmsText.ts            # Parsers for LABEL|VALUE blobs
-└── types/index.ts            # Shared CMS TypeScript types
+└── types/index.ts            # Shared TypeScript types
 ```
 
 ### Notable UI pieces
 
 - **Hero workstation** — 3-column HUD, oscilloscope, radar, resume CTA, PCB layered background
 - **Firmware Inspector** — slide-over project detail panel
-- **Terminal dock** — boot sequence, slash commands from CMS, free-form AI chat
-- **Boot loader** — first-visit splash driven by SiteSettings
+- **Terminal dock** — boot sequence, slash commands, free-form AI chat
+- **Boot loader** — first-visit splash driven by siteSettings
 
 ---
 
 ## Scripts
-
-### Frontend (`portfolio-frontend`)
 
 | Command | Description |
 |---------|-------------|
@@ -213,40 +158,34 @@ portfolio-frontend/src/
 | `npm run start` | Serve production build |
 | `npm run lint` | ESLint |
 
-### CMS (`portfolio-cms`)
-
-| Command | Description |
-|---------|-------------|
-| `npm run develop` | Strapi with admin rebuild / watch |
-| `npm run build` | Build admin panel |
-| `npm run start` | Production Strapi |
-| `npm run console` | Strapi REPL |
-
 ---
 
-## Production notes
+## Deploy to Vercel
 
-1. Set `NEXT_PUBLIC_STRAPI_URL` to your deployed Strapi URL (never leave localhost in prod).
-2. Set `NEXT_PUBLIC_SITE_URL` to the public frontend URL.
-3. Set `CORS_ORIGIN` on Strapi to your frontend origin(s), comma-separated.
-4. Prefer **PostgreSQL** for Strapi in production (see `portfolio-cms/.env.example`).
-5. Keep `OPENROUTER_API_KEY` server-side only (never `NEXT_PUBLIC_`).
-6. Place `resume.pdf` in `portfolio-frontend/public/` (or set Hero `resumeUrl`).
-7. Upload an **ogImage** under SiteSettings for social previews.
-8. Never commit `.env` / `.env.local` / `.env.production` (gitignored).
+1. Push the repo to GitHub
+2. Import the project on [vercel.com](https://vercel.com)
+3. Set **Root Directory** to `portfolio-frontend`
+4. Add environment variables:
+   - `OPENROUTER_API_KEY` = your OpenRouter key
+   - `OPENROUTER_MODEL` = `google/gemini-2.0-flash-exp:free` (optional)
+5. Deploy
+
+### Production notes
+
+1. Set `NEXT_PUBLIC_SITE_URL` to the public frontend URL.
+2. Keep `OPENROUTER_API_KEY` server-side only (never `NEXT_PUBLIC_`).
+3. Place `resume.pdf` in `portfolio-frontend/public/` (or set Hero `resumeUrl`).
+4. Never commit `.env` / `.env.local` / `.env.production` (gitignored).
 
 ### Security checklist
 
-- [ ] Public role in Strapi allows only `find` / `findOne` on needed types (no create/update/delete)
-- [ ] Strapi admin password is strong; change default secrets from `.env.example`
 - [ ] Chat route rate-limits (~20 req/min/IP) and caps message length
 - [ ] Security headers enabled via `next.config.ts` (`X-Content-Type-Options`, `X-Frame-Options`, etc.)
-- [ ] Run `npm audit` in both packages before each deploy
+- [ ] Run `npm audit` before each deploy
 
 ### Known dependency notes
 
-- **Frontend:** Remaining `postcss` advisory is inside Next.js itself; do **not** run `npm audit fix --force` (it downgrades Next).
-- **CMS:** Strapi pulls transitive advisories (`undici`, `ws`, etc.). Prefer upgrading Strapi when a patched release is available; avoid force-downgrades.
+- Remaining `postcss` advisory is inside Next.js itself; do **not** run `npm audit fix --force` (it downgrades Next).
 
 ---
 
@@ -262,11 +201,9 @@ portfolio-frontend/src/
 
 | Issue | Fix |
 |-------|-----|
-| Blank sections | Public permissions + publish content in Strapi |
 | Chat says “not configured” | Set `OPENROUTER_API_KEY` in `.env.local` and restart Next |
-| CORS / fetch errors | Confirm `NEXT_PUBLIC_STRAPI_URL` and Strapi is running |
-| Schema changes not visible | Restart `npm run develop` in `portfolio-cms` |
-| New CMS fields empty | Frontend uses defaults until you fill & publish in Admin |
+| Content not updating | Edit `src/lib/portfolio-data.ts` and refresh / rebuild |
+| Blank resume download | Add `public/resume.pdf` or update `hero.resumeUrl` |
 
 ---
 

@@ -1,4 +1,4 @@
-/** Shared parsers for Strapi text blob fields. */
+/** Shared parsers for LABEL|VALUE and line-based text blob fields. */
 
 export function parseLines(raw?: string | null): string[] {
   if (!raw?.trim()) return [];
