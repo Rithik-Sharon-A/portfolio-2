@@ -1,0 +1,32 @@
+############################
+# Strapi / Node
+############################
+node_modules/
+.strapi/
+.tmp/
+.cache/
+build/
+dist/
+.strapi-updater.json
+
+############################
+# Env & secrets
+############################
+.env
+.env.*
+!.env.example
+
+############################
+# Database
+############################
+*.db
+*.sqlite
+*.sqlite3
+data.db
+
+############################
+# Logs / OS
+############################
+*.log
+.DS_Store
+Thumbs.db

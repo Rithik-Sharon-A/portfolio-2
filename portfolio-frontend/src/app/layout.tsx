@@ -1,17 +1,10 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { fetchSiteSettings } from '@/lib/strapi';
-
-const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
-
-function mediaUrl(url?: string) {
-  if (!url) return undefined;
-  return url.startsWith('http') ? url : `${STRAPI_URL}${url}`;
-}
+import { fetchSiteSettings, mediaUrl } from '@/lib/strapi';
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await fetchSiteSettings();
-  const og = mediaUrl(settings?.ogImage?.url);
+  const og = mediaUrl(settings?.ogImage?.url) || undefined;
   return {
     title: settings?.seoTitle,
     description: settings?.seoDesc,

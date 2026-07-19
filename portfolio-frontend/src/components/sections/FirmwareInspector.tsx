@@ -4,8 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, FolderGit2, FileText } from 'lucide-react';
 import { Project, SiteSettings } from '@/types';
 import { useInstrumentBus } from '@/context/InstrumentBus';
-
-const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
+import { mediaUrl } from '@/lib/strapi';
 
 type InspectorLabels = Pick<
   SiteSettings,
@@ -25,11 +24,6 @@ type InspectorLabels = Pick<
   | 'inspectorDocs'
   | 'inspectorLive'
 >;
-
-function mediaUrl(url?: string) {
-  if (!url) return '';
-  return url.startsWith('http') ? url : `${STRAPI_URL}${url}`;
-}
 
 function Block({ title, body }: { title: string; body?: string | null }) {
   if (!body?.trim()) return null;

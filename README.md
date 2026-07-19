@@ -226,12 +226,27 @@ portfolio-frontend/src/
 
 ## Production notes
 
-1. Point `NEXT_PUBLIC_STRAPI_URL` at your deployed Strapi URL.
-2. Prefer **PostgreSQL** for Strapi in production (see comments in `portfolio-cms/.env.example`).
-3. Keep `OPENROUTER_API_KEY` server-side only (never prefix with `NEXT_PUBLIC_`).
-4. Configure CORS on Strapi for your frontend origin.
-5. Place `resume.pdf` in `portfolio-frontend/public/` (or set Hero `resumeUrl` to an absolute URL).
-6. Upload an **ogImage** under SiteSettings for social previews.
+1. Set `NEXT_PUBLIC_STRAPI_URL` to your deployed Strapi URL (never leave localhost in prod).
+2. Set `NEXT_PUBLIC_SITE_URL` to the public frontend URL.
+3. Set `CORS_ORIGIN` on Strapi to your frontend origin(s), comma-separated.
+4. Prefer **PostgreSQL** for Strapi in production (see `portfolio-cms/.env.example`).
+5. Keep `OPENROUTER_API_KEY` server-side only (never `NEXT_PUBLIC_`).
+6. Place `resume.pdf` in `portfolio-frontend/public/` (or set Hero `resumeUrl`).
+7. Upload an **ogImage** under SiteSettings for social previews.
+8. Never commit `.env` / `.env.local` / `.env.production` (gitignored).
+
+### Security checklist
+
+- [ ] Public role in Strapi allows only `find` / `findOne` on needed types (no create/update/delete)
+- [ ] Strapi admin password is strong; change default secrets from `.env.example`
+- [ ] Chat route rate-limits (~20 req/min/IP) and caps message length
+- [ ] Security headers enabled via `next.config.ts` (`X-Content-Type-Options`, `X-Frame-Options`, etc.)
+- [ ] Run `npm audit` in both packages before each deploy
+
+### Known dependency notes
+
+- **Frontend:** Remaining `postcss` advisory is inside Next.js itself; do **not** run `npm audit fix --force` (it downgrades Next).
+- **CMS:** Strapi pulls transitive advisories (`undici`, `ws`, etc.). Prefer upgrading Strapi when a patched release is available; avoid force-downgrades.
 
 ---
 

@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 
-const STRAPI = 'http://localhost:1337/api';
+// Relative to the Strapi admin host (works in local + deployed CMS)
+const STRAPI = '/api';
 
 const COLLECTIONS = [
   { name: 'Hero',         endpoint: 'heroes'        },

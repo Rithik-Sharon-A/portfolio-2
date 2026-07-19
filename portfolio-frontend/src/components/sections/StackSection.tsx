@@ -5,6 +5,7 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { StackDomain, StackItem } from '@/types';
 import { useInstrumentBus } from '@/context/InstrumentBus';
+import { mediaUrl } from '@/lib/strapi';
 
 interface Props {
   data: StackItem[];
@@ -129,11 +130,7 @@ export default function StackSection({ data, label, heading, subtitle }: Props) 
               >
                 {group.items.map((item) => {
                   const active = techFilter?.toLowerCase() === item.name.toLowerCase();
-                  const iconSrc = item.icon?.url
-                    ? item.icon.url.startsWith('http')
-                      ? item.icon.url
-                      : `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${item.icon.url}`
-                    : item.iconUrl;
+                  const iconSrc = item.icon?.url ? mediaUrl(item.icon.url) : item.iconUrl;
                   return (
                     <button
                       key={item.documentId}
