@@ -459,6 +459,21 @@ export interface ApiAboutAbout extends Struct.CollectionTypeSchema {
     heading: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'Read the spin.'>;
+    labelBackground: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'BACKGROUND'>;
+    labelFocus: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'CURRENT FOCUS'>;
+    labelLanguage: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'PRIMARY LANGUAGE'>;
+    labelLearning: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'CURRENT LEARNING'>;
+    labelLocation: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'LOCATION / OPS'>;
+    labelMission: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'MISSION'>;
+    labelName: Schema.Attribute.String & Schema.Attribute.DefaultTo<'NAME'>;
+    labelPhilosophy: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'PHILOSOPHY'>;
     learning: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::about.about'> &
@@ -513,6 +528,12 @@ export interface ApiContactContact extends Struct.CollectionTypeSchema {
     footerTagline: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Built from bare metal to browser.'>;
     github: Schema.Attribute.String;
+    handshakeAck: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'\u2190 ACK'>;
+    handshakeOpen: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'CHANNEL OPEN \u00B7 MAIL'>;
+    handshakeSyn: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'SYN \u2192'>;
     headingLine1: Schema.Attribute.String & Schema.Attribute.DefaultTo<"LET'S">;
     headingLine2: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'CONNECT'>;
@@ -537,7 +558,7 @@ export interface ApiContactContact extends Struct.CollectionTypeSchema {
 export interface ApiHeroHero extends Struct.CollectionTypeSchema {
   collectionName: 'heroes';
   info: {
-    description: 'Hero section content';
+    description: 'Hero section content and workstation chrome';
     displayName: 'Hero';
     pluralName: 'heroes';
     singularName: 'hero';
@@ -563,6 +584,13 @@ export interface ApiHeroHero extends Struct.CollectionTypeSchema {
       Schema.Attribute.DefaultTo<'CHENNAI'>;
     bottomName: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Rithik Sharon A'>;
+    chipLabel: Schema.Attribute.String & Schema.Attribute.DefaultTo<'STM32'>;
+    chipSubLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'F407VG'>;
+    corePanelLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'CORE'>;
+    coreRows: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'CORE|ARM Cortex-M4\nFLASH|512 KB\nRAM|128 KB\nCLOCK|168 MHz\nSTATUS|\u25CF ACTIVE'>;
     counterLabel: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'PRIMARY LANGUAGE'>;
@@ -572,23 +600,64 @@ export interface ApiHeroHero extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    ctaPrimary: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'>_ OPEN TERMINAL'>;
+    ctaSecondary: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'\u25A6 VIEW SYSTEMS'>;
+    ctaSecondaryHref: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'#work'>;
+    debuggerButtonText: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'PRESS TO OPEN TERMINAL >'>;
+    debuggerPanelLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'STM32 DEBUGGER'>;
+    debuggerRows: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Firmware|Loaded\nKnowledge Base|Ready\nUART|115200\nAI Assistant|Online'>;
+    debuggerStatus: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'\u25CF CONNECTED'>;
     heroWordLine1: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'FIRM'>;
     heroWordLine2: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'WARE'>;
+    langPanelLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'LANG'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::hero.hero'> &
       Schema.Attribute.Private;
+    mobileMenuTerminal: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'OPEN TERMINAL'>;
+    navLinks: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'SYSTEMS|#work\nSYSINFO|#about\nSTACK|#stack\nCONNECT|#contact'>;
+    navTerminalLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'TERMINAL'>;
+    profilePanelLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'DEVELOPER PROFILE'>;
     profileRows: Schema.Attribute.Text;
     profileStatus: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'OPEN TO WORK'>;
     publishedAt: Schema.Attribute.DateTime;
+    radarLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'RADAR ARRAY'>;
+    radarStatus: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'SCANNING...'>;
+    resumeFileName: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Rithik_Sharon_A_Resume.pdf'>;
+    resumeLabel: Schema.Attribute.String & Schema.Attribute.DefaultTo<'RESUME'>;
+    resumeSubLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'.PDF'>;
+    resumeUrl: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'/resume.pdf'>;
     roleSubtitle: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'EMBEDDED SYSTEMS ENGINEER'>;
     statusTags: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'System Online,Communication Active,ARM Cortex-M,Embedded C,STM32,ESP32,RTOS,TinyML'>;
+    systemTimeLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'SYSTEM TIME'>;
+    taglinePrompt: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'rs@embedded'>;
+    taglineTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'bash \u2014 rs@embedded:~'>;
     typedLines: Schema.Attribute.Text;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -684,7 +753,7 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
 export interface ApiSiteSettingSiteSetting extends Struct.CollectionTypeSchema {
   collectionName: 'site_settings';
   info: {
-    description: 'Global site settings, SEO, and shared UI text';
+    description: 'Global site settings, SEO, boot, terminal, and shared UI text';
     displayName: 'SiteSettings';
     pluralName: 'site-settings';
     singularName: 'site-setting';
@@ -693,13 +762,46 @@ export interface ApiSiteSettingSiteSetting extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    bootLines: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'[ OK ] POWER-ON SELF TEST\n[ OK ] ATTACH DEBUG PROBE\n[ OK ] OPEN UART @ 115200\n[ OK ] ENUMERATE PERIPHERALS\n[ OK ] LOAD FIRMWARE IMAGE\n[ OK ] SYSTEM ONLINE'>;
+    bootTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'EMBEDDED WORKSTATION \u00B7 BOOT'>;
     chatButtonLabel: Schema.Attribute.String &
-      Schema.Attribute.DefaultTo<'\u2B21 Ask Rithik'>;
+      Schema.Attribute.DefaultTo<'>_ OPEN TERMINAL \u2014 FIRMWARE ASSISTANT'>;
     chatGreeting: Schema.Attribute.Text &
-      Schema.Attribute.DefaultTo<"Hey! I'm Rithik's AI assistant. Ask me about his skills, projects, or how to work with him. \u26A1">;
+      Schema.Attribute.DefaultTo<"Hey! I'm Rithik's AI assistant. Ask me about his skills, projects, or how to work with him.">;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    inspectorArchitecture: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'ARCHITECTURE'>;
+    inspectorChallenges: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'CHALLENGES'>;
+    inspectorDecisions: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'ENGINEERING DECISIONS'>;
+    inspectorDocs: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'DOCUMENTATION'>;
+    inspectorFirmware: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'FIRMWARE FEATURES'>;
+    inspectorGallery: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'GALLERY / DIAGRAMS'>;
+    inspectorHardware: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'HARDWARE USED'>;
+    inspectorLessons: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'LESSONS LEARNED'>;
+    inspectorLive: Schema.Attribute.String & Schema.Attribute.DefaultTo<'LIVE'>;
+    inspectorOverview: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'OVERVIEW'>;
+    inspectorProtocols: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'COMMUNICATION PROTOCOLS'>;
+    inspectorRepo: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'REPOSITORY'>;
+    inspectorTech: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'TECH STACK'>;
+    inspectorTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'FIRMWARE INSPECTOR'>;
+    inspectorVideo: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'VIDEO'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -712,8 +814,16 @@ export interface ApiSiteSettingSiteSetting extends Struct.CollectionTypeSchema {
     marqueeLine2: Schema.Attribute.Text &
       Schema.Attribute.DefaultTo<'C/C++,RTOS,ESP32,ARDUINO,UART,SPI,I2C,GPIO,PWM'>;
     ogImage: Schema.Attribute.Media<'images'>;
+    projectsEmpty: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'No modules match this filter.'>;
+    projectsFilterLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Filter active:'>;
     projectsHeading: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'PROJECTS'>;
+    projectsHint: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Select a module to open the Firmware Inspector.'>;
+    projectsInspectLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'INSPECT \u2192'>;
     projectsLabel: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'03 \u00B7 DEPLOYED SYSTEMS'>;
     publishedAt: Schema.Attribute.DateTime;
@@ -731,6 +841,22 @@ export interface ApiSiteSettingSiteSetting extends Struct.CollectionTypeSchema {
       Schema.Attribute.DefaultTo<'04 \u00B7 THE COMPONENTS'>;
     stackSubtitle: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Full component list \u2014 hardware to web'>;
+    terminalBootLines: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'> Boot Successful\n> Loading Strapi Knowledge Base...\n> Initializing Embedded Assistant...\n> UART Connection Established @115200\n> Firmware Assistant Ready.'>;
+    terminalCommands: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'help|Available: help \u00B7 projects \u00B7 hardware \u00B7 firmware \u00B7 experience \u00B7 contact \u00B7 clear \u2014 or ask me anything in plain English.\nprojects|Deployed systems: 01 \u00B7 MERN Movie Management Dashboard (React, Node, MongoDB, AWS). 02 \u00B7 Agentic AI Digital Twin (RAG, OpenRouter, MERN). Type "tell me about project 1" for details.\nhardware|Hardware focus: STM32 (ARM Cortex-M), ESP32, GPIO/UART/SPI/I2C protocols, bare-metal C/C++ and RTOS concepts.\nfirmware|Firmware expertise: C/C++, register-level programming, interrupt handling, peripheral drivers, moving from full-stack into embedded systems.\nexperience|B.Tech ECE, SASTRA Deemed University (2021-2025). National Hackathon Finalist \u2014 Gidy AgentX (autonomous AI agents). Full-stack background, now going deep into embedded.\ncontact|Email: rithiksharon.a@gmail.com \u00B7 GitHub: github.com/Rithik-Sharon-A \u00B7 LinkedIn: linkedin.com/in/rithik-sharon \u00B7 Chennai, India'>;
+    terminalCommandsHeading: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'AVAILABLE COMMANDS'>;
+    terminalErrorFallback: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'ERR: connection failed. Email rithiksharon.a@gmail.com directly.'>;
+    terminalLauncherMeta: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'UART @115200 | READY'>;
+    terminalPrompt: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'assistant@rs-embedded:~$'>;
+    terminalPromptShort: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'rs~$'>;
+    terminalTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'TERMINAL \u2014 FIRMWARE ASSISTANT'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

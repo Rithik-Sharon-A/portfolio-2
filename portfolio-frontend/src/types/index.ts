@@ -19,6 +19,31 @@ export interface Hero {
   badgeTitle: string;
   badgeSubtitle: string;
   avatarInitials: string;
+  navLinks?: string;
+  navTerminalLabel?: string;
+  mobileMenuTerminal?: string;
+  ctaPrimary?: string;
+  ctaSecondary?: string;
+  ctaSecondaryHref?: string;
+  resumeLabel?: string;
+  resumeSubLabel?: string;
+  resumeUrl?: string;
+  resumeFileName?: string;
+  radarLabel?: string;
+  radarStatus?: string;
+  profilePanelLabel?: string;
+  corePanelLabel?: string;
+  langPanelLabel?: string;
+  debuggerPanelLabel?: string;
+  systemTimeLabel?: string;
+  coreRows?: string;
+  debuggerRows?: string;
+  debuggerStatus?: string;
+  debuggerButtonText?: string;
+  taglineTitle?: string;
+  taglinePrompt?: string;
+  chipLabel?: string;
+  chipSubLabel?: string;
 }
 
 export interface About {
@@ -38,6 +63,14 @@ export interface About {
   philosophy: string;
   focus: string;
   learning: string;
+  labelName?: string;
+  labelBackground?: string;
+  labelLanguage?: string;
+  labelFocus?: string;
+  labelMission?: string;
+  labelPhilosophy?: string;
+  labelLearning?: string;
+  labelLocation?: string;
 }
 
 export interface MediaRef {
@@ -87,6 +120,7 @@ export interface StackItem {
   order: number;
   domain?: StackDomain;
   icon?: MediaRef;
+  iconUrl?: string;
 }
 
 export interface Service {
@@ -109,24 +143,58 @@ export interface Contact {
   email: string;
   github: string;
   linkedin: string;
+  twitter?: string;
   phone: string;
   ctaText: string;
+  handshakeSyn?: string;
+  handshakeAck?: string;
+  handshakeOpen?: string;
 }
 
 export interface SiteSettings {
   id: number;
   seoTitle: string;
   seoDesc: string;
+  ogImage?: MediaRef;
   logoText: string;
   marqueeLine1: string;
   marqueeLine2: string;
   projectsLabel: string;
   projectsHeading: string;
+  projectsHint?: string;
+  projectsFilterLabel?: string;
+  projectsEmpty?: string;
+  projectsInspectLabel?: string;
+  inspectorTitle?: string;
+  inspectorOverview?: string;
+  inspectorHardware?: string;
+  inspectorArchitecture?: string;
+  inspectorProtocols?: string;
+  inspectorChallenges?: string;
+  inspectorDecisions?: string;
+  inspectorFirmware?: string;
+  inspectorLessons?: string;
+  inspectorTech?: string;
+  inspectorGallery?: string;
+  inspectorVideo?: string;
+  inspectorRepo?: string;
+  inspectorDocs?: string;
+  inspectorLive?: string;
   stackLabel: string;
   stackHeading: string;
   stackSubtitle: string;
   servicesLabel: string;
   servicesHeading: string;
+  bootTitle?: string;
+  bootLines?: string;
   chatButtonLabel: string;
   chatGreeting: string;
+  terminalLauncherMeta?: string;
+  terminalTitle?: string;
+  terminalPrompt?: string;
+  terminalPromptShort?: string;
+  terminalCommandsHeading?: string;
+  terminalBootLines?: string;
+  terminalCommands?: string;
+  terminalErrorFallback?: string;
 }

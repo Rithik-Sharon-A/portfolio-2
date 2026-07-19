@@ -59,6 +59,18 @@
     "ctaText": {
       "type": "string",
       "default": "GET IN TOUCH →"
+    },
+    "handshakeSyn": {
+      "type": "string",
+      "default": "SYN →"
+    },
+    "handshakeAck": {
+      "type": "string",
+      "default": "← ACK"
+    },
+    "handshakeOpen": {
+      "type": "string",
+      "default": "CHANNEL OPEN · MAIL"
     }
   }
 }

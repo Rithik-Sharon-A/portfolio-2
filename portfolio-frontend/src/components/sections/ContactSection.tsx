@@ -37,10 +37,10 @@ export default function ContactSection({ data }: Props) {
     phase === 'idle'
       ? data.ctaText
       : phase === 'syn'
-        ? 'SYN →'
+        ? data.handshakeSyn || 'SYN →'
         : phase === 'ack'
-          ? '← ACK'
-          : 'CHANNEL OPEN · MAIL';
+          ? data.handshakeAck || '← ACK'
+          : data.handshakeOpen || 'CHANNEL OPEN · MAIL';
 
   return (
     <section
@@ -192,6 +192,7 @@ export default function ContactSection({ data }: Props) {
               {[
                 { href: data?.github, icon: <FolderGit2 size={20} />, label: 'GitHub' },
                 { href: data?.linkedin, icon: <Link2 size={20} />, label: 'LinkedIn' },
+                { href: data?.twitter, icon: <Link2 size={20} />, label: 'Twitter' },
                 {
                   href: data?.email ? `mailto:${data.email}` : undefined,
                   icon: <Mail size={20} />,

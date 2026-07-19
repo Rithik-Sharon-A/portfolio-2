@@ -1,14 +1,16 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { SiteSettings } from '@/types';
+import { parseCommandMap, parseLines } from '@/lib/cmsText';
 
 interface Line {
   type: 'boot' | 'user' | 'assistant' | 'system';
   text: string;
 }
 
-const BOOT_LINES = [
+const DEFAULT_BOOT = [
   '> Boot Successful',
   '> Loading Strapi Knowledge Base...',
   '> Initializing Embedded Assistant...',
@@ -16,7 +18,7 @@ const BOOT_LINES = [
   '> Firmware Assistant Ready.',
 ];
 
-const COMMANDS: Record<string, string> = {
+const DEFAULT_COMMANDS: Record<string, string> = {
   help: 'Available: help · projects · hardware · firmware · experience · contact · clear — or ask me anything in plain English.',
   projects:
     'Deployed systems: 01 · MERN Movie Management Dashboard (React, Node, MongoDB, AWS). 02 · Agentic AI Digital Twin (RAG, OpenRouter, MERN). Type "tell me about project 1" for details.',
@@ -30,7 +32,21 @@ const COMMANDS: Record<string, string> = {
     'Email: rithiksharon.a@gmail.com · GitHub: github.com/Rithik-Sharon-A · LinkedIn: linkedin.com/in/rithik-sharon · Chennai, India',
 };
 
-export default function TerminalDock() {
+type TerminalSettings = Pick<
+  SiteSettings,
+  | 'chatButtonLabel'
+  | 'chatGreeting'
+  | 'terminalLauncherMeta'
+  | 'terminalTitle'
+  | 'terminalPrompt'
+  | 'terminalPromptShort'
+  | 'terminalCommandsHeading'
+  | 'terminalBootLines'
+  | 'terminalCommands'
+  | 'terminalErrorFallback'
+>;
+
+export default function TerminalDock({ settings }: { settings?: TerminalSettings | null }) {
   const [open, setOpen] = useState(false);
   const [booted, setBooted] = useState(false);
   const [lines, setLines] = useState<Line[]>([]);
@@ -38,6 +54,28 @@ export default function TerminalDock() {
   const [loading, setLoading] = useState(false);
   const bodyRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const bootLines = useMemo(() => {
+    const parsed = parseLines(settings?.terminalBootLines);
+    return parsed.length ? parsed : DEFAULT_BOOT;
+  }, [settings?.terminalBootLines]);
+
+  const commands = useMemo(
+    () => parseCommandMap(settings?.terminalCommands, DEFAULT_COMMANDS),
+    [settings?.terminalCommands],
+  );
+
+  const launcherLabel =
+    settings?.chatButtonLabel || '>_ OPEN TERMINAL — FIRMWARE ASSISTANT';
+  const launcherMeta = settings?.terminalLauncherMeta || 'UART @115200 | READY';
+  const title = settings?.terminalTitle || 'TERMINAL — FIRMWARE ASSISTANT';
+  const prompt = settings?.terminalPrompt || 'assistant@rs-embedded:~$';
+  const promptShort = settings?.terminalPromptShort || 'rs~$';
+  const commandsHeading = settings?.terminalCommandsHeading || 'AVAILABLE COMMANDS';
+  const errorFallback =
+    settings?.terminalErrorFallback ||
+    'ERR: connection failed. Email rithiksharon.a@gmail.com directly.';
+  const greeting = settings?.chatGreeting;
 
   useEffect(() => {
     const openTerminal = () => setOpen(true);
@@ -48,13 +86,18 @@ export default function TerminalDock() {
   useEffect(() => {
     if (open && !booted) {
       setBooted(true);
-      BOOT_LINES.forEach((text, i) => {
+      bootLines.forEach((text, i) => {
         setTimeout(() => {
           setLines((prev) => [...prev, { type: 'boot', text }]);
         }, i * 350);
       });
+      if (greeting?.trim()) {
+        setTimeout(() => {
+          setLines((prev) => [...prev, { type: 'assistant', text: greeting.trim() }]);
+        }, bootLines.length * 350 + 200);
+      }
     }
-  }, [open, booted]);
+  }, [open, booted, bootLines, greeting]);
 
   useEffect(() => {
     bodyRef.current?.scrollTo({ top: bodyRef.current.scrollHeight, behavior: 'smooth' });
@@ -75,8 +118,8 @@ export default function TerminalDock() {
       setLines([]);
       return;
     }
-    if (COMMANDS[lower]) {
-      setLines((prev) => [...prev, { type: 'assistant', text: COMMANDS[lower] }]);
+    if (commands[lower]) {
+      setLines((prev) => [...prev, { type: 'assistant', text: commands[lower] }]);
       return;
     }
 
@@ -93,13 +136,7 @@ export default function TerminalDock() {
         { type: 'assistant', text: data.reply || 'ERR: no response. Retry.' },
       ]);
     } catch {
-      setLines((prev) => [
-        ...prev,
-        {
-          type: 'assistant',
-          text: 'ERR: connection failed. Email rithiksharon.a@gmail.com directly.',
-        },
-      ]);
+      setLines((prev) => [...prev, { type: 'assistant', text: errorFallback }]);
     } finally {
       setLoading(false);
     }
@@ -149,7 +186,7 @@ export default function TerminalDock() {
             className="term-launcher-label"
             style={{ ...mono, fontSize: 13, color: '#00D4FF', letterSpacing: '0.08em' }}
           >
-            {'>_'} OPEN TERMINAL — FIRMWARE ASSISTANT
+            {launcherLabel}
           </span>
           <span
             className="term-launcher-meta"
@@ -161,7 +198,7 @@ export default function TerminalDock() {
               letterSpacing: '0.1em',
             }}
           >
-            UART @115200 | READY
+            {launcherMeta}
           </span>
         </motion.button>
       )}
@@ -209,7 +246,7 @@ export default function TerminalDock() {
                 }}
               />
               <span style={{ ...mono, fontSize: 12, color: '#E8F4F8', letterSpacing: '0.15em' }}>
-                TERMINAL — FIRMWARE ASSISTANT
+                {title}
               </span>
               <span
                 style={{
@@ -220,7 +257,7 @@ export default function TerminalDock() {
                   letterSpacing: '0.1em',
                 }}
               >
-                UART @115200 | CONNECTED
+                {launcherMeta}
               </span>
               <button
                 type="button"
@@ -258,7 +295,7 @@ export default function TerminalDock() {
                             : '#00D4FF',
                     }}
                   >
-                    {l.type === 'user' ? `assistant@rs-embedded:~$ ${l.text}` : l.text}
+                    {l.type === 'user' ? `${prompt} ${l.text}` : l.text}
                   </div>
                 ))}
                 {loading && (
@@ -294,9 +331,9 @@ export default function TerminalDock() {
                     marginBottom: 12,
                   }}
                 >
-                  AVAILABLE COMMANDS
+                  {commandsHeading}
                 </div>
-                {Object.keys(COMMANDS).map((c) => (
+                {Object.keys(commands).map((c) => (
                   <div
                     key={c}
                     onClick={() => {
@@ -314,7 +351,7 @@ export default function TerminalDock() {
                   >
                     <span style={{ color: '#00D4FF', minWidth: 90 }}>{c}</span>
                     <span style={{ color: '#2A4A5A', fontSize: 11 }}>
-                      {COMMANDS[c].split('·')[0].slice(0, 34)}…
+                      {commands[c].split('·')[0].slice(0, 34)}…
                     </span>
                   </div>
                 ))}
@@ -325,20 +362,32 @@ export default function TerminalDock() {
               </div>
             </div>
 
-              <div
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+                padding: '12px clamp(12px, 3vw, 24px)',
+                borderTop: '1px solid rgba(0,212,255,0.15)',
+              }}
+            >
+              <span
+                className="term-prompt-prefix term-prompt-full"
+                style={{ ...mono, fontSize: 13, color: '#00D4FF', flexShrink: 0 }}
+              >
+                {prompt}
+              </span>
+              <span
+                className="term-prompt-mobile term-prompt-short"
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  padding: '12px clamp(12px, 3vw, 24px)',
-                  borderTop: '1px solid rgba(0,212,255,0.15)',
+                  ...mono,
+                  fontSize: 13,
+                  color: '#00D4FF',
+                  flexShrink: 0,
+                  display: 'none',
                 }}
               >
-              <span className="term-prompt-prefix term-prompt-full" style={{ ...mono, fontSize: 13, color: '#00D4FF', flexShrink: 0 }}>
-                assistant@rs-embedded:~$
-              </span>
-              <span className="term-prompt-mobile term-prompt-short" style={{ ...mono, fontSize: 13, color: '#00D4FF', flexShrink: 0, display: 'none' }}>
-                rs~$
+                {promptShort}
               </span>
               <input
                 ref={inputRef}

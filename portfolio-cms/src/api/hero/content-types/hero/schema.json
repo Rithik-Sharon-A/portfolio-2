@@ -5,7 +5,7 @@
     "singularName": "hero",
     "pluralName": "heroes",
     "displayName": "Hero",
-    "description": "Hero section content"
+    "description": "Hero section content and workstation chrome"
   },
   "options": {
     "draftAndPublish": true
@@ -89,6 +89,106 @@
     "avatarInitials": {
       "type": "string",
       "default": "RS"
+    },
+    "navLinks": {
+      "type": "text",
+      "default": "SYSTEMS|#work\nSYSINFO|#about\nSTACK|#stack\nCONNECT|#contact"
+    },
+    "navTerminalLabel": {
+      "type": "string",
+      "default": "TERMINAL"
+    },
+    "mobileMenuTerminal": {
+      "type": "string",
+      "default": "OPEN TERMINAL"
+    },
+    "ctaPrimary": {
+      "type": "string",
+      "default": ">_ OPEN TERMINAL"
+    },
+    "ctaSecondary": {
+      "type": "string",
+      "default": "▦ VIEW SYSTEMS"
+    },
+    "ctaSecondaryHref": {
+      "type": "string",
+      "default": "#work"
+    },
+    "resumeLabel": {
+      "type": "string",
+      "default": "RESUME"
+    },
+    "resumeSubLabel": {
+      "type": "string",
+      "default": ".PDF"
+    },
+    "resumeUrl": {
+      "type": "string",
+      "default": "/resume.pdf"
+    },
+    "resumeFileName": {
+      "type": "string",
+      "default": "Rithik_Sharon_A_Resume.pdf"
+    },
+    "radarLabel": {
+      "type": "string",
+      "default": "RADAR ARRAY"
+    },
+    "radarStatus": {
+      "type": "string",
+      "default": "SCANNING..."
+    },
+    "profilePanelLabel": {
+      "type": "string",
+      "default": "DEVELOPER PROFILE"
+    },
+    "corePanelLabel": {
+      "type": "string",
+      "default": "CORE"
+    },
+    "langPanelLabel": {
+      "type": "string",
+      "default": "LANG"
+    },
+    "debuggerPanelLabel": {
+      "type": "string",
+      "default": "STM32 DEBUGGER"
+    },
+    "systemTimeLabel": {
+      "type": "string",
+      "default": "SYSTEM TIME"
+    },
+    "coreRows": {
+      "type": "text",
+      "default": "CORE|ARM Cortex-M4\nFLASH|512 KB\nRAM|128 KB\nCLOCK|168 MHz\nSTATUS|● ACTIVE"
+    },
+    "debuggerRows": {
+      "type": "text",
+      "default": "Firmware|Loaded\nKnowledge Base|Ready\nUART|115200\nAI Assistant|Online"
+    },
+    "debuggerStatus": {
+      "type": "string",
+      "default": "● CONNECTED"
+    },
+    "debuggerButtonText": {
+      "type": "string",
+      "default": "PRESS TO OPEN TERMINAL >"
+    },
+    "taglineTitle": {
+      "type": "string",
+      "default": "bash — rs@embedded:~"
+    },
+    "taglinePrompt": {
+      "type": "string",
+      "default": "rs@embedded"
+    },
+    "chipLabel": {
+      "type": "string",
+      "default": "STM32"
+    },
+    "chipSubLabel": {
+      "type": "string",
+      "default": "F407VG"
     }
   }
 }

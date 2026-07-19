@@ -66,6 +66,38 @@
     },
     "learning": {
       "type": "string"
+    },
+    "labelName": {
+      "type": "string",
+      "default": "NAME"
+    },
+    "labelBackground": {
+      "type": "string",
+      "default": "BACKGROUND"
+    },
+    "labelLanguage": {
+      "type": "string",
+      "default": "PRIMARY LANGUAGE"
+    },
+    "labelFocus": {
+      "type": "string",
+      "default": "CURRENT FOCUS"
+    },
+    "labelMission": {
+      "type": "string",
+      "default": "MISSION"
+    },
+    "labelPhilosophy": {
+      "type": "string",
+      "default": "PHILOSOPHY"
+    },
+    "labelLearning": {
+      "type": "string",
+      "default": "CURRENT LEARNING"
+    },
+    "labelLocation": {
+      "type": "string",
+      "default": "LOCATION / OPS"
     }
   }
 }

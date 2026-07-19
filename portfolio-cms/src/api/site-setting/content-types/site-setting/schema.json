@@ -5,7 +5,7 @@
     "singularName": "site-setting",
     "pluralName": "site-settings",
     "displayName": "SiteSettings",
-    "description": "Global site settings, SEO, and shared UI text"
+    "description": "Global site settings, SEO, boot, terminal, and shared UI text"
   },
   "options": {
     "draftAndPublish": true
@@ -45,6 +45,82 @@
       "type": "string",
       "default": "PROJECTS"
     },
+    "projectsHint": {
+      "type": "string",
+      "default": "Select a module to open the Firmware Inspector."
+    },
+    "projectsFilterLabel": {
+      "type": "string",
+      "default": "Filter active:"
+    },
+    "projectsEmpty": {
+      "type": "string",
+      "default": "No modules match this filter."
+    },
+    "projectsInspectLabel": {
+      "type": "string",
+      "default": "INSPECT →"
+    },
+    "inspectorTitle": {
+      "type": "string",
+      "default": "FIRMWARE INSPECTOR"
+    },
+    "inspectorOverview": {
+      "type": "string",
+      "default": "OVERVIEW"
+    },
+    "inspectorHardware": {
+      "type": "string",
+      "default": "HARDWARE USED"
+    },
+    "inspectorArchitecture": {
+      "type": "string",
+      "default": "ARCHITECTURE"
+    },
+    "inspectorProtocols": {
+      "type": "string",
+      "default": "COMMUNICATION PROTOCOLS"
+    },
+    "inspectorChallenges": {
+      "type": "string",
+      "default": "CHALLENGES"
+    },
+    "inspectorDecisions": {
+      "type": "string",
+      "default": "ENGINEERING DECISIONS"
+    },
+    "inspectorFirmware": {
+      "type": "string",
+      "default": "FIRMWARE FEATURES"
+    },
+    "inspectorLessons": {
+      "type": "string",
+      "default": "LESSONS LEARNED"
+    },
+    "inspectorTech": {
+      "type": "string",
+      "default": "TECH STACK"
+    },
+    "inspectorGallery": {
+      "type": "string",
+      "default": "GALLERY / DIAGRAMS"
+    },
+    "inspectorVideo": {
+      "type": "string",
+      "default": "VIDEO"
+    },
+    "inspectorRepo": {
+      "type": "string",
+      "default": "REPOSITORY"
+    },
+    "inspectorDocs": {
+      "type": "string",
+      "default": "DOCUMENTATION"
+    },
+    "inspectorLive": {
+      "type": "string",
+      "default": "LIVE"
+    },
     "stackLabel": {
       "type": "string",
       "default": "04 · THE COMPONENTS"
@@ -65,13 +141,53 @@
       "type": "string",
       "default": "SERVICES"
     },
+    "bootTitle": {
+      "type": "string",
+      "default": "EMBEDDED WORKSTATION · BOOT"
+    },
+    "bootLines": {
+      "type": "text",
+      "default": "[ OK ] POWER-ON SELF TEST\n[ OK ] ATTACH DEBUG PROBE\n[ OK ] OPEN UART @ 115200\n[ OK ] ENUMERATE PERIPHERALS\n[ OK ] LOAD FIRMWARE IMAGE\n[ OK ] SYSTEM ONLINE"
+    },
     "chatButtonLabel": {
       "type": "string",
-      "default": "⬡ Ask Rithik"
+      "default": ">_ OPEN TERMINAL — FIRMWARE ASSISTANT"
     },
     "chatGreeting": {
       "type": "text",
-      "default": "Hey! I'm Rithik's AI assistant. Ask me about his skills, projects, or how to work with him. ⚡"
+      "default": "Hey! I'm Rithik's AI assistant. Ask me about his skills, projects, or how to work with him."
+    },
+    "terminalLauncherMeta": {
+      "type": "string",
+      "default": "UART @115200 | READY"
+    },
+    "terminalTitle": {
+      "type": "string",
+      "default": "TERMINAL — FIRMWARE ASSISTANT"
+    },
+    "terminalPrompt": {
+      "type": "string",
+      "default": "assistant@rs-embedded:~$"
+    },
+    "terminalPromptShort": {
+      "type": "string",
+      "default": "rs~$"
+    },
+    "terminalCommandsHeading": {
+      "type": "string",
+      "default": "AVAILABLE COMMANDS"
+    },
+    "terminalBootLines": {
+      "type": "text",
+      "default": "> Boot Successful\n> Loading Strapi Knowledge Base...\n> Initializing Embedded Assistant...\n> UART Connection Established @115200\n> Firmware Assistant Ready."
+    },
+    "terminalCommands": {
+      "type": "text",
+      "default": "help|Available: help · projects · hardware · firmware · experience · contact · clear — or ask me anything in plain English.\nprojects|Deployed systems: 01 · MERN Movie Management Dashboard (React, Node, MongoDB, AWS). 02 · Agentic AI Digital Twin (RAG, OpenRouter, MERN). Type \"tell me about project 1\" for details.\nhardware|Hardware focus: STM32 (ARM Cortex-M), ESP32, GPIO/UART/SPI/I2C protocols, bare-metal C/C++ and RTOS concepts.\nfirmware|Firmware expertise: C/C++, register-level programming, interrupt handling, peripheral drivers, moving from full-stack into embedded systems.\nexperience|B.Tech ECE, SASTRA Deemed University (2021-2025). National Hackathon Finalist — Gidy AgentX (autonomous AI agents). Full-stack background, now going deep into embedded.\ncontact|Email: rithiksharon.a@gmail.com · GitHub: github.com/Rithik-Sharon-A · LinkedIn: linkedin.com/in/rithik-sharon · Chennai, India"
+    },
+    "terminalErrorFallback": {
+      "type": "string",
+      "default": "ERR: connection failed. Email rithiksharon.a@gmail.com directly."
     }
   }
 }

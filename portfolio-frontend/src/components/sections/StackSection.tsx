@@ -129,6 +129,11 @@ export default function StackSection({ data, label, heading, subtitle }: Props) 
               >
                 {group.items.map((item) => {
                   const active = techFilter?.toLowerCase() === item.name.toLowerCase();
+                  const iconSrc = item.icon?.url
+                    ? item.icon.url.startsWith('http')
+                      ? item.icon.url
+                      : `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${item.icon.url}`
+                    : item.iconUrl;
                   return (
                     <button
                       key={item.documentId}
@@ -146,6 +151,20 @@ export default function StackSection({ data, label, heading, subtitle }: Props) 
                         transition: 'border-color 0.2s, background 0.2s',
                       }}
                     >
+                      {iconSrc ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={iconSrc}
+                          alt=""
+                          style={{
+                            width: 22,
+                            height: 22,
+                            objectFit: 'contain',
+                            marginBottom: 8,
+                            opacity: 0.85,
+                          }}
+                        />
+                      ) : null}
                       <div
                         style={{
                           fontFamily: 'Space Grotesk, sans-serif',

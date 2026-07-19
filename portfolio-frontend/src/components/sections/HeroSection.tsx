@@ -6,6 +6,7 @@ import { Hero } from '@/types';
 import CircuitBoardBackground, {
   emitPcbPulse,
 } from '@/components/svg/CircuitBoardBackground';
+import { csvList, parseKvRows, parseLines, parseNavLinks } from '@/lib/cmsText';
 
 function onInteractiveHover(e: MouseEvent) {
   emitPcbPulse(e.clientX, e.clientY);
@@ -13,9 +14,10 @@ function onInteractiveHover(e: MouseEvent) {
 
 interface Props {
   data: Hero | null;
+  logoText?: string | null;
 }
 
-function STM32Small() {
+function STM32Small({ label = 'STM32', subLabel = 'F407VG' }: { label?: string; subLabel?: string }) {
   const pins = 4;
   return (
     <svg width="72" height="72" viewBox="0 0 90 90" aria-hidden>
@@ -68,10 +70,10 @@ function STM32Small() {
         <circle key={i} cx={x} cy={y} r="2.5" fill="#00D4FF" opacity="0.8" />
       ))}
       <text x="45" y="42" textAnchor="middle" fontFamily="DM Mono" fontSize="8" fill="#00D4FF" fontWeight="bold">
-        STM32
+        {label}
       </text>
       <text x="45" y="53" textAnchor="middle" fontFamily="DM Mono" fontSize="6" fill="#00D4FF" opacity="0.6">
-        F407VG
+        {subLabel}
       </text>
     </svg>
   );
@@ -557,28 +559,15 @@ function Oscilloscope() {
   );
 }
 
-function parseLines(raw?: string | null) {
-  if (!raw?.trim()) return [];
-  return raw
-    .split(/\n|\\n/)
-    .map((l) => l.trim())
-    .filter(Boolean);
-}
-
-function parseKvRows(raw?: string | null) {
-  if (!raw?.trim()) return [] as [string, string][];
-  return raw
-    .split(/\n|\\n/)
-    .map((l) => l.trim())
-    .filter(Boolean)
-    .map((line) => {
-      const [label, ...rest] = line.split('|');
-      return [label.trim(), rest.join('|').trim()] as [string, string];
-    })
-    .filter(([a, b]) => a && b);
-}
-
-function TypewriterTagline({ lines }: { lines: string[] }) {
+function TypewriterTagline({
+  lines,
+  title = 'bash — rs@embedded:~',
+  prompt = 'rs@embedded',
+}: {
+  lines: string[];
+  title?: string;
+  prompt?: string;
+}) {
   const [lineIdx, setLineIdx] = useState(0);
   const [text, setText] = useState('');
   const [deleting, setDeleting] = useState(false);
@@ -665,7 +654,7 @@ function TypewriterTagline({ lines }: { lines: string[] }) {
             marginLeft: 6,
           }}
         >
-          bash — rs@embedded:~
+          {title}
         </span>
       </div>
 
@@ -691,7 +680,7 @@ function TypewriterTagline({ lines }: { lines: string[] }) {
             width: '100%',
           }}
         >
-          <span style={{ color: '#00D4FF' }}>rs@embedded</span>
+          <span style={{ color: '#00D4FF' }}>{prompt}</span>
           <span style={{ color: '#6B8FA8' }}>:</span>
           <span style={{ color: '#00FFE5' }}>~</span>
           <span style={{ color: '#6B8FA8' }}>$ </span>
@@ -713,7 +702,19 @@ function TypewriterTagline({ lines }: { lines: string[] }) {
   );
 }
 
-export default function HeroSection({ data }: Props) {
+const DEFAULT_NAV = [
+  { label: 'SYSTEMS', href: '#work' },
+  { label: 'SYSINFO', href: '#about' },
+  { label: 'STACK', href: '#stack' },
+  { label: 'CONNECT', href: '#contact' },
+];
+
+const DEFAULT_CORE =
+  'CORE|ARM Cortex-M4\nFLASH|512 KB\nRAM|128 KB\nCLOCK|168 MHz\nSTATUS|● ACTIVE';
+const DEFAULT_DEBUGGER =
+  'Firmware|Loaded\nKnowledge Base|Ready\nUART|115200\nAI Assistant|Online';
+
+export default function HeroSection({ data, logoText }: Props) {
   const [time, setTime] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -726,18 +727,24 @@ export default function HeroSection({ data }: Props) {
 
   const typedLines = useMemo(() => parseLines(data?.typedLines), [data?.typedLines]);
   const profileRows = useMemo(() => parseKvRows(data?.profileRows), [data?.profileRows]);
-  const statusPills = useMemo(
-    () =>
-      (data?.statusTags || '')
-        .split(',')
-        .map((t) => t.trim())
-        .filter(Boolean),
-    [data?.statusTags]
+  const statusPills = useMemo(() => csvList(data?.statusTags), [data?.statusTags]);
+  const navLinks = useMemo(
+    () => parseNavLinks(data?.navLinks, DEFAULT_NAV),
+    [data?.navLinks],
+  );
+  const coreRows = useMemo(
+    () => parseKvRows(data?.coreRows || DEFAULT_CORE),
+    [data?.coreRows],
+  );
+  const debuggerRows = useMemo(
+    () => parseKvRows(data?.debuggerRows || DEFAULT_DEBUGGER),
+    [data?.debuggerRows],
   );
 
   if (!data) return null;
 
   const pillPalette = ['#00FFE5', '#00D4FF', '#00FFE5', '#00D4FF'];
+  const brand = logoText || data.avatarInitials;
 
   function openTerminal() {
     window.dispatchEvent(new CustomEvent('open-terminal'));
@@ -763,35 +770,13 @@ export default function HeroSection({ data }: Props) {
     background: 'transparent',
   };
 
-  const navLinks = [
-    { label: 'SYSTEMS', href: '#work' },
-    { label: 'SYSINFO', href: '#about' },
-    { label: 'STACK', href: '#stack' },
-    { label: 'CONNECT', href: '#contact' },
-  ];
-
-  const debuggerRows = [
-    ['Firmware', 'Loaded'],
-    ['Knowledge Base', 'Ready'],
-    ['UART', '115200'],
-    ['AI Assistant', 'Online'],
-  ] as const;
-
-  const coreRows = [
-    ['CORE', 'ARM Cortex-M4'],
-    ['FLASH', '512 KB'],
-    ['RAM', '128 KB'],
-    ['CLOCK', '168 MHz'],
-    ['STATUS', '● ACTIVE'],
-  ] as const;
-
   return (
     <section id="hero" className="hero-shell">
       <CircuitBoardBackground />
       {/* Nav */}
       <header className="hero-nav">
         <div className="hero-nav-left">
-          <span className="hero-logo">{data.avatarInitials}</span>
+          <span className="hero-logo">{brand}</span>
           {[
             { label: 'PWR', color: '#00D4FF', blink: false },
             { label: 'TX', color: '#00FFE5', blink: true },
@@ -827,7 +812,7 @@ export default function HeroSection({ data }: Props) {
             onClick={openTerminal}
             onMouseEnter={onInteractiveHover}
           >
-            TERMINAL
+            {data.navTerminalLabel || 'TERMINAL'}
           </button>
         </nav>
 
@@ -850,7 +835,7 @@ export default function HeroSection({ data }: Props) {
             </a>
           ))}
           <button type="button" onClick={openTerminal}>
-            OPEN TERMINAL
+            {data.mobileMenuTerminal || 'OPEN TERMINAL'}
           </button>
         </div>
       )}
@@ -866,7 +851,7 @@ export default function HeroSection({ data }: Props) {
         >
           {/* Radar Scanner panel */}
           <div style={panel} className="hero-panel">
-            <div style={panelHeader}>RADAR ARRAY</div>
+            <div style={panelHeader}>{data.radarLabel || 'RADAR ARRAY'}</div>
             <div
               style={{
                 padding: '16px',
@@ -988,7 +973,7 @@ export default function HeroSection({ data }: Props) {
                   animation: 'blink 2s step-end infinite',
                 }}
               >
-                SCANNING...
+                {data.radarStatus || 'SCANNING...'}
               </div>
 
               <div
@@ -1017,7 +1002,7 @@ export default function HeroSection({ data }: Props) {
           </div>
 
           <div style={panel} className="hero-panel">
-            <div style={panelHeader}>DEVELOPER PROFILE</div>
+            <div style={panelHeader}>{data.profilePanelLabel || 'DEVELOPER PROFILE'}</div>
             <div className="hero-panel-body">
               <div className="hero-profile-top">
                 <div className="hero-avatar">{data.avatarInitials}</div>
@@ -1083,8 +1068,8 @@ export default function HeroSection({ data }: Props) {
               />
 
               <motion.a
-                href="/resume.pdf"
-                download="Rithik_Sharon_A_Resume.pdf"
+                href={data.resumeUrl || '/resume.pdf'}
+                download={data.resumeFileName || 'Rithik_Sharon_A_Resume.pdf'}
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.7 }}
@@ -1170,7 +1155,7 @@ export default function HeroSection({ data }: Props) {
                       marginBottom: '3px',
                     }}
                   >
-                    RESUME
+                    {data.resumeLabel || 'RESUME'}
                   </div>
                   <div
                     style={{
@@ -1180,7 +1165,7 @@ export default function HeroSection({ data }: Props) {
                       letterSpacing: '0.1em',
                     }}
                   >
-                    .PDF
+                    {data.resumeSubLabel || '.PDF'}
                   </div>
                 </div>
 
@@ -1232,7 +1217,11 @@ export default function HeroSection({ data }: Props) {
             </div>
 
             <div className="hero-role">{data.roleSubtitle}</div>
-            <TypewriterTagline lines={typedLines} />
+            <TypewriterTagline
+              lines={typedLines}
+              title={data.taglineTitle || 'bash — rs@embedded:~'}
+              prompt={data.taglinePrompt || 'rs@embedded'}
+            />
           </div>
 
           <div className="hero-pills">
@@ -1290,14 +1279,14 @@ export default function HeroSection({ data }: Props) {
               onClick={openTerminal}
               onMouseEnter={onInteractiveHover}
             >
-              {'>_'} OPEN TERMINAL
+              {data.ctaPrimary || '>_ OPEN TERMINAL'}
             </button>
             <a
-              href="#work"
+              href={data.ctaSecondaryHref || '#work'}
               className="hero-cta-ghost eng-pulse"
               onMouseEnter={onInteractiveHover}
             >
-              ▦ VIEW SYSTEMS
+              {data.ctaSecondary || '▦ VIEW SYSTEMS'}
             </a>
           </div>
         </motion.div>
@@ -1311,12 +1300,19 @@ export default function HeroSection({ data }: Props) {
         >
           <div style={panel} className="hero-panel">
             <div className="hero-core-heads">
-              <div style={{ ...panelHeader, borderRight: '1px solid rgba(0,212,255,0.35)' }}>CORE</div>
-              <div style={{ ...panelHeader, textAlign: 'right' }}>LANG</div>
+              <div style={{ ...panelHeader, borderRight: '1px solid rgba(0,212,255,0.35)' }}>
+                {data.corePanelLabel || 'CORE'}
+              </div>
+              <div style={{ ...panelHeader, textAlign: 'right' }}>
+                {data.langPanelLabel || 'LANG'}
+              </div>
             </div>
             <div className="hero-panel-body">
               <div className="hero-core-top">
-                <STM32Small />
+                <STM32Small
+                  label={data.chipLabel || 'STM32'}
+                  subLabel={data.chipSubLabel || 'F407VG'}
+                />
                 <div style={{ textAlign: 'right' }}>
                   <div className="hero-lang">{data.counterValue}</div>
                   <div className="hero-lang-sub">{data.counterLabel}</div>
@@ -1332,11 +1328,11 @@ export default function HeroSection({ data }: Props) {
           </div>
 
           <div style={panel} className="hero-panel">
-            <div style={panelHeader}>STM32 DEBUGGER</div>
+            <div style={panelHeader}>{data.debuggerPanelLabel || 'STM32 DEBUGGER'}</div>
             <div className="hero-panel-body">
               <div className="hero-kv hero-kv-status">
                 <span>STATUS</span>
-                <span className="hero-kv-accent">● CONNECTED</span>
+                <span className="hero-kv-accent">{data.debuggerStatus || '● CONNECTED'}</span>
               </div>
               {debuggerRows.map(([label, value]) => (
                 <div key={label} className="hero-kv">
@@ -1350,14 +1346,14 @@ export default function HeroSection({ data }: Props) {
                 onClick={openTerminal}
                 onMouseEnter={onInteractiveHover}
               >
-                PRESS TO OPEN TERMINAL {'>'}
+                {data.debuggerButtonText || 'PRESS TO OPEN TERMINAL >'}
               </button>
             </div>
           </div>
 
           <div style={panel} className="hero-panel hero-time-panel">
             <span style={{ ...mono, fontSize: 10, color: '#2A4A5A', letterSpacing: '0.12em' }}>
-              SYSTEM TIME
+              {data.systemTimeLabel || 'SYSTEM TIME'}
             </span>
             <span className="hero-time">{time || '00:00:00'}</span>
           </div>

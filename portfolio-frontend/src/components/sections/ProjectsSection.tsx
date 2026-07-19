@@ -3,7 +3,7 @@
 import { useMemo } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Project } from '@/types';
+import { Project, SiteSettings } from '@/types';
 import { useInstrumentBus } from '@/context/InstrumentBus';
 import FirmwareInspector from '@/components/sections/FirmwareInspector';
 
@@ -11,9 +11,31 @@ interface Props {
   data: Project[];
   label?: string;
   heading?: string;
+  ui?: Pick<
+    SiteSettings,
+    | 'projectsHint'
+    | 'projectsFilterLabel'
+    | 'projectsEmpty'
+    | 'projectsInspectLabel'
+    | 'inspectorTitle'
+    | 'inspectorOverview'
+    | 'inspectorHardware'
+    | 'inspectorArchitecture'
+    | 'inspectorProtocols'
+    | 'inspectorChallenges'
+    | 'inspectorDecisions'
+    | 'inspectorFirmware'
+    | 'inspectorLessons'
+    | 'inspectorTech'
+    | 'inspectorGallery'
+    | 'inspectorVideo'
+    | 'inspectorRepo'
+    | 'inspectorDocs'
+    | 'inspectorLive'
+  > | null;
 }
 
-export default function ProjectsSection({ data, label, heading }: Props) {
+export default function ProjectsSection({ data, label, heading, ui }: Props) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
   const {
@@ -85,11 +107,11 @@ export default function ProjectsSection({ data, label, heading }: Props) {
             maxWidth: 520,
           }}
         >
-          Select a module to open the Firmware Inspector.
+          {ui?.projectsHint || 'Select a module to open the Firmware Inspector.'}
           {techFilter ? (
             <>
               {' '}
-              Filter active:{' '}
+              {ui?.projectsFilterLabel || 'Filter active:'}{' '}
               <button
                 type="button"
                 onClick={() => filterByTech(null)}
@@ -192,20 +214,20 @@ export default function ProjectsSection({ data, label, heading }: Props) {
                     color: '#00D4FF',
                   }}
                 >
-                  INSPECT →
+                  {ui?.projectsInspectLabel || 'INSPECT →'}
                 </span>
               </motion.button>
             );
           })}
           {filtered.length === 0 && (
             <p style={{ fontFamily: 'DM Mono, monospace', fontSize: 12, color: 'var(--muted)' }}>
-              No modules match this filter.
+              {ui?.projectsEmpty || 'No modules match this filter.'}
             </p>
           )}
         </div>
       </div>
 
-      <FirmwareInspector project={null} projects={data} />
+      <FirmwareInspector project={null} projects={data} labels={ui} />
     </section>
   );
 }

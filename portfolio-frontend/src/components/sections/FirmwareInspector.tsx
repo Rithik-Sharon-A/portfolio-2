@@ -2,10 +2,29 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, FolderGit2, FileText } from 'lucide-react';
-import { Project } from '@/types';
+import { Project, SiteSettings } from '@/types';
 import { useInstrumentBus } from '@/context/InstrumentBus';
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
+
+type InspectorLabels = Pick<
+  SiteSettings,
+  | 'inspectorTitle'
+  | 'inspectorOverview'
+  | 'inspectorHardware'
+  | 'inspectorArchitecture'
+  | 'inspectorProtocols'
+  | 'inspectorChallenges'
+  | 'inspectorDecisions'
+  | 'inspectorFirmware'
+  | 'inspectorLessons'
+  | 'inspectorTech'
+  | 'inspectorGallery'
+  | 'inspectorVideo'
+  | 'inspectorRepo'
+  | 'inspectorDocs'
+  | 'inspectorLive'
+>;
 
 function mediaUrl(url?: string) {
   if (!url) return '';
@@ -46,13 +65,32 @@ function Block({ title, body }: { title: string; body?: string | null }) {
 export default function FirmwareInspector({
   project,
   projects,
+  labels,
 }: {
   project: Project | null;
   projects: Project[];
+  labels?: InspectorLabels | null;
 }) {
   const { activeProjectId, openProject } = useInstrumentBus();
   const active = project || projects.find((p) => p.documentId === activeProjectId) || null;
   const open = Boolean(active);
+  const L = {
+    title: labels?.inspectorTitle || 'FIRMWARE INSPECTOR',
+    overview: labels?.inspectorOverview || 'OVERVIEW',
+    hardware: labels?.inspectorHardware || 'HARDWARE USED',
+    architecture: labels?.inspectorArchitecture || 'ARCHITECTURE',
+    protocols: labels?.inspectorProtocols || 'COMMUNICATION PROTOCOLS',
+    challenges: labels?.inspectorChallenges || 'CHALLENGES',
+    decisions: labels?.inspectorDecisions || 'ENGINEERING DECISIONS',
+    firmware: labels?.inspectorFirmware || 'FIRMWARE FEATURES',
+    lessons: labels?.inspectorLessons || 'LESSONS LEARNED',
+    tech: labels?.inspectorTech || 'TECH STACK',
+    gallery: labels?.inspectorGallery || 'GALLERY / DIAGRAMS',
+    video: labels?.inspectorVideo || 'VIDEO',
+    repo: labels?.inspectorRepo || 'REPOSITORY',
+    docs: labels?.inspectorDocs || 'DOCUMENTATION',
+    live: labels?.inspectorLive || 'LIVE',
+  };
 
   const gallery = [active?.col1Image1, active?.col1Image2, active?.col2Image, active?.blockDiagram, active?.schematic]
     .filter(Boolean)
@@ -104,7 +142,7 @@ export default function FirmwareInspector({
                   marginBottom: 6,
                 }}
               >
-                FIRMWARE INSPECTOR · {active.category.toUpperCase()}
+                {L.title} · {active.category.toUpperCase()}
               </div>
               <h2
                 style={{
@@ -140,14 +178,14 @@ export default function FirmwareInspector({
           </div>
 
           <div style={{ flex: 1, overflowY: 'auto', padding: '20px 22px 40px' }}>
-            <Block title="OVERVIEW" body={active.overview || active.description} />
-            <Block title="HARDWARE USED" body={active.hardwareUsed} />
-            <Block title="ARCHITECTURE" body={active.architecture} />
-            <Block title="COMMUNICATION PROTOCOLS" body={active.protocols} />
-            <Block title="CHALLENGES" body={active.challenges} />
-            <Block title="ENGINEERING DECISIONS" body={active.decisions} />
-            <Block title="FIRMWARE FEATURES" body={active.firmwareFeatures} />
-            <Block title="LESSONS LEARNED" body={active.lessonsLearned} />
+            <Block title={L.overview} body={active.overview || active.description} />
+            <Block title={L.hardware} body={active.hardwareUsed} />
+            <Block title={L.architecture} body={active.architecture} />
+            <Block title={L.protocols} body={active.protocols} />
+            <Block title={L.challenges} body={active.challenges} />
+            <Block title={L.decisions} body={active.decisions} />
+            <Block title={L.firmware} body={active.firmwareFeatures} />
+            <Block title={L.lessons} body={active.lessonsLearned} />
 
             {active.techStack && (
               <div style={{ marginBottom: 22 }}>
@@ -160,7 +198,7 @@ export default function FirmwareInspector({
                     marginBottom: 10,
                   }}
                 >
-                  TECH STACK
+                  {L.tech}
                 </div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                   {active.techStack.split(',').map((t) => (
@@ -192,7 +230,7 @@ export default function FirmwareInspector({
                     marginBottom: 10,
                   }}
                 >
-                  GALLERY / DIAGRAMS
+                  {L.gallery}
                 </div>
                 <div style={{ display: 'grid', gap: 10 }}>
                   {gallery.map((src) => (
@@ -223,7 +261,7 @@ export default function FirmwareInspector({
                     marginBottom: 10,
                   }}
                 >
-                  VIDEO
+                  {L.video}
                 </div>
                 <video
                   controls
@@ -253,7 +291,7 @@ export default function FirmwareInspector({
                     padding: '10px 14px',
                   }}
                 >
-                  <FolderGit2 size={14} /> REPOSITORY
+                  <FolderGit2 size={14} /> {L.repo}
                 </a>
               )}
               {active.docsUrl && (
@@ -274,7 +312,7 @@ export default function FirmwareInspector({
                     padding: '10px 14px',
                   }}
                 >
-                  <FileText size={14} /> DOCUMENTATION
+                  <FileText size={14} /> {L.docs}
                 </a>
               )}
               {active.liveUrl && (
@@ -295,7 +333,7 @@ export default function FirmwareInspector({
                     padding: '10px 14px',
                   }}
                 >
-                  <ExternalLink size={14} /> LIVE
+                  <ExternalLink size={14} /> {L.live}
                 </a>
               )}
             </div>

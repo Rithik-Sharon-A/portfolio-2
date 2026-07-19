@@ -40,8 +40,8 @@ export default async function Home() {
           paddingBottom: 56,
         }}
       >
-        <BootLoader />
-        <HeroSection data={hero} />
+        <BootLoader title={settings?.bootTitle} lines={settings?.bootLines} />
+        <HeroSection data={hero} logoText={settings?.logoText} />
         <MarqueeSection line1={settings?.marqueeLine1} line2={settings?.marqueeLine2} />
         <AboutSection data={about} />
         <SquareWaveDivider color="#00FFE5" background="#010509" />
@@ -49,6 +49,7 @@ export default async function Home() {
           data={projects}
           label={settings?.projectsLabel}
           heading={settings?.projectsHeading}
+          ui={settings}
         />
         <SquareWaveDivider color="#00D4FF" background="#010509" flip />
         <StackSection
@@ -63,7 +64,7 @@ export default async function Home() {
           heading={settings?.servicesHeading}
         />
         <ContactSection data={contact} />
-        <TerminalDock />
+        <TerminalDock settings={settings} />
       </main>
     </WorkstationShell>
   );

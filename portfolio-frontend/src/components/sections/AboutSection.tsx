@@ -122,14 +122,14 @@ export default function AboutSection({ data }: Props) {
               padding: '8px 20px 4px',
             }}
           >
-            <Row k="NAME" v={data.name} />
-            <Row k="BACKGROUND" v={data.para3} />
-            <Row k="PRIMARY LANGUAGE" v={data.stat1Value} />
-            <Row k="CURRENT FOCUS" v={data.focus} />
-            <Row k="MISSION" v={data.para1} />
-            <Row k="PHILOSOPHY" v={data.philosophy} />
-            <Row k="CURRENT LEARNING" v={data.learning} />
-            <Row k="LOCATION / OPS" v={data.para2} />
+            <Row k={data.labelName || 'NAME'} v={data.name} />
+            <Row k={data.labelBackground || 'BACKGROUND'} v={data.para3} />
+            <Row k={data.labelLanguage || 'PRIMARY LANGUAGE'} v={data.stat1Value} />
+            <Row k={data.labelFocus || 'CURRENT FOCUS'} v={data.focus} />
+            <Row k={data.labelMission || 'MISSION'} v={data.para1} />
+            <Row k={data.labelPhilosophy || 'PHILOSOPHY'} v={data.philosophy} />
+            <Row k={data.labelLearning || 'CURRENT LEARNING'} v={data.learning} />
+            <Row k={data.labelLocation || 'LOCATION / OPS'} v={data.para2} />
           </div>
         </div>
 
