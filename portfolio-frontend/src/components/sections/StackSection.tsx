@@ -53,8 +53,7 @@ export default function StackSection({ data, label, heading, subtitle }: Props) 
       ref={ref}
       style={{
         background: 'var(--bg)',
-        padding: 'clamp(60px, 12vw, 120px) clamp(20px, 6vw, 80px)',
-        minHeight: 'unset',
+        padding: 'clamp(48px, 8vw, 80px) clamp(20px, 6vw, 80px)',
         position: 'relative',
         overflow: 'hidden',
       }}

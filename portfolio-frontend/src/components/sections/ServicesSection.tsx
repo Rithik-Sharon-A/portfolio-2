@@ -23,8 +23,7 @@ export default function ServicesSection({ data, label, heading }: Props) {
         background: 'var(--surface)',
         position: 'relative',
         zIndex: 2,
-        padding: 'clamp(50px, 10vw, 100px) clamp(20px, 6vw, 80px)',
-        minHeight: 'unset',
+        padding: 'clamp(48px, 8vw, 80px) clamp(20px, 6vw, 80px)',
         overflow: 'hidden',
         borderTop: '1px solid rgba(0,212,255,0.1)',
       }}

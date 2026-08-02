@@ -3,7 +3,6 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { About } from '@/types';
-import OscilloscopeWave from '@/components/svg/OscilloscopeWave';
 import CircuitCorners from '@/components/svg/CircuitCorners';
 
 interface Props {
@@ -59,191 +58,183 @@ export default function AboutSection({ data }: Props) {
       ref={ref}
       style={{
         background: 'var(--bg)',
-        padding: 'clamp(60px, 12vw, 120px) clamp(20px, 6vw, 80px)',
-        minHeight: 'unset',
-        display: 'flex',
-        alignItems: 'center',
+        padding: 'clamp(48px, 8vw, 80px) clamp(20px, 6vw, 80px)',
         position: 'relative',
         overflow: 'hidden',
       }}
     >
       <style>{`
-        .about-sys, .about-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-          gap: clamp(32px, 5vw, 80px);
-          width: 100%;
-          max-width: 1100px;
-          margin: 0 auto;
-          align-items: start;
+        @media (max-width: 640px) {
+          .about-panel-grid {
+            grid-template-columns: 1fr !important;
+          }
         }
       `}</style>
 
       <div className="pcb-grid" style={{ position: 'absolute', inset: 0, opacity: 0.4 }} />
-
       <CircuitCorners opacity={0.35} />
 
-      <div className="about-sys about-grid" style={{ position: 'relative', zIndex: 1 }}>
-        <div>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            style={{
-              fontFamily: 'DM Mono, monospace',
-              fontSize: '11px',
-              color: 'var(--blue)',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              marginBottom: '16px',
-              marginTop: 'clamp(0px, 2vw, 8px)',
-            }}
-          >
-            {data.sectionLabel}
-          </motion.div>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            style={{
-              fontFamily: 'Syne, sans-serif',
-              fontSize: 'clamp(2rem, 8vw, 5rem)',
-              fontWeight: 800,
-              letterSpacing: '-0.03em',
-              marginBottom: 28,
-              color: 'var(--white)',
-            }}
-          >
-            {data.heading}
-          </motion.h2>
+      <div style={{ position: 'relative', zIndex: 1, maxWidth: 1100, margin: '0 auto' }}>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          style={{
+            fontFamily: 'DM Mono, monospace',
+            fontSize: '11px',
+            color: 'var(--blue)',
+            letterSpacing: '0.15em',
+            textTransform: 'uppercase',
+            marginBottom: 12,
+          }}
+        >
+          {data.sectionLabel}
+        </motion.div>
 
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          style={{
+            fontFamily: 'Syne, sans-serif',
+            fontSize: 'clamp(2rem, 6vw, 3.8rem)',
+            fontWeight: 800,
+            letterSpacing: '-0.03em',
+            color: 'var(--white)',
+            marginBottom: 32,
+          }}
+        >
+          {data.heading}
+        </motion.h2>
+
+        <motion.div
+          className="about-panel-grid"
+          initial={{ opacity: 0, y: 16 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.1 }}
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: 'clamp(16px, 3vw, 32px)',
+            alignItems: 'start',
+          }}
+        >
           <div
             style={{
               border: '1px solid rgba(0,212,255,0.16)',
               background: 'rgba(22,24,29,0.55)',
               padding: '8px 20px 4px',
+              height: '100%',
             }}
           >
             <Row k={data.labelName || 'NAME'} v={data.name} />
-            <Row k={data.labelBackground || 'BACKGROUND'} v={data.para3} />
-            <Row k={data.labelLanguage || 'PRIMARY LANGUAGE'} v={data.stat1Value} />
-            <Row k={data.labelFocus || 'CURRENT FOCUS'} v={data.focus} />
             <Row k={data.labelMission || 'MISSION'} v={data.para1} />
+            <Row k={data.labelFocus || 'CURRENT FOCUS'} v={data.focus} />
             <Row k={data.labelPhilosophy || 'PHILOSOPHY'} v={data.philosophy} />
-            <Row k={data.labelLearning || 'CURRENT LEARNING'} v={data.learning} />
-            <Row k={data.labelLocation || 'LOCATION / OPS'} v={data.para2} />
-          </div>
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.2 }}
-          style={{ display: 'flex', flexDirection: 'column', gap: 20, width: '100%' }}
-        >
-          <OscilloscopeWave color="#00D4FF" />
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: 10,
-              width: '100%',
-            }}
-          >
-            {[
-              { v: data.stat1Value, l: data.stat1Label },
-              { v: data.stat2Value, l: data.stat2Label },
-              { v: data.stat3Value, l: data.stat3Label },
-              { v: '115200', l: 'UART BAUD RATE' },
-            ].map((s) => (
-              <div
-                key={s.l}
-                style={{
-                  border: '1px solid rgba(0,212,255,0.14)',
-                  padding: 'clamp(12px, 2vw, 18px)',
-                  background: 'var(--surface)',
-                }}
-              >
-                <div
-                  style={{
-                    fontFamily: 'Syne, sans-serif',
-                    fontSize: 'clamp(1.3rem, 3vw, 1.75rem)',
-                    fontWeight: 700,
-                    color: '#00D4FF',
-                  }}
-                >
-                  {s.v}
-                </div>
-                <div
-                  style={{
-                    fontFamily: 'DM Mono, monospace',
-                    fontSize: 9,
-                    color: 'var(--muted)',
-                    letterSpacing: '0.12em',
-                    marginTop: 4,
-                  }}
-                >
-                  {(s.l || '').toUpperCase()}
-                </div>
-              </div>
-            ))}
           </div>
 
-          <div
-            style={{
-              border: '1px solid rgba(0,212,255,0.14)',
-              background: 'rgba(22,24,29,0.55)',
-              padding: '14px 18px',
-            }}
-          >
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             <div
               style={{
-                fontFamily: 'DM Mono, monospace',
-                fontSize: 9,
-                letterSpacing: '0.16em',
-                color: 'rgba(0,212,255,0.5)',
-                marginBottom: 12,
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                gap: 10,
               }}
             >
-              SYSTEM SPEC
+              {[
+                { v: data.stat1Value, l: data.stat1Label },
+                { v: data.stat2Value, l: data.stat2Label },
+                { v: data.stat3Value, l: data.stat3Label },
+                { v: '115200', l: 'UART BAUD RATE' },
+              ].map((s) => (
+                <div
+                  key={s.l}
+                  style={{
+                    border: '1px solid rgba(0,212,255,0.14)',
+                    padding: 'clamp(12px, 2vw, 16px)',
+                    background: 'var(--surface)',
+                  }}
+                >
+                  <div
+                    style={{
+                      fontFamily: 'Syne, sans-serif',
+                      fontSize: 'clamp(1.2rem, 2.5vw, 1.6rem)',
+                      fontWeight: 700,
+                      color: '#00D4FF',
+                    }}
+                  >
+                    {s.v}
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: 'DM Mono, monospace',
+                      fontSize: 9,
+                      color: 'var(--muted)',
+                      letterSpacing: '0.12em',
+                      marginTop: 4,
+                    }}
+                  >
+                    {(s.l || '').toUpperCase()}
+                  </div>
+                </div>
+              ))}
             </div>
-            {[
-              { k: 'MCU', v: 'STM32 · ESP32' },
-              { k: 'PROTOCOL', v: 'UART · SPI · I2C · CAN' },
-              { k: 'OS', v: 'FreeRTOS · Bare-Metal' },
-              { k: 'LANG', v: 'C / C++ / JavaScript' },
-              { k: 'IDE', v: 'STM32CubeIDE · VS Code' },
-            ].map(({ k, v }) => (
+
+            <div
+              style={{
+                border: '1px solid rgba(0,212,255,0.14)',
+                background: 'rgba(22,24,29,0.55)',
+                padding: '14px 18px',
+              }}
+            >
               <div
-                key={k}
                 style={{
-                  display: 'grid',
-                  gridTemplateColumns: '90px 1fr',
-                  gap: 12,
-                  padding: '7px 0',
-                  borderBottom: '1px solid rgba(0,212,255,0.07)',
+                  fontFamily: 'DM Mono, monospace',
+                  fontSize: 9,
+                  letterSpacing: '0.16em',
+                  color: 'rgba(0,212,255,0.5)',
+                  marginBottom: 10,
                 }}
               >
-                <span
-                  style={{
-                    fontFamily: 'DM Mono, monospace',
-                    fontSize: 9,
-                    color: 'rgba(0,212,255,0.55)',
-                    letterSpacing: '0.1em',
-                  }}
-                >
-                  {k}
-                </span>
-                <span
-                  style={{
-                    fontFamily: 'DM Mono, monospace',
-                    fontSize: 10,
-                    color: 'rgba(226,232,240,0.7)',
-                  }}
-                >
-                  {v}
-                </span>
+                SYSTEM SPEC
               </div>
-            ))}
+              {[
+                { k: 'MCU', v: 'STM32 · ESP32' },
+                { k: 'PROTOCOL', v: 'UART · SPI · I2C · CAN' },
+                { k: 'OS', v: 'FreeRTOS · Bare-Metal' },
+                { k: 'LANG', v: 'C / C++ / JavaScript' },
+                { k: 'IDE', v: 'STM32CubeIDE · VS Code' },
+              ].map(({ k, v }) => (
+                <div
+                  key={k}
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: '80px 1fr',
+                    gap: 12,
+                    padding: '6px 0',
+                    borderBottom: '1px solid rgba(0,212,255,0.07)',
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: 'DM Mono, monospace',
+                      fontSize: 9,
+                      color: 'rgba(0,212,255,0.55)',
+                      letterSpacing: '0.1em',
+                    }}
+                  >
+                    {k}
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: 'DM Mono, monospace',
+                      fontSize: 10,
+                      color: 'rgba(226,232,240,0.7)',
+                    }}
+                  >
+                    {v}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>

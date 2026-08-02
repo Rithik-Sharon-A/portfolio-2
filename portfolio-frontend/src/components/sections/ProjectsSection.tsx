@@ -84,7 +84,7 @@ export default function ProjectsSection({ data, label, heading, ui }: Props) {
       onMouseMove={(e) => setMousePos({ x: e.clientX, y: e.clientY })}
       style={{
         background: 'var(--bg)',
-        padding: 'clamp(70px, 12vw, 120px) clamp(20px, 6vw, 80px)',
+        padding: 'clamp(48px, 8vw, 80px) clamp(20px, 6vw, 80px)',
         position: 'relative',
         overflow: 'hidden',
         outline: projectsHighlight ? '1px solid rgba(0,212,255,0.35)' : 'none',

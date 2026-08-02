@@ -47,8 +47,7 @@ export default function ContactSection({ data }: Props) {
       ref={ref}
       style={{
         background: 'var(--bg)',
-        padding: 'clamp(80px, 10vw, 140px) clamp(16px, 4vw, 80px)',
-        minHeight: '100vh',
+        padding: 'clamp(48px, 8vw, 80px) clamp(20px, 6vw, 80px)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
