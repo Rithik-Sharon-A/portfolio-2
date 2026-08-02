@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useEffect, useMemo, useState, type CSSProperties, type MouseEvent } from 'react';
+import { useEffect, useMemo, useState, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
 import { Hero } from '@/types';
 import CircuitBoardBackground, {
   emitPcbPulse,
@@ -79,18 +79,11 @@ function STM32Small({ label = 'STM32', subLabel = 'F407VG' }: { label?: string; 
   );
 }
 
-function Oscilloscope() {
+function Oscilloscope({ children }: { children?: ReactNode }) {
   const w = 500;
-  const h = 130;
+  const h = 180;
   const mid = h / 2;
   const CORNER = 16;
-
-  const generateSine = (offset: number) =>
-    Array.from({ length: 160 }, (_, i) => {
-      const x = (i / 159) * w + offset;
-      const y = mid + Math.sin((i / 159) * Math.PI * 6) * (h * 0.32);
-      return `${x.toFixed(2)},${y.toFixed(2)}`;
-    }).join(' ');
 
   const s = CORNER + 4;
   const brackets: { path: string; style: CSSProperties }[] = [
@@ -108,7 +101,7 @@ function Oscilloscope() {
         padding: '10px',
         background: '#010a14',
         width: '100%',
-        maxWidth: 520,
+        maxWidth: '100%',
         overflow: 'hidden',
         boxSizing: 'border-box',
       }}
@@ -438,67 +431,92 @@ function Oscilloscope() {
             />
           </svg>
 
-          <style>{`
-            @keyframes sineScroll {
-              from { transform: translateX(0); }
-              to   { transform: translateX(-50%); }
-            }
-            .s-glow { animation: sineScroll 2.5s linear infinite; filter: blur(5px); opacity: 0.3; }
-            .s-wave { animation: sineScroll 2.5s linear infinite; }
-          `}</style>
-
+          {/* Animated moving ECG — two copies side by side for seamless loop */}
           <svg
-            width={w * 2}
+            width="200%"
             height={h}
             viewBox={`0 0 ${w * 2} ${h}`}
-            preserveAspectRatio="xMinYMid meet"
-            className="s-glow"
-            style={{ position: 'absolute', top: 0, left: 0, width: '200%', height: `${h}px`, maxWidth: 'none' }}
+            preserveAspectRatio="none"
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              maxWidth: 'none',
+              animation: 'ecgScroll 3s linear infinite',
+              pointerEvents: 'none',
+            }}
+            aria-hidden
           >
-            {[0, w].map((o) => (
-              <polyline key={o} points={generateSine(o)} fill="none" stroke="#00D4FF" strokeWidth="5" />
-            ))}
-          </svg>
-
-          <svg
-            width={w * 2}
-            height={h}
-            viewBox={`0 0 ${w * 2} ${h}`}
-            preserveAspectRatio="xMinYMid meet"
-            className="s-wave"
-            style={{ position: 'absolute', top: 0, left: 0, width: '200%', height: `${h}px`, maxWidth: 'none' }}
-          >
-            <defs>
-              <linearGradient id="wFill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#00D4FF" stopOpacity="0.1" />
-                <stop offset="100%" stopColor="#00D4FF" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            {[0, w].map((o) => (
-              <g key={o}>
-                <polyline
-                  points={[
-                    `${o},${mid}`,
-                    ...Array.from({ length: 160 }, (_, i) => {
-                      const x = (i / 159) * w + o;
-                      const y = mid + Math.sin((i / 159) * Math.PI * 6) * (h * 0.32);
-                      return `${x.toFixed(2)},${y.toFixed(2)}`;
-                    }),
-                    `${o + w},${mid}`,
-                  ].join(' ')}
-                  fill="url(#wFill)"
-                  stroke="none"
-                />
-                <polyline
-                  points={generateSine(o)}
-                  fill="none"
-                  stroke="#00D4FF"
-                  strokeWidth="1.8"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                />
-              </g>
-            ))}
+            <polyline
+              points={`
+                0,${mid}
+                ${w * 0.06},${mid}
+                ${w * 0.10},${mid - h * 0.08}
+                ${w * 0.13},${mid + h * 0.12}
+                ${w * 0.16},${mid - h * 0.38}
+                ${w * 0.20},${mid + h * 0.45}
+                ${w * 0.23},${mid - h * 0.18}
+                ${w * 0.26},${mid}
+                ${w * 0.40},${mid}
+                ${w * 0.44},${mid - h * 0.06}
+                ${w * 0.47},${mid + h * 0.10}
+                ${w * 0.50},${mid - h * 0.35}
+                ${w * 0.54},${mid + h * 0.42}
+                ${w * 0.57},${mid - h * 0.15}
+                ${w * 0.60},${mid}
+                ${w * 0.74},${mid}
+                ${w * 0.78},${mid - h * 0.07}
+                ${w * 0.81},${mid + h * 0.11}
+                ${w * 0.84},${mid - h * 0.36}
+                ${w * 0.88},${mid + h * 0.43}
+                ${w * 0.91},${mid - h * 0.16}
+                ${w * 0.94},${mid}
+                ${w},${mid}
+              `}
+              fill="none"
+              stroke="#00D4FF"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{
+                filter: 'drop-shadow(0 0 6px #00D4FF) drop-shadow(0 0 14px rgba(0,212,255,0.5))',
+              }}
+            />
+            <polyline
+              points={`
+                ${w},${mid}
+                ${w + w * 0.06},${mid}
+                ${w + w * 0.10},${mid - h * 0.08}
+                ${w + w * 0.13},${mid + h * 0.12}
+                ${w + w * 0.16},${mid - h * 0.38}
+                ${w + w * 0.20},${mid + h * 0.45}
+                ${w + w * 0.23},${mid - h * 0.18}
+                ${w + w * 0.26},${mid}
+                ${w + w * 0.40},${mid}
+                ${w + w * 0.44},${mid - h * 0.06}
+                ${w + w * 0.47},${mid + h * 0.10}
+                ${w + w * 0.50},${mid - h * 0.35}
+                ${w + w * 0.54},${mid + h * 0.42}
+                ${w + w * 0.57},${mid - h * 0.15}
+                ${w + w * 0.60},${mid}
+                ${w + w * 0.74},${mid}
+                ${w + w * 0.78},${mid - h * 0.07}
+                ${w + w * 0.81},${mid + h * 0.11}
+                ${w + w * 0.84},${mid - h * 0.36}
+                ${w + w * 0.88},${mid + h * 0.43}
+                ${w + w * 0.91},${mid - h * 0.16}
+                ${w + w * 0.94},${mid}
+                ${w * 2},${mid}
+              `}
+              fill="none"
+              stroke="#00D4FF"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{
+                filter: 'drop-shadow(0 0 6px #00D4FF) drop-shadow(0 0 14px rgba(0,212,255,0.5))',
+              }}
+            />
           </svg>
 
           <div
@@ -555,6 +573,7 @@ function Oscilloscope() {
           ))}
         </div>
       </div>
+      {children}
     </div>
   );
 }
@@ -1036,187 +1055,119 @@ export default function HeroSection({ data, logoText }: Props) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <Oscilloscope />
-
           <div className="hero-title-block">
-            <div className="hero-word-resume-row">
-              <div style={{ lineHeight: 0.85 }}>
-                <motion.div
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                  className="hero-word"
-                >
-                  {data.heroWordLine1}
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                  className="hero-word hero-word-accent"
-                >
-                  {data.heroWordLine2}
-                </motion.div>
+            <Oscilloscope>
+              {/* Name overlay — inside oscilloscope */}
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  padding: '0 16px 12px',
+                  textAlign: 'left',
+                  background:
+                    'linear-gradient(to top, rgba(7,11,15,0.92) 0%, rgba(7,11,15,0.4) 60%, transparent 100%)',
+                  zIndex: 5,
+                  pointerEvents: 'none',
+                }}
+              >
+                <div className="hero-words" style={{ lineHeight: 0.85, textAlign: 'left' }}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                    className="hero-word"
+                    style={{
+                      WebkitTextStroke: '1px rgba(255,255,255,0.1)',
+                      letterSpacing: '-0.02em',
+                    }}
+                  >
+                    {data.heroWordLine1 || 'RITHIK'}
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    className="hero-word hero-word-2 hero-word-accent"
+                    style={{
+                      WebkitTextStroke: '1px rgba(255,255,255,0.1)',
+                      letterSpacing: '-0.02em',
+                    }}
+                  >
+                    {data.heroWordLine2 || 'SHARON A'}
+                  </motion.div>
+                </div>
               </div>
+            </Oscilloscope>
 
-              <motion.div
-                initial={{ opacity: 0, scaleY: 0 }}
-                animate={{ opacity: 1, scaleY: 1 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-                className="hero-resume-divider"
-                aria-hidden
-              />
-
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: 12,
+                marginTop: 8,
+              }}
+            >
+              <div className="hero-role hero-role-sub">{data.roleSubtitle}</div>
               <motion.a
                 href={data.resumeUrl || '/resume.pdf'}
                 download={data.resumeFileName || 'Rithik_Sharon_A_Resume.pdf'}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.7 }}
-                className="hero-resume-cta"
-                onMouseEnter={(e) => {
-                  onInteractiveHover(e);
-                  e.currentTarget.style.background = 'rgba(0,212,255,0.12)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'rgba(0,212,255,0.06)';
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.7 }}
+                onMouseEnter={onInteractiveHover}
+                style={{
+                  fontFamily: 'DM Mono, monospace',
+                  fontSize: 10,
+                  color: '#00D4FF',
+                  border: '1px solid rgba(0,212,255,0.4)',
+                  padding: '5px 12px',
+                  letterSpacing: '0.1em',
+                  textDecoration: 'none',
+                  whiteSpace: 'nowrap',
+                  flexShrink: 0,
                 }}
               >
-                <svg
-                  className="hero-resume-cta-frame"
-                  viewBox="0 0 100 100"
-                  preserveAspectRatio="none"
-                  aria-hidden
-                >
-                  <defs>
-                    <filter id="rGlow" x="-30%" y="-30%" width="160%" height="160%">
-                      <feGaussianBlur stdDeviation="2" result="blur" />
-                      <feMerge>
-                        <feMergeNode in="blur" />
-                        <feMergeNode in="SourceGraphic" />
-                      </feMerge>
-                    </filter>
-                  </defs>
-                  <path
-                    d="M 10 1 L 90 1 L 99 10 L 99 90 L 90 99 L 10 99 L 1 90 L 1 10 Z"
-                    fill="none"
-                    stroke="#00D4FF"
-                    strokeWidth="1.2"
-                    vectorEffect="non-scaling-stroke"
-                    opacity="0.55"
-                    filter="url(#rGlow)"
-                  />
-                  <line x1="0" y1="0" x2="10" y2="0" stroke="#00FFE5" strokeWidth="2" vectorEffect="non-scaling-stroke" opacity="0.9" />
-                  <line x1="0" y1="0" x2="0" y2="10" stroke="#00FFE5" strokeWidth="2" vectorEffect="non-scaling-stroke" opacity="0.9" />
-                  <line x1="100" y1="0" x2="90" y2="0" stroke="#00FFE5" strokeWidth="2" vectorEffect="non-scaling-stroke" opacity="0.9" />
-                  <line x1="100" y1="0" x2="100" y2="10" stroke="#00FFE5" strokeWidth="2" vectorEffect="non-scaling-stroke" opacity="0.9" />
-                  <line x1="0" y1="100" x2="10" y2="100" stroke="#00FFE5" strokeWidth="2" vectorEffect="non-scaling-stroke" opacity="0.9" />
-                  <line x1="0" y1="100" x2="0" y2="90" stroke="#00FFE5" strokeWidth="2" vectorEffect="non-scaling-stroke" opacity="0.9" />
-                  <line x1="100" y1="100" x2="90" y2="100" stroke="#00FFE5" strokeWidth="2" vectorEffect="non-scaling-stroke" opacity="0.9" />
-                  <line x1="100" y1="100" x2="100" y2="90" stroke="#00FFE5" strokeWidth="2" vectorEffect="non-scaling-stroke" opacity="0.9" />
-                </svg>
-
-                <div style={{ position: 'relative', zIndex: 3 }}>
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: '50%',
-                      transform: 'translate(-50%, -50%)',
-                      width: '24px',
-                      height: '24px',
-                      borderRadius: '50%',
-                      border: '1px solid #00FFE5',
-                      animation: 'ledRing 1.5s ease-out infinite',
-                      opacity: 0,
-                    }}
-                  />
-                  <div
-                    style={{
-                      width: '10px',
-                      height: '10px',
-                      borderRadius: '50%',
-                      background: '#00FFE5',
-                      boxShadow: '0 0 8px #00FFE5, 0 0 20px rgba(0,255,229,0.5)',
-                      animation: 'ledBlink 1.2s ease-in-out infinite',
-                      position: 'relative',
-                      zIndex: 1,
-                    }}
-                  />
-                </div>
-
-                <div style={{ zIndex: 3, textAlign: 'center' }}>
-                  <div
-                    style={{
-                      fontFamily: 'DM Mono, monospace',
-                      fontSize: '13px',
-                      color: '#E8F4F8',
-                      letterSpacing: '0.15em',
-                      marginBottom: '3px',
-                    }}
-                  >
-                    {data.resumeLabel || 'RESUME'}
-                  </div>
-                  <div
-                    style={{
-                      fontFamily: 'DM Mono, monospace',
-                      fontSize: '10px',
-                      color: '#00D4FF',
-                      letterSpacing: '0.1em',
-                    }}
-                  >
-                    {data.resumeSubLabel || '.PDF'}
-                  </div>
-                </div>
-
-                <div style={{ zIndex: 3 }}>
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden>
-                    <line
-                      x1="9"
-                      y1="2"
-                      x2="9"
-                      y2="13"
-                      stroke="#00D4FF"
-                      strokeWidth="1.4"
-                      strokeLinecap="round"
-                    />
-                    <polyline
-                      points="4,9 9,14 14,9"
-                      fill="none"
-                      stroke="#00D4FF"
-                      strokeWidth="1.4"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <line
-                      x1="2"
-                      y1="16"
-                      x2="16"
-                      y2="16"
-                      stroke="#00D4FF"
-                      strokeWidth="1.4"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </div>
-
-                <div
-                  style={{
-                    position: 'absolute',
-                    left: 0,
-                    right: 0,
-                    height: '1px',
-                    background:
-                      'linear-gradient(90deg, transparent, rgba(0,212,255,0.25), transparent)',
-                    animation: 'scanline 2.5s linear infinite',
-                    pointerEvents: 'none',
-                    zIndex: 4,
-                  }}
-                />
+                {(data.resumeLabel || 'RESUME')} {(data.resumeSubLabel || '.PDF')} ↓
               </motion.a>
             </div>
 
-            <div className="hero-role">{data.roleSubtitle}</div>
+            {/* Mobile only — two mini panels (shown via CSS ≤767px) */}
+            <div className="hero-mobile-panels">
+              <div className="hero-mobile-panel">
+                <div className="hero-mobile-panel-header">ENGINEER PROFILE</div>
+                <div className="hero-mobile-panel-row">
+                  <span className="hero-mobile-panel-dot" />
+                  <span className="hero-mobile-panel-status">
+                    {data.profileStatus || 'OPEN TO WORK'}
+                  </span>
+                </div>
+                {profileRows.slice(0, 3).map(([k, v]) => (
+                  <div key={k} className="hero-mobile-panel-kv">
+                    <span className="hero-mobile-panel-key">{k}</span>
+                    <span className="hero-mobile-panel-val">{v}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="hero-mobile-panel">
+                <div className="hero-mobile-panel-header">CORE SPEC</div>
+                {coreRows.slice(0, 4).map(([k, v]) => (
+                  <div key={k} className="hero-mobile-panel-kv">
+                    <span className="hero-mobile-panel-key">{k}</span>
+                    <span
+                      className="hero-mobile-panel-val"
+                      style={k === 'STATUS' ? { color: '#00D4FF' } : undefined}
+                    >
+                      {v}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             <TypewriterTagline
               lines={typedLines}
               title={data.taglineTitle || 'bash — rs@embedded:~'}
@@ -1224,13 +1175,14 @@ export default function HeroSection({ data, logoText }: Props) {
             />
           </div>
 
-          <div className="hero-pills">
+          <div className="hero-pills hero-status-pills">
             {statusPills.map((pill, i) => {
               const color = pillPalette[i % pillPalette.length];
               const label = pill.replace(/^[●▣◷■◆▸▹]+\s*/, '').trim() || pill;
               return (
                 <div
                   key={pill}
+                  className="hero-status-pill"
                   style={{
                     display: 'flex',
                     alignItems: 'center',

@@ -10,8 +10,8 @@ import type {
 
 export const hero: Hero = {
   id: 1,
-  heroWordLine1: 'BARE',
-  heroWordLine2: 'METAL',
+  heroWordLine1: 'RITHIK',
+  heroWordLine2: 'SHARON A',
   bioLeft:
     'Writing firmware from register level. Hardware, protocols, and real-time systems.',
   bioRight: 'Full stack capable — bare metal to browser.',
