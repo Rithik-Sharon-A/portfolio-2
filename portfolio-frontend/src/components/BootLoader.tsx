@@ -30,13 +30,13 @@ export default function BootLoader({
 
   const [visibleLines, setVisibleLines] = useState(0);
   const [fading, setFading] = useState(false);
-  const [done, setDone] = useState(false);
+  const [done, setDone] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return sessionStorage.getItem('booted') === '1';
+  });
 
   useEffect(() => {
-    if (sessionStorage.getItem('booted')) {
-      setDone(true);
-      return;
-    }
+    if (done) return;
     const timers: ReturnType<typeof setTimeout>[] = [];
     bootLines.forEach((_, i) => {
       timers.push(setTimeout(() => setVisibleLines(i + 1), (i + 1) * LINE_INTERVAL));
@@ -51,7 +51,7 @@ export default function BootLoader({
       }, bootLines.length * LINE_INTERVAL + FADE_DELAY + 480),
     );
     return () => timers.forEach(clearTimeout);
-  }, [bootLines]);
+  }, [bootLines, done]);
 
   if (done) return null;
 

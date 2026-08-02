@@ -85,7 +85,7 @@ export default function TerminalDock({ settings }: { settings?: TerminalSettings
 
   useEffect(() => {
     if (open && !booted) {
-      setBooted(true);
+      setTimeout(() => setBooted(true), 0);
       bootLines.forEach((text, i) => {
         setTimeout(() => {
           setLines((prev) => [...prev, { type: 'boot', text }]);
