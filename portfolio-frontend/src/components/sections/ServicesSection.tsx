@@ -23,7 +23,7 @@ export default function ServicesSection({ data, label, heading }: Props) {
         background: 'var(--surface)',
         position: 'relative',
         zIndex: 2,
-        padding: 'clamp(48px, 8vw, 80px) clamp(20px, 6vw, 80px)',
+        padding: 'clamp(32px, 5vw, 56px) clamp(20px, 6vw, 80px)',
         overflow: 'hidden',
         borderTop: '1px solid rgba(0,212,255,0.1)',
       }}
@@ -63,9 +63,9 @@ export default function ServicesSection({ data, label, heading }: Props) {
           style={{
             fontFamily: 'DM Mono, monospace',
             fontSize: 11,
-            color: 'var(--muted)',
+            color: 'rgba(226,232,240,0.55)',
             letterSpacing: '0.06em',
-            marginBottom: 40,
+            marginBottom: 24,
             maxWidth: 480,
           }}
         >
@@ -84,7 +84,7 @@ export default function ServicesSection({ data, label, heading }: Props) {
               className="service-row"
               style={{
                 borderTop: '1px solid rgba(0,212,255,0.12)',
-                padding: '28px 0',
+                padding: '18px 0',
                 display: 'grid',
                 gridTemplateColumns: 'minmax(48px, 72px) 1fr auto',
                 gap: 'clamp(12px, 3vw, 20px)',
@@ -100,7 +100,7 @@ export default function ServicesSection({ data, label, heading }: Props) {
                   color:
                     hovered === service.documentId
                       ? 'var(--blue)'
-                      : 'rgba(0,212,255,0.12)',
+                      : 'rgba(0,212,255,0.25)',
                   lineHeight: 1,
                   transition: 'color 0.2s',
                   textShadow:
@@ -130,7 +130,7 @@ export default function ServicesSection({ data, label, heading }: Props) {
                     fontFamily: 'Space Grotesk, sans-serif',
                     fontSize: 14,
                     lineHeight: 1.7,
-                    color: 'var(--muted)',
+                    color: 'rgba(226,232,240,0.7)',
                     maxWidth: 640,
                     margin: 0,
                   }}

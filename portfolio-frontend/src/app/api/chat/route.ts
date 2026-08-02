@@ -177,8 +177,8 @@ ${context}`;
       headers: {
         Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
-        'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
-        'X-Title': 'RS Embedded Portfolio',
+        'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'https://rithiksharon.com',
+        'X-Title': 'Rithik Sharon Portfolio',
       },
       body: JSON.stringify({
         model: MODEL,

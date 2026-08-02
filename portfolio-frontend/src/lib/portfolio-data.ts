@@ -17,9 +17,9 @@ export const hero: Hero = {
   bioRight: 'Full stack capable — bare metal to browser.',
   counterValue: 'C/C++',
   counterLabel: 'PRIMARY LANGUAGE',
-  badgeOuterText: 'EMBEDDED DEV | OPEN TO WORK | CHENNAI |',
+  badgeOuterText: 'EMBEDDED ENGINEER | OPEN TO WORK | CHENNAI |',
   badgeInnerText: 'C/C++ | STM32 | ESP32 | RTOS | UART |',
-  bottomLabel: 'EMBEDDED SYSTEMS DEVELOPER',
+  bottomLabel: 'EMBEDDED SYSTEMS ENGINEER',
   bottomName: 'Rithik Sharon A',
   bottomLocation: 'CHENNAI, INDIA',
   statusTags: '> SYSTEM ONLINE,> ARM Cortex-M,> RTOS READY',
@@ -44,7 +44,7 @@ export const hero: Hero = {
   resumeFileName: 'Rithik_Sharon_A_Resume.pdf',
   radarLabel: 'RADAR ARRAY',
   radarStatus: 'SCANNING...',
-  profilePanelLabel: 'DEVELOPER PROFILE',
+  profilePanelLabel: 'ENGINEER PROFILE',
   corePanelLabel: 'CORE',
   langPanelLabel: 'LANG',
   debuggerPanelLabel: 'STM32 DEBUGGER',
@@ -76,7 +76,7 @@ export const about: About = {
   stat1Label: 'Primary Language',
   stat2Value: 'ECE',
   stat2Label: 'Background',
-  stat3Value: '02+',
+  stat3Value: '04+',
   stat3Label: 'Systems Built',
   philosophy: 'Measure twice on the scope. Ship firmware that survives the field.',
   focus: 'Bare-metal + RTOS firmware for STM32 / ESP32',
@@ -116,7 +116,7 @@ export const projects: Project[] = [
       'Boot calibration · anti-windup PID · soft-start PWM · failsafe stop on lost line',
     lessonsLearned:
       'Always characterize deadband on the bench before tuning Kp/Ki/Kd in the field.',
-    repoUrl: '',
+    repoUrl: 'https://github.com/Rithik-Sharon-A',
     docsUrl: '',
   },
   {
@@ -141,7 +141,7 @@ export const projects: Project[] = [
     firmwareFeatures: 'Deep-sleep windows · JSON telemetry · OTA channel · watchdog',
     lessonsLearned:
       'Treat connectivity as unreliable; design for queues and backoff from day one.',
-    repoUrl: '',
+    repoUrl: 'https://github.com/Rithik-Sharon-A',
     docsUrl: '',
   },
   {
@@ -162,7 +162,7 @@ export const projects: Project[] = [
     decisions: 'Centralized API client; server as source of truth for permissions.',
     firmwareFeatures: 'N/A',
     lessonsLearned: 'Same care for state machines applies in UI as in firmware.',
-    repoUrl: '',
+    repoUrl: 'https://github.com/Rithik-Sharon-A',
     docsUrl: '',
   },
   {
@@ -183,7 +183,7 @@ export const projects: Project[] = [
     decisions: 'Explicit tool schemas; short context windows; fallbacks on tool errors.',
     firmwareFeatures: 'N/A',
     lessonsLearned: 'Agents need the same fail-safe thinking as interrupt handlers.',
-    repoUrl: '',
+    repoUrl: 'https://github.com/Rithik-Sharon-A',
     docsUrl: '',
   },
 ];
@@ -218,14 +218,14 @@ export const services: Service[] = [
   },
   {
     documentId: 'svc-2',
-    number: '03',
+    number: '02',
     name: 'Full Stack Interfaces',
     description: 'Dashboards and APIs that talk to devices — React to Node.',
     order: 2,
   },
   {
     documentId: 'svc-3',
-    number: '02',
+    number: '03',
     name: 'IoT Systems',
     description: 'Sensor nodes to cloud: MQTT, OTA, power budgets, and reliable reconnect.',
     order: 3,
@@ -258,7 +258,7 @@ export const contact: Contact = {
   email: 'rithiksharon.a@gmail.com',
   github: 'https://github.com/Rithik-Sharon-A',
   linkedin: 'https://linkedin.com/in/rithik-sharon',
-  twitter: '',
+  twitter: undefined,
   phone: '+919360812245',
   ctaText: '[ INITIATE HANDSHAKE ]',
   handshakeSyn: 'SYN →',
@@ -268,12 +268,12 @@ export const contact: Contact = {
 
 export const siteSettings: SiteSettings = {
   id: 1,
-  seoTitle: 'Rithik Sharon A — Embedded Systems Developer',
+  seoTitle: 'Rithik Sharon A — Embedded Systems Engineer',
   seoDesc:
     'Interactive embedded engineering workstation — firmware, hardware, and systems from Chennai.',
   logoText: 'RS',
   marqueeLine1: 'FIRMWARE,SIGNAL,INTERRUPT,REGISTER,PROTOCOL,VOLTAGE,LATENCY',
-  marqueeLine2: 'C/C++,RTOS,ESP32,ARDUINO,UART,SPI,I2C,GPIO,PWM',
+  marqueeLine2: 'C/C++,RTOS,ESP32,CORTEX-M,UART,SPI,I2C,GPIO,PWM',
   projectsLabel: '03 · DEPLOYED SYSTEMS',
   projectsHeading: 'FIRMWARE MODULES',
   projectsHint: 'Select a module to open the Firmware Inspector.',

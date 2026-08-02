@@ -47,7 +47,7 @@ export default function ContactSection({ data }: Props) {
       ref={ref}
       style={{
         background: 'var(--bg)',
-        padding: 'clamp(48px, 8vw, 80px) clamp(20px, 6vw, 80px)',
+        padding: 'clamp(32px, 5vw, 56px) clamp(20px, 6vw, 80px)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -143,7 +143,7 @@ export default function ContactSection({ data }: Props) {
           style={{
             fontFamily: 'DM Mono, monospace',
             fontSize: 12,
-            color: 'var(--muted)',
+            color: 'rgba(226,232,240,0.6)',
             letterSpacing: '0.06em',
             marginBottom: 36,
             maxWidth: 420,
@@ -243,11 +243,11 @@ export default function ContactSection({ data }: Props) {
               y1="16"
               x2="800"
               y2="16"
-              stroke="rgba(0,212,255,0.18)"
+              stroke="rgba(0,212,255,0.35)"
               strokeWidth="1"
             />
 
-            <circle cx="0" cy="16" r="3" fill="none" stroke="rgba(0,212,255,0.5)" strokeWidth="1" />
+            <circle cx="0" cy="16" r="3" fill="none" stroke="rgba(0,212,255,0.7)" strokeWidth="1" />
             <circle cx="0" cy="16" r="1.5" fill="rgba(0,212,255,0.8)" />
 
             <circle cx="200" cy="16" r="3" fill="none" stroke="rgba(0,212,255,0.35)" strokeWidth="1" />
@@ -255,7 +255,7 @@ export default function ContactSection({ data }: Props) {
             <line x1="200" y1="16" x2="200" y2="4" stroke="rgba(0,212,255,0.25)" strokeWidth="1" />
             <circle cx="200" cy="4" r="2" fill="none" stroke="rgba(0,212,255,0.3)" strokeWidth="1" />
 
-            <circle cx="400" cy="16" r="4" fill="none" stroke="rgba(0,212,255,0.5)" strokeWidth="1" />
+            <circle cx="400" cy="16" r="4" fill="none" stroke="rgba(0,212,255,0.7)" strokeWidth="1" />
             <circle cx="400" cy="16" r="2" fill="rgba(0,212,255,0.9)" />
             <circle
               cx="400"
@@ -272,7 +272,7 @@ export default function ContactSection({ data }: Props) {
             <line x1="600" y1="16" x2="600" y2="28" stroke="rgba(0,212,255,0.25)" strokeWidth="1" />
             <circle cx="600" cy="28" r="2" fill="none" stroke="rgba(0,212,255,0.3)" strokeWidth="1" />
 
-            <circle cx="800" cy="16" r="3" fill="none" stroke="rgba(0,212,255,0.5)" strokeWidth="1" />
+            <circle cx="800" cy="16" r="3" fill="none" stroke="rgba(0,212,255,0.7)" strokeWidth="1" />
             <circle cx="800" cy="16" r="1.5" fill="rgba(0,212,255,0.8)" />
           </svg>
         </div>
@@ -314,7 +314,7 @@ export default function ContactSection({ data }: Props) {
                   fontFamily: 'DM Mono, monospace',
                   fontSize: 9,
                   letterSpacing: '0.14em',
-                  color: 'rgba(0,212,255,0.55)',
+                  color: 'rgba(0,212,255,0.85)',
                   whiteSpace: 'nowrap',
                   minWidth: 72,
                 }}
@@ -325,7 +325,7 @@ export default function ContactSection({ data }: Props) {
                 style={{
                   fontFamily: 'DM Mono, monospace',
                   fontSize: 10,
-                  color: 'rgba(226,232,240,0.55)',
+                  color: 'rgba(226,232,240,0.8)',
                   letterSpacing: '0.04em',
                   wordBreak: 'break-all',
                 }}
@@ -348,7 +348,7 @@ export default function ContactSection({ data }: Props) {
               style={{
                 fontFamily: 'DM Mono, monospace',
                 fontSize: 9,
-                color: 'rgba(0,212,255,0.4)',
+                color: 'rgba(0,212,255,0.7)',
                 letterSpacing: '0.14em',
               }}
             >

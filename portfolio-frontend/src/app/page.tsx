@@ -54,6 +54,7 @@ export default async function Home() {
         <SquareWaveDivider color="#00D4FF" background="#010509" flip />
         <StackSection
           data={stackItems}
+          projects={projects}
           label={settings?.stackLabel}
           heading={settings?.stackHeading}
           subtitle={settings?.stackSubtitle}

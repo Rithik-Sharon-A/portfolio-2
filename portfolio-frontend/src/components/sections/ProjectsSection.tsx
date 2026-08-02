@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { Project, SiteSettings } from '@/types';
@@ -52,9 +52,7 @@ export default function ProjectsSection({ data, label, heading, ui }: Props) {
   const {
     openProject,
     activeProjectId,
-    techFilter,
     projectsHighlight,
-    filterByTech,
   } = useInstrumentBus();
 
   const [hoveredId, setHoveredId] = useState<string | null>(null);
@@ -66,11 +64,7 @@ export default function ProjectsSection({ data, label, heading, ui }: Props) {
     setIsMobile(window.matchMedia('(max-width: 768px)').matches);
   }, []);
 
-  const filtered = useMemo(() => {
-    if (!techFilter) return data;
-    const q = techFilter.toLowerCase();
-    return data.filter((p) => (p.techStack || '').toLowerCase().includes(q));
-  }, [data, techFilter]);
+  const filtered = data;
 
   const previewLeft =
     typeof window !== 'undefined' && mousePos.x + 24 + 260 > window.innerWidth
@@ -84,7 +78,7 @@ export default function ProjectsSection({ data, label, heading, ui }: Props) {
       onMouseMove={(e) => setMousePos({ x: e.clientX, y: e.clientY })}
       style={{
         background: 'var(--bg)',
-        padding: 'clamp(48px, 8vw, 80px) clamp(20px, 6vw, 80px)',
+        padding: 'clamp(32px, 5vw, 56px) clamp(20px, 6vw, 80px)',
         position: 'relative',
         overflow: 'hidden',
         outline: projectsHighlight ? '1px solid rgba(0,212,255,0.35)' : 'none',
@@ -117,7 +111,7 @@ export default function ProjectsSection({ data, label, heading, ui }: Props) {
             fontSize: 'clamp(2rem, 8vw, 3.5rem)',
             fontWeight: 800,
             letterSpacing: '-0.03em',
-            marginBottom: 16,
+            marginBottom: 10,
             color: 'var(--white)',
           }}
         >
@@ -126,36 +120,14 @@ export default function ProjectsSection({ data, label, heading, ui }: Props) {
         <p
           style={{
             fontFamily: 'DM Mono, monospace',
-            fontSize: 12,
+            fontSize: 13,
             color: 'var(--muted)',
             letterSpacing: '0.06em',
-            marginBottom: 36,
+            marginBottom: 24,
             maxWidth: 520,
           }}
         >
           {ui?.projectsHint || 'Select a module to open the Firmware Inspector.'}
-          {techFilter ? (
-            <>
-              {' '}
-              {ui?.projectsFilterLabel || 'Filter active:'}{' '}
-              <button
-                type="button"
-                onClick={() => filterByTech(null)}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  color: '#00D4FF',
-                  cursor: 'pointer',
-                  fontFamily: 'inherit',
-                  fontSize: 'inherit',
-                  letterSpacing: 'inherit',
-                  textDecoration: 'underline',
-                }}
-              >
-                {techFilter} ×
-              </button>
-            </>
-          ) : null}
         </p>
 
         <div>
@@ -211,7 +183,7 @@ export default function ProjectsSection({ data, label, heading, ui }: Props) {
                   style={{
                     fontFamily: 'DM Mono, monospace',
                     fontSize: 12,
-                    color: 'rgba(0,212,255,0.55)',
+                    color: 'rgba(0,212,255,0.75)',
                   }}
                 >
                   {String(i + 1).padStart(2, '0')}
@@ -301,8 +273,8 @@ export default function ProjectsSection({ data, label, heading, ui }: Props) {
                         style={{
                           fontFamily: 'DM Mono, monospace',
                           fontSize: 10,
-                          color: 'var(--muted)',
-                          border: '1px solid rgba(0,212,255,0.18)',
+                          color: 'rgba(0,212,255,0.7)',
+                          border: '1px solid rgba(0,212,255,0.35)',
                           padding: '3px 8px',
                         }}
                       >
@@ -324,12 +296,7 @@ export default function ProjectsSection({ data, label, heading, ui }: Props) {
                 </span>
               </motion.button>
             );
-          })}
-          {filtered.length === 0 && (
-            <p style={{ fontFamily: 'DM Mono, monospace', fontSize: 12, color: 'var(--muted)' }}>
-              {ui?.projectsEmpty || 'No modules match this filter.'}
-            </p>
-          )}
+          }          )}
         </div>
 
         {!isMobile &&

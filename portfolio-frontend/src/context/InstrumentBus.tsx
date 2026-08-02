@@ -61,13 +61,12 @@ export function InstrumentBusProvider({ children }: { children: ReactNode }) {
     (tech: string | null) => {
       setTechFilter(tech);
       if (tech) {
-        scrollToSection('projects');
         setProjectsHighlight(true);
         window.setTimeout(() => setProjectsHighlight(false), 1800);
         showToast(`Filter · ${tech}`);
       }
     },
-    [scrollToSection, showToast]
+    [showToast]
   );
 
   const flashProjects = useCallback(() => {

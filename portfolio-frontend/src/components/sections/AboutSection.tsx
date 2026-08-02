@@ -27,7 +27,7 @@ function Row({ k, v }: { k: string; v?: string | null }) {
           fontFamily: 'DM Mono, monospace',
           fontSize: 11,
           letterSpacing: '0.1em',
-          color: 'rgba(0,212,255,0.7)',
+          color: 'rgba(0,212,255,0.9)',
         }}
       >
         {k}
@@ -37,7 +37,7 @@ function Row({ k, v }: { k: string; v?: string | null }) {
           fontFamily: 'Space Grotesk, sans-serif',
           fontSize: 15,
           lineHeight: 1.65,
-          color: 'rgba(226,232,240,0.9)',
+          color: '#E8F4F8',
         }}
       >
         {v}
@@ -58,7 +58,7 @@ export default function AboutSection({ data }: Props) {
       ref={ref}
       style={{
         background: 'var(--bg)',
-        padding: 'clamp(48px, 8vw, 80px) clamp(20px, 6vw, 80px)',
+        padding: 'clamp(32px, 5vw, 56px) clamp(20px, 6vw, 80px)',
         position: 'relative',
         overflow: 'hidden',
       }}
@@ -99,7 +99,7 @@ export default function AboutSection({ data }: Props) {
             fontWeight: 800,
             letterSpacing: '-0.03em',
             color: 'var(--white)',
-            marginBottom: 32,
+            marginBottom: 20,
           }}
         >
           {data.heading}
@@ -190,7 +190,7 @@ export default function AboutSection({ data }: Props) {
                   fontFamily: 'DM Mono, monospace',
                   fontSize: 9,
                   letterSpacing: '0.16em',
-                  color: 'rgba(0,212,255,0.5)',
+                  color: 'rgba(0,212,255,0.75)',
                   marginBottom: 10,
                 }}
               >
@@ -217,7 +217,7 @@ export default function AboutSection({ data }: Props) {
                     style={{
                       fontFamily: 'DM Mono, monospace',
                       fontSize: 9,
-                      color: 'rgba(0,212,255,0.55)',
+                      color: 'rgba(0,212,255,0.8)',
                       letterSpacing: '0.1em',
                     }}
                   >
@@ -227,7 +227,7 @@ export default function AboutSection({ data }: Props) {
                     style={{
                       fontFamily: 'DM Mono, monospace',
                       fontSize: 10,
-                      color: 'rgba(226,232,240,0.7)',
+                      color: 'rgba(226,232,240,0.9)',
                     }}
                   >
                     {v}

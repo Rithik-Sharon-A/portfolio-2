@@ -12,7 +12,9 @@
   --bright: #00D4FF;
   --green: #00D4FF;
   --white: #E8F4F8;
-  --muted: #2A4A5A;
+  --muted: #5A8A9F;
+  --text-dim: rgba(226,232,240,0.6);
+  --text-faint: rgba(226,232,240,0.35);
   --glow-c: rgba(0,212,255,0.15);
   --glow-t: rgba(0,255,229,0.12);
   --glow-b: rgba(0,212,255,0.15);
