@@ -1064,24 +1064,21 @@ export default function HeroSection({ data, logoText }: Props) {
                   bottom: 0,
                   left: 0,
                   right: 0,
-                  padding: '0 16px 12px',
-                  textAlign: 'left',
+                  padding: '0 12px 10px',
                   background:
-                    'linear-gradient(to top, rgba(7,11,15,0.92) 0%, rgba(7,11,15,0.4) 60%, transparent 100%)',
+                    'linear-gradient(to top, rgba(7,11,15,0.95) 0%, rgba(7,11,15,0.5) 50%, transparent 100%)',
                   zIndex: 5,
                   pointerEvents: 'none',
+                  textAlign: 'left',
                 }}
               >
-                <div className="hero-words" style={{ lineHeight: 0.85, textAlign: 'left' }}>
+                <div className="hero-words" style={{ textAlign: 'left', lineHeight: 0.85 }}>
                   <motion.div
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
                     className="hero-word"
-                    style={{
-                      WebkitTextStroke: '1px rgba(255,255,255,0.1)',
-                      letterSpacing: '-0.02em',
-                    }}
+                    style={{ textAlign: 'left' }}
                   >
                     {data.heroWordLine1 || 'RITHIK'}
                   </motion.div>
@@ -1089,11 +1086,8 @@ export default function HeroSection({ data, logoText }: Props) {
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                    className="hero-word hero-word-2 hero-word-accent"
-                    style={{
-                      WebkitTextStroke: '1px rgba(255,255,255,0.1)',
-                      letterSpacing: '-0.02em',
-                    }}
+                    className="hero-word hero-word-accent"
+                    style={{ textAlign: 'left' }}
                   >
                     {data.heroWordLine2 || 'SHARON A'}
                   </motion.div>
@@ -1107,18 +1101,24 @@ export default function HeroSection({ data, logoText }: Props) {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 gap: 12,
-                marginTop: 8,
+                marginTop: 4,
               }}
             >
-              <div className="hero-role hero-role-sub">{data.roleSubtitle}</div>
+              <div className="hero-role" style={{ textAlign: 'left' }}>
+                {data.roleSubtitle}
+              </div>
               <motion.a
                 href={data.resumeUrl || '/resume.pdf'}
                 download={data.resumeFileName || 'Rithik_Sharon_A_Resume.pdf'}
+                className="hero-resume-cta"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.7 }}
                 onMouseEnter={onInteractiveHover}
                 style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                   fontFamily: 'DM Mono, monospace',
                   fontSize: 10,
                   color: '#00D4FF',
@@ -1128,44 +1128,17 @@ export default function HeroSection({ data, logoText }: Props) {
                   textDecoration: 'none',
                   whiteSpace: 'nowrap',
                   flexShrink: 0,
+                  minHeight: 'auto',
+                  width: 'auto',
+                  flexDirection: 'row',
+                  gap: 0,
+                  background: 'transparent',
+                  clipPath: 'none',
+                  position: 'relative',
                 }}
               >
                 {(data.resumeLabel || 'RESUME')} {(data.resumeSubLabel || '.PDF')} ↓
               </motion.a>
-            </div>
-
-            {/* Mobile only — two mini panels (shown via CSS ≤767px) */}
-            <div className="hero-mobile-panels">
-              <div className="hero-mobile-panel">
-                <div className="hero-mobile-panel-header">ENGINEER PROFILE</div>
-                <div className="hero-mobile-panel-row">
-                  <span className="hero-mobile-panel-dot" />
-                  <span className="hero-mobile-panel-status">
-                    {data.profileStatus || 'OPEN TO WORK'}
-                  </span>
-                </div>
-                {profileRows.slice(0, 3).map(([k, v]) => (
-                  <div key={k} className="hero-mobile-panel-kv">
-                    <span className="hero-mobile-panel-key">{k}</span>
-                    <span className="hero-mobile-panel-val">{v}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="hero-mobile-panel">
-                <div className="hero-mobile-panel-header">CORE SPEC</div>
-                {coreRows.slice(0, 4).map(([k, v]) => (
-                  <div key={k} className="hero-mobile-panel-kv">
-                    <span className="hero-mobile-panel-key">{k}</span>
-                    <span
-                      className="hero-mobile-panel-val"
-                      style={k === 'STATUS' ? { color: '#00D4FF' } : undefined}
-                    >
-                      {v}
-                    </span>
-                  </div>
-                ))}
-              </div>
             </div>
 
             <TypewriterTagline

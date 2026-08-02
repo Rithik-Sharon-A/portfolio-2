@@ -773,20 +773,25 @@ body {
   .hero-shell {
     height: auto;
     max-height: none;
-    min-height: 100dvh;
-    overflow: visible;
-    padding-bottom: 120px;
+    min-height: unset;
+    overflow-x: hidden;
+    padding-bottom: 44px;
+  }
+
+  .hero-nav {
+    margin-bottom: 0 !important;
   }
 
   .hero-nav-links { display: none; }
   .hero-nav-toggle { display: grid; place-items: center; }
   .hero-mobile-menu { display: flex; }
+  .hero-led:nth-child(n+3) { display: none; }
 
   .hero-grid {
     grid-template-columns: 1fr !important;
     height: auto;
-    padding: 12px 14px 20px;
-    gap: 16px;
+    padding: 0 12px 12px;
+    gap: 8px;
   }
 
   .hero-left,
@@ -797,221 +802,137 @@ body {
   .hero-center {
     background: transparent;
     padding: 0;
+    gap: 8px;
   }
 
-  .hero-led:nth-child(n+3) { display: none; }
-
-  .hero-footer {
-    grid-template-columns: 1fr !important;
-    text-align: center;
-    justify-items: center;
-    padding: 12px 16px !important;
-    gap: 8px !important;
-  }
-
-  .hero-footer-side {
-    display: none !important;
-  }
-
-  .hero-footer-name svg { display: none; }
-
+  /* Oscilloscope — tighter on mobile */
   .oscilloscope-wrapper {
+    width: 100% !important;
     max-width: 100% !important;
-    height: 140px !important;
-    max-height: 140px;
+    max-height: 220px;
+    min-height: 180px;
     overflow: hidden;
-    width: 100%;
   }
 
-  .hero-scope-with-words {
-    max-width: 100%;
-  }
-
-  .hero-scope-overlay {
-    padding: 8px 12px;
-  }
-
+  /* Name overlay — smaller font so wave is visible */
   .hero-word {
-    font-size: clamp(1.6rem, 10vw, 3.2rem) !important;
+    font-size: clamp(1.6rem, 9vw, 2.8rem) !important;
+    line-height: 0.9 !important;
   }
 
+  /* Role subtitle */
+  .hero-role {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    font-size: 8px !important;
+    letter-spacing: 0.25em !important;
+    margin-top: 4px !important;
+    text-align: left !important;
+  }
+
+  /* Resume — hide the floating resume button on mobile, show inline text only */
+  .hero-resume-cta { display: none !important; }
   .hero-word-resume-row {
     flex-direction: column !important;
-    align-items: center !important;
-    gap: 16px !important;
+    align-items: flex-start !important;
+    gap: 0 !important;
   }
+  .hero-resume-divider { display: none !important; }
 
-  .hero-resume-divider {
-    display: none !important;
-  }
-
-  .hero-role,
-  .hero-role-sub {
-    font-size: 9px !important;
-    letter-spacing: 0.18em !important;
-    margin-bottom: 8px !important;
-    margin-top: 6px !important;
-  }
-
+  /* Terminal box — compact */
   .hero-tagline-box {
     max-width: 100% !important;
-    height: 64px !important;
-    min-height: 64px !important;
-    margin: 6px auto 0 !important;
+    height: auto !important;
+    min-height: 80px !important;
+    max-height: 110px !important;
+    margin: 0 !important;
   }
 
-  .hero-mobile-panels {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin: 8px 0;
-    width: 100%;
-  }
-
-  .hero-mobile-panel {
-    border: 1px solid rgba(0,212,255,0.35);
-    background: rgba(6,24,36,0.8);
-    padding: 8px 10px;
-  }
-
-  .hero-mobile-panel-header {
-    font-family: 'DM Mono', monospace;
-    font-size: 8px;
-    letter-spacing: 0.16em;
-    color: rgba(0,212,255,0.7);
-    border-bottom: 1px solid rgba(0,212,255,0.15);
-    padding-bottom: 5px;
-    margin-bottom: 6px;
-  }
-
-  .hero-mobile-panel-row {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-bottom: 4px;
-  }
-
-  .hero-mobile-panel-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: #00D4FF;
-    box-shadow: 0 0 4px #00D4FF;
-    flex-shrink: 0;
-  }
-
-  .hero-mobile-panel-status {
-    font-family: 'DM Mono', monospace;
-    font-size: 8px;
-    color: #00D4FF;
-    letter-spacing: 0.1em;
-  }
-
-  .hero-mobile-panel-kv {
-    display: grid;
-    grid-template-columns: 42px 1fr;
-    gap: 4px;
-    margin-bottom: 3px;
-  }
-
-  .hero-mobile-panel-key {
-    font-family: 'DM Mono', monospace;
-    font-size: 7px;
-    color: rgba(0,212,255,0.5);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .hero-mobile-panel-val {
-    font-family: 'DM Mono', monospace;
-    font-size: 8px;
-    color: rgba(226,232,240,0.85);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .hero-pills,
-  .hero-status-pills {
+  /* Status pills — horizontal scrollable single row */
+  .hero-pills {
+    display: flex !important;
     flex-direction: row !important;
     flex-wrap: nowrap !important;
-    gap: 6px !important;
     overflow-x: auto !important;
+    gap: 6px !important;
+    justify-content: flex-start !important;
     padding-bottom: 2px !important;
-    justify-content: center !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
   }
 
-  .hero-status-pill {
-    font-size: 9px !important;
-    padding: 4px 8px !important;
-    white-space: nowrap !important;
+  .hero-pills::-webkit-scrollbar { display: none; }
+
+  /* Each pill — smaller and compact */
+  .hero-pills > div {
+    padding: 6px 10px !important;
     flex-shrink: 0 !important;
   }
 
-  .hero-status-pill span {
+  .hero-pills > div span {
     font-size: 9px !important;
+    letter-spacing: 0.08em !important;
   }
 
+  /* CTAs — two side by side */
   .hero-ctas {
     flex-direction: row !important;
-    gap: 8px !important;
     width: 100% !important;
     max-width: 100% !important;
-    margin: 0 auto !important;
+    margin: 0 !important;
+    gap: 8px !important;
   }
 
   .hero-cta-solid,
   .hero-cta-ghost {
-    font-size: 10px !important;
-    padding: 8px 12px !important;
     flex: 1 !important;
-    width: auto !important;
     justify-content: center !important;
+    font-size: 10px !important;
+    padding: 10px 8px !important;
+    min-height: 40px !important;
   }
 
-  .hero-resume-cta {
-    min-height: auto;
-    flex-direction: row;
-    gap: 12px;
-    padding: 12px 20px;
+  /* Footer — centered, compact */
+  .hero-footer {
+    grid-template-columns: 1fr !important;
+    text-align: center;
+    justify-items: center;
+    padding: 8px 16px !important;
+    gap: 4px !important;
+    margin-top: 0 !important;
   }
 
+  .hero-footer-side { display: none !important; }
+  .hero-footer-name svg { display: none; }
+  .hero-footer-name { display: none !important; }
+  .hero-footer { display: none !important; }
+  .hero-footer-name span {
+    font-size: 1rem !important;
+  }
+
+  /* Hide mobile panels if they exist */
+  .hero-mobile-panels { display: none !important; }
+
+  /* Other sections mobile */
   .project-row {
     grid-template-columns: 40px 1fr !important;
     gap: 12px !important;
-    padding: 20px 8px !important;
+    padding: 18px 8px !important;
   }
-
-  .project-tags {
-    display: none !important;
-  }
-
-  .project-inspect {
-    display: none !important;
-  }
-
-  .project-title {
-    font-size: clamp(1rem, 4vw, 1.35rem) !important;
-  }
+  .project-tags { display: none !important; }
+  .project-inspect { display: none !important; }
+  .project-title { font-size: clamp(1rem, 4vw, 1.35rem) !important; }
 
   .service-row {
     grid-template-columns: 1fr !important;
     gap: 8px !important;
-    padding: 20px 0 !important;
+    padding: 16px 0 !important;
   }
-
-  .service-number {
-    font-size: clamp(2rem, 8vw, 3rem) !important;
-    line-height: 1 !important;
-  }
-
-  .service-name {
-    font-size: clamp(1rem, 4vw, 1.4rem) !important;
-  }
-
-  .service-desc {
-    font-size: 12px !important;
-  }
+  .service-number { font-size: clamp(2rem, 8vw, 3rem) !important; line-height: 1 !important; }
+  .service-name { font-size: clamp(1rem, 4vw, 1.4rem) !important; }
+  .service-desc { font-size: 12px !important; }
 
   .contact-footer {
     flex-direction: column !important;
@@ -1020,12 +941,10 @@ body {
     text-align: center !important;
   }
 
-  .about-sys,
-  .about-grid {
+  .about-sys, .about-grid {
     grid-template-columns: 1fr !important;
-    gap: 28px !important;
+    gap: 20px !important;
   }
-
   .about-row {
     grid-template-columns: 1fr !important;
     gap: 6px !important;
