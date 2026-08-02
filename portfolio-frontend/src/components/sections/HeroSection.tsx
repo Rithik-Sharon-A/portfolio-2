@@ -1206,12 +1206,24 @@ export default function HeroSection({ data, logoText }: Props) {
             >
               {data.ctaPrimary || '>_ OPEN TERMINAL'}
             </button>
+
+            {/* Desktop — VIEW SYSTEMS */}
             <a
               href={data.ctaSecondaryHref || '#work'}
-              className="hero-cta-ghost eng-pulse"
+              className="hero-cta-ghost eng-pulse hide-mobile"
               onMouseEnter={onInteractiveHover}
             >
               {data.ctaSecondary || '▦ VIEW SYSTEMS'}
+            </a>
+
+            {/* Mobile — RESUME DOWNLOAD */}
+            <a
+              href={data.resumeUrl || '/resume.pdf'}
+              download={data.resumeFileName || 'Rithik_Sharon_A_Resume.pdf'}
+              className="hero-cta-ghost eng-pulse show-mobile"
+              style={{ textAlign: 'center' }}
+            >
+              RESUME .PDF ↓
             </a>
           </div>
         </motion.div>
