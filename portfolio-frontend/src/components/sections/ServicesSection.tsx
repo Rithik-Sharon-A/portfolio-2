@@ -24,7 +24,7 @@ export default function ServicesSection({ data, label, heading }: Props) {
         position: 'relative',
         zIndex: 2,
         padding: 'clamp(50px, 10vw, 100px) clamp(20px, 6vw, 80px)',
-        minHeight: '80vh',
+        minHeight: 'unset',
         overflow: 'hidden',
         borderTop: '1px solid rgba(0,212,255,0.1)',
       }}
@@ -54,12 +54,24 @@ export default function ServicesSection({ data, label, heading }: Props) {
             fontSize: 'clamp(2rem, 7vw, 3.2rem)',
             fontWeight: 800,
             letterSpacing: '-0.03em',
-            marginBottom: 40,
+            marginBottom: 12,
             color: 'var(--white)',
           }}
         >
           {heading}
         </motion.h2>
+        <p
+          style={{
+            fontFamily: 'DM Mono, monospace',
+            fontSize: 11,
+            color: 'var(--muted)',
+            letterSpacing: '0.06em',
+            marginBottom: 40,
+            maxWidth: 480,
+          }}
+        >
+          Domains I operate in — from silicon to software.
+        </p>
 
         <div>
           {data.map((service, i) => (
@@ -75,7 +87,7 @@ export default function ServicesSection({ data, label, heading }: Props) {
                 borderTop: '1px solid rgba(0,212,255,0.12)',
                 padding: '28px 0',
                 display: 'grid',
-                gridTemplateColumns: 'minmax(48px, 72px) 1fr',
+                gridTemplateColumns: 'minmax(48px, 72px) 1fr auto',
                 gap: 'clamp(12px, 3vw, 20px)',
                 cursor: 'default',
               }}
@@ -126,6 +138,29 @@ export default function ServicesSection({ data, label, heading }: Props) {
                 >
                   {service.description}
                 </p>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  opacity: hovered === service.documentId ? 1 : 0,
+                  transition: 'opacity 0.2s',
+                  paddingLeft: 16,
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'flex-end', gap: 3 }}>
+                  {[10, 16, 22, 14, 18].map((h, bi) => (
+                    <div
+                      key={bi}
+                      style={{
+                        width: 3,
+                        height: h,
+                        background: 'rgba(0,212,255,0.7)',
+                        borderRadius: 1,
+                      }}
+                    />
+                  ))}
+                </div>
               </div>
             </motion.div>
           ))}

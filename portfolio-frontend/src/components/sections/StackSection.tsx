@@ -54,7 +54,7 @@ export default function StackSection({ data, label, heading, subtitle }: Props) 
       style={{
         background: 'var(--bg)',
         padding: 'clamp(60px, 12vw, 120px) clamp(20px, 6vw, 80px)',
-        minHeight: '80vh',
+        minHeight: 'unset',
         position: 'relative',
         overflow: 'hidden',
       }}
@@ -113,16 +113,34 @@ export default function StackSection({ data, label, heading, subtitle }: Props) 
             >
               <div
                 style={{
-                  fontFamily: 'DM Mono, monospace',
-                  fontSize: 11,
-                  letterSpacing: '0.16em',
-                  color: 'rgba(0,212,255,0.75)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 10,
                   marginBottom: 14,
-                  borderBottom: '1px solid rgba(0,212,255,0.12)',
                   paddingBottom: 8,
+                  borderBottom: '1px solid rgba(0,212,255,0.12)',
                 }}
               >
-                {group.domain.toUpperCase()}
+                <span
+                  style={{
+                    width: 6,
+                    height: 6,
+                    borderRadius: '50%',
+                    background: 'rgba(0,212,255,0.6)',
+                    display: 'inline-block',
+                    flexShrink: 0,
+                  }}
+                />
+                <span
+                  style={{
+                    fontFamily: 'DM Mono, monospace',
+                    fontSize: 11,
+                    letterSpacing: '0.16em',
+                    color: 'rgba(0,212,255,0.75)',
+                  }}
+                >
+                  {group.domain.toUpperCase()}
+                </span>
               </div>
               <div
                 className="stack-grid"
@@ -136,20 +154,22 @@ export default function StackSection({ data, label, heading, subtitle }: Props) 
                   const active = techFilter?.toLowerCase() === item.name.toLowerCase();
                   const iconSrc = item.icon?.url ? mediaUrl(item.icon.url) : item.iconUrl;
                   return (
-                    <button
+                    <motion.button
                       key={item.documentId}
                       type="button"
-                      onClick={() =>
-                        filterByTech(active ? null : item.name)
-                      }
+                      onClick={() => filterByTech(active ? null : item.name)}
                       className="eng-pulse"
+                      whileHover={{
+                        borderColor: 'rgba(0,212,255,0.45)',
+                        background: 'rgba(0,212,255,0.06)',
+                      }}
+                      transition={{ duration: 0.15 }}
                       style={{
                         textAlign: 'left',
                         border: `1px solid rgba(0,212,255,${active ? 0.45 : 0.14})`,
                         background: active ? 'rgba(0,212,255,0.08)' : 'var(--surface)',
                         padding: 'clamp(12px, 2vw, 20px) clamp(10px, 1.5vw, 16px)',
                         cursor: 'pointer',
-                        transition: 'border-color 0.2s, background 0.2s',
                       }}
                     >
                       {iconSrc ? (
@@ -187,7 +207,19 @@ export default function StackSection({ data, label, heading, subtitle }: Props) 
                       >
                         {item.cricketRole}
                       </div>
-                    </button>
+                      {active && (
+                        <div
+                          style={{
+                            width: 6,
+                            height: 6,
+                            borderRadius: '50%',
+                            background: '#00D4FF',
+                            boxShadow: '0 0 6px #00D4FF',
+                            marginTop: 8,
+                          }}
+                        />
+                      )}
+                    </motion.button>
                   );
                 })}
               </div>

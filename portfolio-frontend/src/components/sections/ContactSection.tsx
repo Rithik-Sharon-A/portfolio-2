@@ -4,7 +4,6 @@ import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { Contact } from '@/types';
 import { FolderGit2, Link2, Mail, Phone } from 'lucide-react';
-import CircuitNode from '@/components/svg/CircuitNode';
 import CircuitCorners from '@/components/svg/CircuitCorners';
 
 interface Props {
@@ -60,23 +59,29 @@ export default function ContactSection({ data }: Props) {
       }}
     >
       <style>{`
-        .contact-footer {
-          border-top: 1px solid rgba(0,212,255,0.12);
-          width: 100%;
-          max-width: 100vw;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 16px;
-          padding: clamp(16px, 3vw, 32px) 0 0;
-          flex-wrap: wrap;
+        @keyframes pcb-pulse {
+          0%, 100% { opacity: 0.3; transform: scale(1); }
+          50% { opacity: 0.8; transform: scale(1.6); }
         }
-        @media (max-width: 768px) {
-          .contact-footer {
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            gap: 8px;
+        .pcb-pulse-node {
+          animation: pcb-pulse 2.4s ease-in-out infinite;
+          transform-origin: 400px 16px;
+        }
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
+        }
+        .footer-cursor {
+          display: inline-block;
+          width: 7px;
+          height: 13px;
+          background: rgba(0,212,255,0.7);
+          animation: blink 1.1s step-start infinite;
+          vertical-align: middle;
+        }
+        @media (max-width: 600px) {
+          .footer-terminal-grid {
+            grid-template-columns: 1fr !important;
           }
         }
       `}</style>
@@ -227,20 +232,132 @@ export default function ContactSection({ data }: Props) {
           )}
         </AnimatePresence>
 
-        <div className="contact-footer">
-          <span style={{ fontFamily: 'DM Mono', fontSize: '11px', color: 'var(--muted)' }}>
-            {data.footerCopyright}
-          </span>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <CircuitNode size={20} color="var(--blue)" />
-            <span style={{ fontFamily: 'DM Mono', fontSize: '11px', color: 'var(--muted)' }}>
-              {data.footerStatus}
-            </span>
-          </div>
-          <span style={{ fontFamily: 'DM Mono', fontSize: '11px', color: 'var(--muted)' }}>
-            {data.footerTagline}
-          </span>
+        <div style={{ width: '100%', margin: '48px 0 0', position: 'relative' }}>
+          <svg
+            viewBox="0 0 800 32"
+            preserveAspectRatio="none"
+            style={{ width: '100%', height: 32, display: 'block', overflow: 'visible' }}
+            aria-hidden="true"
+          >
+            <line
+              x1="0"
+              y1="16"
+              x2="800"
+              y2="16"
+              stroke="rgba(0,212,255,0.18)"
+              strokeWidth="1"
+            />
+
+            <circle cx="0" cy="16" r="3" fill="none" stroke="rgba(0,212,255,0.5)" strokeWidth="1" />
+            <circle cx="0" cy="16" r="1.5" fill="rgba(0,212,255,0.8)" />
+
+            <circle cx="200" cy="16" r="3" fill="none" stroke="rgba(0,212,255,0.35)" strokeWidth="1" />
+            <circle cx="200" cy="16" r="1.5" fill="rgba(0,212,255,0.5)" />
+            <line x1="200" y1="16" x2="200" y2="4" stroke="rgba(0,212,255,0.25)" strokeWidth="1" />
+            <circle cx="200" cy="4" r="2" fill="none" stroke="rgba(0,212,255,0.3)" strokeWidth="1" />
+
+            <circle cx="400" cy="16" r="4" fill="none" stroke="rgba(0,212,255,0.5)" strokeWidth="1" />
+            <circle cx="400" cy="16" r="2" fill="rgba(0,212,255,0.9)" />
+            <circle
+              cx="400"
+              cy="16"
+              r="4"
+              fill="none"
+              stroke="rgba(0,212,255,0.3)"
+              strokeWidth="1"
+              className="pcb-pulse-node"
+            />
+
+            <circle cx="600" cy="16" r="3" fill="none" stroke="rgba(0,212,255,0.35)" strokeWidth="1" />
+            <circle cx="600" cy="16" r="1.5" fill="rgba(0,212,255,0.5)" />
+            <line x1="600" y1="16" x2="600" y2="28" stroke="rgba(0,212,255,0.25)" strokeWidth="1" />
+            <circle cx="600" cy="28" r="2" fill="none" stroke="rgba(0,212,255,0.3)" strokeWidth="1" />
+
+            <circle cx="800" cy="16" r="3" fill="none" stroke="rgba(0,212,255,0.5)" strokeWidth="1" />
+            <circle cx="800" cy="16" r="1.5" fill="rgba(0,212,255,0.8)" />
+          </svg>
         </div>
+
+        <motion.div
+          className="footer-terminal-grid"
+          initial={{ opacity: 0, y: 12 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.3, duration: 0.6 }}
+          style={{
+            width: '100%',
+            padding: '28px 0 40px',
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: '6px 48px',
+            textAlign: 'left',
+          }}
+        >
+          {[
+            { label: 'SYSTEM', value: `${data.footerCopyright}` },
+            { label: 'LOCATION', value: 'Chennai, IN' },
+            { label: 'STATUS', value: data.footerStatus || 'Link ready.' },
+            { label: 'BUILD', value: data.footerTagline || 'Built from bare metal to browser.' },
+            { label: 'CONTACT', value: data.email || '' },
+            { label: 'NETWORK', value: 'github · linkedin' },
+          ].map(({ label, value }) => (
+            <div
+              key={label}
+              style={{
+                display: 'flex',
+                gap: 10,
+                alignItems: 'baseline',
+                borderBottom: '1px solid rgba(0,212,255,0.06)',
+                padding: '7px 0',
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: 'DM Mono, monospace',
+                  fontSize: 9,
+                  letterSpacing: '0.14em',
+                  color: 'rgba(0,212,255,0.55)',
+                  whiteSpace: 'nowrap',
+                  minWidth: 72,
+                }}
+              >
+                {'>'} {label}
+              </span>
+              <span
+                style={{
+                  fontFamily: 'DM Mono, monospace',
+                  fontSize: 10,
+                  color: 'rgba(226,232,240,0.55)',
+                  letterSpacing: '0.04em',
+                  wordBreak: 'break-all',
+                }}
+              >
+                {value}
+              </span>
+            </div>
+          ))}
+
+          <div
+            style={{
+              gridColumn: '1 / -1',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              paddingTop: 10,
+            }}
+          >
+            <span
+              style={{
+                fontFamily: 'DM Mono, monospace',
+                fontSize: 9,
+                color: 'rgba(0,212,255,0.4)',
+                letterSpacing: '0.14em',
+              }}
+            >
+              {'>'} rs-embedded:~$
+            </span>
+            <span className="footer-cursor" />
+          </div>
+        </motion.div>
       </div>
     </section>
   );

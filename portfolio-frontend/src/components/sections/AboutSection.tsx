@@ -60,7 +60,7 @@ export default function AboutSection({ data }: Props) {
       style={{
         background: 'var(--bg)',
         padding: 'clamp(60px, 12vw, 120px) clamp(20px, 6vw, 80px)',
-        minHeight: '100vh',
+        minHeight: 'unset',
         display: 'flex',
         alignItems: 'center',
         position: 'relative',
@@ -137,27 +137,36 @@ export default function AboutSection({ data }: Props) {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 0.2 }}
-          style={{ display: 'flex', flexDirection: 'column', gap: 16, width: '100%' }}
+          style={{ display: 'flex', flexDirection: 'column', gap: 20, width: '100%' }}
         >
           <OscilloscopeWave color="#00D4FF" />
-          <div className="about-stats" style={{ display: 'grid', gap: 10, width: '100%' }}>
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: 10,
+              width: '100%',
+            }}
+          >
             {[
               { v: data.stat1Value, l: data.stat1Label },
               { v: data.stat2Value, l: data.stat2Label },
               { v: data.stat3Value, l: data.stat3Label },
+              { v: '115200', l: 'UART BAUD RATE' },
             ].map((s) => (
               <div
                 key={s.l}
                 style={{
                   border: '1px solid rgba(0,212,255,0.14)',
-                  padding: 'clamp(14px, 2vw, 18px) clamp(14px, 2vw, 20px)',
+                  padding: 'clamp(12px, 2vw, 18px)',
                   background: 'var(--surface)',
                 }}
               >
                 <div
                   style={{
                     fontFamily: 'Syne, sans-serif',
-                    fontSize: '1.75rem',
+                    fontSize: 'clamp(1.3rem, 3vw, 1.75rem)',
                     fontWeight: 700,
                     color: '#00D4FF',
                   }}
@@ -167,7 +176,7 @@ export default function AboutSection({ data }: Props) {
                 <div
                   style={{
                     fontFamily: 'DM Mono, monospace',
-                    fontSize: 10,
+                    fontSize: 9,
                     color: 'var(--muted)',
                     letterSpacing: '0.12em',
                     marginTop: 4,
@@ -175,6 +184,64 @@ export default function AboutSection({ data }: Props) {
                 >
                   {(s.l || '').toUpperCase()}
                 </div>
+              </div>
+            ))}
+          </div>
+
+          <div
+            style={{
+              border: '1px solid rgba(0,212,255,0.14)',
+              background: 'rgba(22,24,29,0.55)',
+              padding: '14px 18px',
+            }}
+          >
+            <div
+              style={{
+                fontFamily: 'DM Mono, monospace',
+                fontSize: 9,
+                letterSpacing: '0.16em',
+                color: 'rgba(0,212,255,0.5)',
+                marginBottom: 12,
+              }}
+            >
+              SYSTEM SPEC
+            </div>
+            {[
+              { k: 'MCU', v: 'STM32 · ESP32' },
+              { k: 'PROTOCOL', v: 'UART · SPI · I2C · CAN' },
+              { k: 'OS', v: 'FreeRTOS · Bare-Metal' },
+              { k: 'LANG', v: 'C / C++ / JavaScript' },
+              { k: 'IDE', v: 'STM32CubeIDE · VS Code' },
+            ].map(({ k, v }) => (
+              <div
+                key={k}
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: '90px 1fr',
+                  gap: 12,
+                  padding: '7px 0',
+                  borderBottom: '1px solid rgba(0,212,255,0.07)',
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: 'DM Mono, monospace',
+                    fontSize: 9,
+                    color: 'rgba(0,212,255,0.55)',
+                    letterSpacing: '0.1em',
+                  }}
+                >
+                  {k}
+                </span>
+                <span
+                  style={{
+                    fontFamily: 'DM Mono, monospace',
+                    fontSize: 10,
+                    color: 'rgba(226,232,240,0.7)',
+                  }}
+                >
+                  {v}
+                </span>
               </div>
             ))}
           </div>
