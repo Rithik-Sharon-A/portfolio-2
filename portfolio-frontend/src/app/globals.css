@@ -156,7 +156,7 @@ body {
   100% { stroke-dashoffset: -400; }
 }
 
-@keyframes ecgScroll {
+@keyframes sineScroll {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
@@ -483,6 +483,28 @@ body {
 
 .hero-mobile-panels {
   display: none;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.services-grid-odd {
+  grid-column: 1 / -1;
+  max-width: calc(50% - 6px);
+}
+
+@media (max-width: 640px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .services-grid-odd {
+    grid-column: auto;
+    max-width: none;
+  }
 }
 
 .hero-word-resume-row {

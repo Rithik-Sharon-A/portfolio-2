@@ -85,6 +85,87 @@ function Oscilloscope({ children }: { children?: ReactNode }) {
   const mid = h / 2;
   const CORNER = 16;
 
+  // CH1 — Sine wave (mathematically perfect)
+  const ch1Sine = useMemo(() => {
+    const points: string[] = [];
+    const totalWidth = w * 2;
+    const amplitude = h * 0.28;
+    const steps = 400;
+    for (let i = 0; i <= steps; i++) {
+      const x = (i / steps) * totalWidth;
+      const y = mid - Math.sin((i / steps) * Math.PI * 2 * 2.5) * amplitude;
+      points.push(`${x.toFixed(2)},${y.toFixed(2)}`);
+    }
+    return points.join(' ');
+  }, [w, h, mid]);
+
+  // CH2 — Square wave (CLK) — runs at a higher frequency
+  const ch2Square = useMemo(() => {
+    const points: string[] = [];
+    const totalWidth = w * 2;
+    const amplitude = h * 0.22;
+    const cycles = 8; // number of square wave cycles
+    const cycleWidth = totalWidth / cycles;
+
+    for (let c = 0; c < cycles; c++) {
+      const x0 = c * cycleWidth;
+      const x1 = x0 + cycleWidth * 0.02; // rise
+      const x2 = x0 + cycleWidth * 0.5; // fall
+      const x3 = x0 + cycleWidth * 0.52; // fall edge
+      const high = mid - amplitude;
+      const low = mid + amplitude;
+
+      points.push(`${x0.toFixed(2)},${low}`);
+      points.push(`${x1.toFixed(2)},${low}`);
+      points.push(`${x1.toFixed(2)},${high}`);
+      points.push(`${x2.toFixed(2)},${high}`);
+      points.push(`${x2.toFixed(2)},${low}`);
+      points.push(`${x3.toFixed(2)},${low}`);
+    }
+    return points.join(' ');
+  }, [w, h, mid]);
+
+  // CH3 — Short pulse bursts (UART-style data)
+  const ch3Pulse = useMemo(() => {
+    const points: string[] = [];
+    const totalWidth = w * 2;
+    const pulseH = mid - h * 0.12;
+    const baseY = mid + h * 0.05;
+    // idle high, then burst of pulses
+    const pattern = [1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1]; // data bits
+    const bitWidth = totalWidth / (pattern.length * 3);
+
+    // start idle
+    points.push(`0,${baseY}`);
+
+    let x = bitWidth * 2;
+    for (let rep = 0; rep < 3; rep++) {
+      // start bit
+      points.push(`${x.toFixed(2)},${baseY}`);
+      x += bitWidth * 0.5;
+      points.push(`${x.toFixed(2)},${baseY}`);
+      points.push(`${x.toFixed(2)},${pulseH}`);
+      x += bitWidth;
+      points.push(`${x.toFixed(2)},${pulseH}`);
+      points.push(`${x.toFixed(2)},${baseY}`);
+
+      for (const bit of pattern) {
+        const top = bit === 1 ? pulseH : baseY;
+        points.push(`${x.toFixed(2)},${baseY}`);
+        points.push(`${x.toFixed(2)},${top}`);
+        x += bitWidth;
+        points.push(`${x.toFixed(2)},${top}`);
+        points.push(`${x.toFixed(2)},${baseY}`);
+      }
+      // gap
+      x += bitWidth * 3;
+      points.push(`${x.toFixed(2)},${baseY}`);
+    }
+
+    points.push(`${totalWidth},${baseY}`);
+    return points.join(' ');
+  }, [w, h, mid]);
+
   const s = CORNER + 4;
   const brackets: { path: string; style: CSSProperties }[] = [
     { path: `M ${CORNER} 2 L 2 2 L 2 ${CORNER}`, style: { top: 0, left: 0 } },
@@ -431,7 +512,7 @@ function Oscilloscope({ children }: { children?: ReactNode }) {
             />
           </svg>
 
-          {/* Animated moving ECG — two copies side by side for seamless loop */}
+          {/* CH1 — Sine wave */}
           <svg
             width="200%"
             height={h}
@@ -442,80 +523,84 @@ function Oscilloscope({ children }: { children?: ReactNode }) {
               top: 0,
               left: 0,
               maxWidth: 'none',
-              animation: 'ecgScroll 3s linear infinite',
               pointerEvents: 'none',
+              animation: 'sineScroll 5s linear infinite',
+            }}
+            aria-hidden
+          >
+            <defs>
+              <filter id="ch1Glow" x="-10%" y="-100%" width="120%" height="300%">
+                <feGaussianBlur stdDeviation="3.5" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+            <polyline
+              points={ch1Sine}
+              fill="none"
+              stroke="rgba(0,212,255,0.3)"
+              strokeWidth="6"
+              filter="url(#ch1Glow)"
+            />
+            <polyline
+              points={ch1Sine}
+              fill="none"
+              stroke="#00D4FF"
+              strokeWidth="2"
+              style={{ filter: 'drop-shadow(0 0 3px rgba(0,212,255,0.9))' }}
+            />
+          </svg>
+
+          {/* CH2 — Square wave (CLK) */}
+          <svg
+            width="200%"
+            height={h}
+            viewBox={`0 0 ${w * 2} ${h}`}
+            preserveAspectRatio="none"
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              maxWidth: 'none',
+              pointerEvents: 'none',
+              animation: 'sineScroll 3s linear infinite',
             }}
             aria-hidden
           >
             <polyline
-              points={`
-                0,${mid}
-                ${w * 0.06},${mid}
-                ${w * 0.10},${mid - h * 0.08}
-                ${w * 0.13},${mid + h * 0.12}
-                ${w * 0.16},${mid - h * 0.38}
-                ${w * 0.20},${mid + h * 0.45}
-                ${w * 0.23},${mid - h * 0.18}
-                ${w * 0.26},${mid}
-                ${w * 0.40},${mid}
-                ${w * 0.44},${mid - h * 0.06}
-                ${w * 0.47},${mid + h * 0.10}
-                ${w * 0.50},${mid - h * 0.35}
-                ${w * 0.54},${mid + h * 0.42}
-                ${w * 0.57},${mid - h * 0.15}
-                ${w * 0.60},${mid}
-                ${w * 0.74},${mid}
-                ${w * 0.78},${mid - h * 0.07}
-                ${w * 0.81},${mid + h * 0.11}
-                ${w * 0.84},${mid - h * 0.36}
-                ${w * 0.88},${mid + h * 0.43}
-                ${w * 0.91},${mid - h * 0.16}
-                ${w * 0.94},${mid}
-                ${w},${mid}
-              `}
+              points={ch2Square}
               fill="none"
-              stroke="#00D4FF"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              style={{
-                filter: 'drop-shadow(0 0 6px #00D4FF) drop-shadow(0 0 14px rgba(0,212,255,0.5))',
-              }}
+              stroke="rgba(0,255,229,0.5)"
+              strokeWidth="1.5"
+              strokeLinejoin="miter"
+              style={{ filter: 'drop-shadow(0 0 2px rgba(0,255,229,0.6))' }}
             />
+          </svg>
+
+          {/* CH3 — Pulse/data signal */}
+          <svg
+            width="200%"
+            height={h}
+            viewBox={`0 0 ${w * 2} ${h}`}
+            preserveAspectRatio="none"
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              maxWidth: 'none',
+              pointerEvents: 'none',
+              animation: 'sineScroll 7s linear infinite',
+            }}
+            aria-hidden
+          >
             <polyline
-              points={`
-                ${w},${mid}
-                ${w + w * 0.06},${mid}
-                ${w + w * 0.10},${mid - h * 0.08}
-                ${w + w * 0.13},${mid + h * 0.12}
-                ${w + w * 0.16},${mid - h * 0.38}
-                ${w + w * 0.20},${mid + h * 0.45}
-                ${w + w * 0.23},${mid - h * 0.18}
-                ${w + w * 0.26},${mid}
-                ${w + w * 0.40},${mid}
-                ${w + w * 0.44},${mid - h * 0.06}
-                ${w + w * 0.47},${mid + h * 0.10}
-                ${w + w * 0.50},${mid - h * 0.35}
-                ${w + w * 0.54},${mid + h * 0.42}
-                ${w + w * 0.57},${mid - h * 0.15}
-                ${w + w * 0.60},${mid}
-                ${w + w * 0.74},${mid}
-                ${w + w * 0.78},${mid - h * 0.07}
-                ${w + w * 0.81},${mid + h * 0.11}
-                ${w + w * 0.84},${mid - h * 0.36}
-                ${w + w * 0.88},${mid + h * 0.43}
-                ${w + w * 0.91},${mid - h * 0.16}
-                ${w + w * 0.94},${mid}
-                ${w * 2},${mid}
-              `}
+              points={ch3Pulse}
               fill="none"
-              stroke="#00D4FF"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              style={{
-                filter: 'drop-shadow(0 0 6px #00D4FF) drop-shadow(0 0 14px rgba(0,212,255,0.5))',
-              }}
+              stroke="rgba(0,212,255,0.35)"
+              strokeWidth="1"
+              strokeLinejoin="miter"
             />
           </svg>
 

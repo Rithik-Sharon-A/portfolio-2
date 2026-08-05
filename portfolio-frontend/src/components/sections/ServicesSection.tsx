@@ -72,95 +72,91 @@ export default function ServicesSection({ data, label, heading }: Props) {
           Domains I operate in — from silicon to software.
         </p>
 
-        <div>
+        {/* Desktop: 2 columns. Mobile: 1 column — order stays 01|02 / 03|04 / 05 */}
+        <div className="services-grid">
           {data.map((service, i) => (
             <motion.div
               key={service.documentId}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: i * 0.06 }}
               onMouseEnter={() => setHovered(service.documentId)}
               onMouseLeave={() => setHovered(null)}
-              className="service-row"
+              className={i === 4 && data.length === 5 ? 'services-grid-odd' : undefined}
               style={{
-                borderTop: '1px solid rgba(0,212,255,0.12)',
-                padding: '18px 0',
-                display: 'grid',
-                gridTemplateColumns: 'minmax(48px, 72px) 1fr auto',
-                gap: 'clamp(12px, 3vw, 20px)',
+                border: `1px solid ${
+                  hovered === service.documentId
+                    ? 'rgba(0,212,255,0.4)'
+                    : 'rgba(0,212,255,0.15)'
+                }`,
+                background:
+                  hovered === service.documentId
+                    ? 'rgba(0,212,255,0.04)'
+                    : 'rgba(6,18,28,0.6)',
+                padding: '16px 18px',
+                position: 'relative',
+                overflow: 'hidden',
+                transition: 'border-color 0.2s, background 0.2s',
                 cursor: 'default',
               }}
             >
+              {/* Ghost number — large, right side watermark */}
               <div
-                className="service-number"
                 style={{
+                  position: 'absolute',
+                  right: 12,
+                  top: '50%',
+                  transform: 'translateY(-50%)',
                   fontFamily: 'Syne, sans-serif',
-                  fontSize: 'clamp(1.6rem, 4vw, 2.8rem)',
-                  fontWeight: 700,
+                  fontSize: 'clamp(3rem, 8vw, 5rem)',
+                  fontWeight: 800,
                   color:
                     hovered === service.documentId
-                      ? 'var(--blue)'
-                      : 'rgba(0,212,255,0.25)',
+                      ? 'rgba(0,212,255,0.18)'
+                      : 'rgba(0,212,255,0.09)',
                   lineHeight: 1,
+                  userSelect: 'none',
+                  pointerEvents: 'none',
                   transition: 'color 0.2s',
-                  textShadow:
-                    hovered === service.documentId
-                      ? '0 0 18px rgba(0,212,255,0.35)'
-                      : 'none',
+                  letterSpacing: '-0.04em',
                 }}
               >
                 {service.number}
               </div>
-              <div>
-                <div
-                  className="service-name"
-                  style={{
-                    fontFamily: 'Space Grotesk, sans-serif',
-                    fontSize: 'clamp(1.15rem, 2.5vw, 1.45rem)',
-                    fontWeight: 600,
-                    color: 'var(--white)',
-                    marginBottom: 8,
-                  }}
-                >
-                  {service.name}
-                </div>
-                <p
-                  className="service-desc"
-                  style={{
-                    fontFamily: 'Space Grotesk, sans-serif',
-                    fontSize: 14,
-                    lineHeight: 1.7,
-                    color: 'rgba(226,232,240,0.7)',
-                    maxWidth: 640,
-                    margin: 0,
-                  }}
-                >
-                  {service.description}
-                </p>
-              </div>
+
+              {/* Service name */}
               <div
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  opacity: hovered === service.documentId ? 1 : 0,
-                  transition: 'opacity 0.2s',
-                  paddingLeft: 16,
+                  fontFamily: 'Space Grotesk, sans-serif',
+                  fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
+                  fontWeight: 700,
+                  color:
+                    hovered === service.documentId ? '#00D4FF' : 'var(--white)',
+                  marginBottom: 8,
+                  transition: 'color 0.2s',
+                  paddingRight: 60,
+                  position: 'relative',
+                  zIndex: 1,
                 }}
               >
-                <div style={{ display: 'flex', alignItems: 'flex-end', gap: 3 }}>
-                  {[10, 16, 22, 14, 18].map((h, bi) => (
-                    <div
-                      key={bi}
-                      style={{
-                        width: 3,
-                        height: h,
-                        background: 'rgba(0,212,255,0.7)',
-                        borderRadius: 1,
-                      }}
-                    />
-                  ))}
-                </div>
+                {service.name}
               </div>
+
+              {/* Description */}
+              <p
+                style={{
+                  fontFamily: 'DM Mono, monospace',
+                  fontSize: 11,
+                  lineHeight: 1.7,
+                  color: 'rgba(226,232,240,0.55)',
+                  margin: 0,
+                  paddingRight: 60,
+                  position: 'relative',
+                  zIndex: 1,
+                }}
+              >
+                {service.description}
+              </p>
             </motion.div>
           ))}
         </div>

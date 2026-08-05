@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { Project, SiteSettings } from '@/types';
@@ -57,11 +57,12 @@ export default function ProjectsSection({ data, label, heading, ui }: Props) {
 
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [isMobile] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    return window.matchMedia('(max-width: 768px)').matches;
-  });
+  const [isMobile, setIsMobile] = useState(false);
   const [mobileExpandedId, setMobileExpandedId] = useState<string | null>(null);
+
+  useEffect(() => {
+    setIsMobile(window.matchMedia('(max-width: 768px)').matches);
+  }, []);
 
   const filtered = data;
 
@@ -151,10 +152,9 @@ export default function ProjectsSection({ data, label, heading, ui }: Props) {
                 onClick={() => {
                   if (isMobile) {
                     if (mobileExpandedId === project.documentId) {
-                      openProject(project.documentId);
-                      setMobileExpandedId(null);
+                      setMobileExpandedId(null); // collapse on second tap
                     } else {
-                      setMobileExpandedId(project.documentId);
+                      setMobileExpandedId(project.documentId); // first tap shows image
                     }
                   } else {
                     openProject(project.documentId);
@@ -208,60 +208,102 @@ export default function ProjectsSection({ data, label, heading, ui }: Props) {
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.2, ease: 'easeOut' }}
-                        style={{ overflow: 'hidden', marginBottom: 10, marginTop: 8 }}
+                        style={{ overflow: 'hidden', marginTop: 10, marginBottom: 4 }}
                       >
-                        {(() => {
-                          const img = getPreviewImage(project);
-                          return img ? (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img
-                              src={img}
-                              alt={project.title}
-                              style={{
-                                width: '100%',
-                                maxHeight: 180,
-                                objectFit: 'cover',
-                                display: 'block',
-                                border: '1px solid rgba(0,212,255,0.2)',
-                              }}
-                            />
-                          ) : (
-                            <div
-                              style={{
-                                width: '100%',
-                                height: 120,
-                                background: 'rgba(0,212,255,0.04)',
-                                border: '1px solid rgba(0,212,255,0.15)',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                              }}
-                            >
-                              <span
+                        {/* Image with INSPECT button overlaid */}
+                        <div
+                          style={{
+                            position: 'relative',
+                            width: '100%',
+                          }}
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {(() => {
+                            const img = getPreviewImage(project);
+                            return img ? (
+                              // eslint-disable-next-line @next/next/no-img-element
+                              <img
+                                src={img}
+                                alt={project.title}
                                 style={{
-                                  fontFamily: 'DM Mono, monospace',
-                                  fontSize: 10,
-                                  color: 'rgba(0,212,255,0.5)',
-                                  letterSpacing: '0.12em',
+                                  width: '100%',
+                                  height: 180,
+                                  objectFit: 'cover',
+                                  display: 'block',
+                                  border: '1px solid rgba(0,212,255,0.25)',
+                                }}
+                              />
+                            ) : (
+                              <div
+                                style={{
+                                  width: '100%',
+                                  height: 180,
+                                  background: 'rgba(0,212,255,0.03)',
+                                  border: '1px solid rgba(0,212,255,0.2)',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
                                 }}
                               >
-                                IMAGE COMING SOON
-                              </span>
-                            </div>
-                          );
-                        })()}
-                        <p
-                          style={{
-                            fontFamily: 'DM Mono, monospace',
-                            fontSize: 9,
-                            color: 'rgba(0,212,255,0.45)',
-                            letterSpacing: '0.1em',
-                            marginTop: 6,
-                            marginBottom: 0,
-                          }}
-                        >
-                          TAP AGAIN TO INSPECT →
-                        </p>
+                                <div style={{ textAlign: 'center' }}>
+                                  <div
+                                    style={{
+                                      fontFamily: 'DM Mono, monospace',
+                                      fontSize: 9,
+                                      color: 'rgba(0,212,255,0.4)',
+                                      letterSpacing: '0.14em',
+                                      marginBottom: 6,
+                                    }}
+                                  >
+                                    {project.title.toUpperCase().slice(0, 22)}
+                                  </div>
+                                  <div
+                                    style={{
+                                      fontFamily: 'DM Mono, monospace',
+                                      fontSize: 8,
+                                      color: 'rgba(0,212,255,0.25)',
+                                      letterSpacing: '0.1em',
+                                    }}
+                                  >
+                                    IMAGE COMING SOON
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })()}
+
+                          {/* INSPECT button overlaid on bottom of image */}
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              openProject(project.documentId);
+                              setMobileExpandedId(null);
+                            }}
+                            style={{
+                              position: 'absolute',
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              background: 'rgba(0,212,255,0.85)',
+                              border: 'none',
+                              padding: '10px 16px',
+                              fontFamily: 'DM Mono, monospace',
+                              fontSize: 11,
+                              fontWeight: 700,
+                              color: '#020D14',
+                              letterSpacing: '0.14em',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              gap: 8,
+                              backdropFilter: 'blur(4px)',
+                            }}
+                          >
+                            INSPECT MODULE →
+                          </button>
+                        </div>
                       </motion.div>
                     )}
                   </AnimatePresence>

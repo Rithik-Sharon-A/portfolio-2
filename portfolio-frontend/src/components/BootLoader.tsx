@@ -30,13 +30,18 @@ export default function BootLoader({
 
   const [visibleLines, setVisibleLines] = useState(0);
   const [fading, setFading] = useState(false);
-  const [done, setDone] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    return sessionStorage.getItem('booted') === '1';
-  });
+  const [done, setDone] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (done) return;
+    if (sessionStorage.getItem('booted') === '1') {
+      setDone(true);
+    }
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted || done) return;
     const timers: ReturnType<typeof setTimeout>[] = [];
     bootLines.forEach((_, i) => {
       timers.push(setTimeout(() => setVisibleLines(i + 1), (i + 1) * LINE_INTERVAL));
@@ -51,9 +56,10 @@ export default function BootLoader({
       }, bootLines.length * LINE_INTERVAL + FADE_DELAY + 480),
     );
     return () => timers.forEach(clearTimeout);
-  }, [bootLines, done]);
+  }, [bootLines, done, mounted]);
 
-  if (done) return null;
+  // Wait until after mount so SSR HTML matches the first client paint
+  if (!mounted || done) return null;
 
   return (
     <div
