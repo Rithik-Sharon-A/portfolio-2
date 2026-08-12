@@ -169,6 +169,9 @@ export default function TerminalDock({ settings }: { settings?: TerminalSettings
             border: 'none',
             borderTop: '1px solid rgba(0,212,255,0.3)',
             boxShadow: '0 -4px 30px rgba(0,212,255,0.08)',
+            overflow: 'hidden',
+            maxWidth: '100%',
+            boxSizing: 'border-box',
           }}
         >
           <span
@@ -184,7 +187,16 @@ export default function TerminalDock({ settings }: { settings?: TerminalSettings
           />
           <span
             className="term-launcher-label"
-            style={{ ...mono, fontSize: 13, color: '#00D4FF', letterSpacing: '0.08em' }}
+            style={{
+              ...mono,
+              fontSize: 13,
+              color: '#00D4FF',
+              letterSpacing: '0.08em',
+              minWidth: 0,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}
           >
             {launcherLabel}
           </span>
@@ -196,6 +208,7 @@ export default function TerminalDock({ settings }: { settings?: TerminalSettings
               color: '#2A4A5A',
               marginLeft: 'auto',
               letterSpacing: '0.1em',
+              flexShrink: 0,
             }}
           >
             {launcherMeta}

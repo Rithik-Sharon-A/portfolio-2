@@ -16,16 +16,18 @@ export default function MarqueeSection({ line1, line2 }: Props) {
         overflowX: 'hidden',
         overflowY: 'hidden',
         width: '100%',
+        maxWidth: '100%',
+        boxSizing: 'border-box',
         padding: '12px 0',
         borderTop: '1px solid rgba(0,212,255,0.1)',
         borderBottom: '1px solid rgba(0,212,255,0.1)',
       }}
     >
       <style>{`
-        .mL { animation: marqueeLeft 18s linear infinite; display:flex; white-space:nowrap; }
-        .mR { animation: marqueeRight 22s linear infinite; display:flex; white-space:nowrap; }
+        .mL { animation: marqueeLeft 18s linear infinite; display:flex; white-space:nowrap; width:max-content; }
+        .mR { animation: marqueeRight 22s linear infinite; display:flex; white-space:nowrap; width:max-content; }
       `}</style>
-      <div style={{ overflow: 'hidden', marginBottom: '6px' }}>
+      <div style={{ overflow: 'hidden', width: '100%', maxWidth: '100%', marginBottom: '6px' }}>
         <div className="mL">
           {[...wordsTop, ...wordsTop, ...wordsTop, ...wordsTop].map((w, i) => (
             <span
@@ -45,7 +47,7 @@ export default function MarqueeSection({ line1, line2 }: Props) {
           ))}
         </div>
       </div>
-      <div style={{ overflow: 'hidden' }}>
+      <div style={{ overflow: 'hidden', width: '100%', maxWidth: '100%' }}>
         <div className="mR">
           {[...wordsBottom, ...wordsBottom, ...wordsBottom, ...wordsBottom].map((w, i) => (
             <span

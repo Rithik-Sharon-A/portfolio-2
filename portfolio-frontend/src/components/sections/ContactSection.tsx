@@ -235,7 +235,7 @@ export default function ContactSection({ data }: Props) {
           <svg
             viewBox="0 0 800 32"
             preserveAspectRatio="none"
-            style={{ width: '100%', height: 32, display: 'block', overflow: 'visible' }}
+            style={{ width: '100%', height: 32, display: 'block', overflow: 'hidden' }}
             aria-hidden="true"
           >
             <line
